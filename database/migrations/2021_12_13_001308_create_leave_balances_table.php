@@ -1,0 +1,38 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateLeaveBalancesTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('leave_balances', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('employee_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->string('emp_id')->nullable();
+            $table->foreignId('leave_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->integer('year')->nullable();
+            $table->integer('limit')->nullable();
+            $table->integer('used')->nullable();
+            $table->integer('balance')->nullable();
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('leave_balances');
+    }
+}
