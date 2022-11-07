@@ -172,7 +172,7 @@ return [
         /*
          * Package Service Providers...
          */
-
+        Spatie\Backup\BackupServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -181,6 +181,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        
 
     ],
 
@@ -199,6 +200,7 @@ return [
         'Agent' => Jenssegers\Agent\Facades\Agent::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'LogActivity' => App\Helpers\LogActivity::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
         // ...
     ])->toArray(),
 
