@@ -1850,6 +1850,7 @@
         },
         {
             "name": "league/flysystem",
+<<<<<<< HEAD
             "version": "3.10.4",
             "source": {
                 "type": "git",
@@ -1860,6 +1861,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/a7790f3dd1b27af81d380e6b2afa77c16ab7e181",
                 "reference": "a7790f3dd1b27af81d380e6b2afa77c16ab7e181",
+=======
+            "version": "3.10.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/flysystem.git",
+                "reference": "8013fb046c6a244b2b1b75cc95d732ed6bcdeb8a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/8013fb046c6a244b2b1b75cc95d732ed6bcdeb8a",
+                "reference": "8013fb046c6a244b2b1b75cc95d732ed6bcdeb8a",
+>>>>>>> 329b6d78f3a8e3f2ed23e0f9c490348e777a49ca
                 "shasum": ""
             },
             "require": {
@@ -1921,7 +1934,11 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/flysystem/issues",
+<<<<<<< HEAD
                 "source": "https://github.com/thephpleague/flysystem/tree/3.10.4"
+=======
+                "source": "https://github.com/thephpleague/flysystem/tree/3.10.3"
+>>>>>>> 329b6d78f3a8e3f2ed23e0f9c490348e777a49ca
             },
             "funding": [
                 {
@@ -1937,7 +1954,11 @@
                     "type": "tidelift"
                 }
             ],
+<<<<<<< HEAD
             "time": "2022-11-26T19:48:01+00:00"
+=======
+            "time": "2022-11-14T10:42:43+00:00"
+>>>>>>> 329b6d78f3a8e3f2ed23e0f9c490348e777a49ca
         },
         {
             "name": "league/mime-type-detection",
