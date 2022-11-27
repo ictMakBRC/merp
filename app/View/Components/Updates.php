@@ -2,8 +2,8 @@
 
 namespace App\View\Components;
 
-use App\Models\Humanresource\BankingInformation;
 use App\Models\Department;
+use App\Models\Humanresource\BankingInformation;
 use App\Models\Humanresource\EducationBackground;
 use App\Models\Humanresource\EmergencyContact;
 use App\Models\Humanresource\FamilyBackground;
@@ -36,7 +36,7 @@ class Updates extends Component
 
     public function __construct()
     {
-       $childDepartments = [];
+        $childDepartments = [];
 
         $level1_children = Department::select('id')->where('parent_department', Auth::user()->employee->department_id)->get();
 
@@ -61,7 +61,7 @@ class Updates extends Component
                 array_push($childDepartments, $level3_child->id);
             }
         }
-        $this->notices = Notice::with('employee')->where('expires_on', '>=', date('Y-m-d'))->where('audience', Auth::user()->employee->department_id)->orWhere('audience',0)->latest()->get();
+        $this->notices = Notice::with('employee')->where('expires_on', '>=', date('Y-m-d'))->where('audience', Auth::user()->employee->department_id)->orWhere('audience', 0)->latest()->get();
         $this->educationInfoCount = EducationBackground::where(['employee_id' => auth()->user()->employee->id])->count();
         $this->bankingInfoCount = BankingInformation::where(['employee_id' => auth()->user()->employee->id])->count();
         $this->emergencyContactCount = EmergencyContact::where(['employee_id' => auth()->user()->employee->id])->count();

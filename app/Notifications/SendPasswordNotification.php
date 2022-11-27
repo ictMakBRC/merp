@@ -51,7 +51,7 @@ class SendPasswordNotification extends Notification implements ShouldQueue
         // ->attach(public_path('storage\photos\20220226204746BRC10008P.jpg'), [
                     //     'as' => 'sample.jpg',
                     //     'mime' => 'image/jpg',
-                    // ]);
+        // ]);
     }
 
     /**

@@ -21,7 +21,6 @@ use App\Http\Controllers\StationController;
 |
 */
 Route::group(['prefix' => 'asset', 'middleware' => ['auth']], function () {
-
     //-------------------------------CATEGORIES MANAGEMENT ROUTES------------------------
     Route::resource('categories', AssetCategoryController::class);
 
@@ -48,7 +47,7 @@ Route::group(['prefix' => 'asset', 'middleware' => ['auth']], function () {
     //-------------------------------MAINTENANCE MANAGEMENT ROUTES------------------------
     Route::resource('maintenance', AssetMaintenanceController::class);
 });
-    //-------------------------------ASSET MANAGEMENT ROUTES------------------------
+//-------------------------------ASSET MANAGEMENT ROUTES------------------------
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('asset/export', [AssetController::class, 'export'])->name('asset.export');

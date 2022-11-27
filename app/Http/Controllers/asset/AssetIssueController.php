@@ -18,8 +18,8 @@ class AssetIssueController extends Controller
     public function index()
     {
         $issues = AssetIssue::with('asset:id,asset_name,barcode',
-        'station:id,station_name', 'sourcedept:id,department_name',
-        'destinationdept:id,department_name', 'createdby:id,name')
+            'station:id,station_name', 'sourcedept:id,department_name',
+            'destinationdept:id,department_name', 'createdby:id,name')
         ->where('issue_status', '=', 'Pending')->orderBy('created_at', 'desc')->get();
         // return $issues;
         return view('assets.manageIssues', compact('issues'));

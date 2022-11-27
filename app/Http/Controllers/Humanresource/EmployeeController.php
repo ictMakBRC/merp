@@ -64,12 +64,12 @@ class EmployeeController extends Controller
         // return $level2_children;
 
         if (Auth::user()->hasRole(['HrSupervisor'])) {
-            $employees = Employee::with(['department:id,department_name', 'designation:id,name'])->where('status','Active')
+            $employees = Employee::with(['department:id,department_name', 'designation:id,name'])->where('status', 'Active')
             ->where('department_id', Auth::user()->employee->department_id)->orWhereIn('department_id', $childDepartments)->latest()->get();
 
             return view('humanResource.employeesList', compact('employees'));
         } elseif (Auth::user()->hasRole(['HrAdmin', 'SuperAdmin'])) {
-            $employees = Employee::with(['department:id,department_name', 'designation:id,name'])->where('status','Active')->latest()->get();
+            $employees = Employee::with(['department:id,department_name', 'designation:id,name'])->where('status', 'Active')->latest()->get();
 
             return view('humanResource.employeesList', compact('employees'));
         } else {
@@ -252,11 +252,11 @@ class EmployeeController extends Controller
             $expiredCount = OfficialContract::where('status', 'Expired')->whereBetween('end_date', [$prev_date, $today])->count();
 
             return view('humanResource.dashboard', compact(
-            'employeeCount', 'expiredCount',
-            'departmentCount', 'projectsCount',
-            'grievanceCount', 'labCount',
-            'leaveCount', 'exitInterviewCount',
-            'appraisalCount', 'resignationCount'));
+                'employeeCount', 'expiredCount',
+                'departmentCount', 'projectsCount',
+                'grievanceCount', 'labCount',
+                'leaveCount', 'exitInterviewCount',
+                'appraisalCount', 'resignationCount'));
         } elseif (Auth::user()->hasRole(['HrSupervisor'])) {
             $childDepartments = [];
 
@@ -302,10 +302,10 @@ class EmployeeController extends Controller
             ->where('department_id', Auth::user()->employee->department_id)->orWhereIn('department_id', $childDepartments)->count();
 
             return view('humanResource.dashboard', compact(
-                 'employeeCount', 'expiredCount',
+                'employeeCount', 'expiredCount',
                 'departmentCount', 'projectsCount', 'grievanceCount',
-                 'leaveCount', 'labCount', 'exitInterviewCount',
-                  'appraisalCount', 'resignationCount'));
+                'leaveCount', 'labCount', 'exitInterviewCount',
+                'appraisalCount', 'resignationCount'));
         } elseif (Auth::user()->hasRole(['HrUser'])) {
             $employee = Employee::with('station:id,station_name', 'department:id,department_name', 'designation:id,name', 'departmentunit:id,department_name')->where('id', Auth::user()->employee->id)->first();
             $reportingTo = Employee::select('prefix', 'surname', 'other_name', 'first_name')->where('id', $employee->reporting_to)->first();

@@ -119,10 +119,10 @@ class FacilityInformationController extends Controller
 
         // $facilityLogo = storage_path('app/public/').$currentLogo;
 
-            // if (file_exists($facilityLogo) && file_exists($facilityLogo2)) {
+        // if (file_exists($facilityLogo) && file_exists($facilityLogo2)) {
             //     @unlink($facilityLogo);
             //     @unlink($facilityLogo2);
-            // }
+        // }
         } elseif ($request->hasFile('logo')) {
             $request->validate(['logo' => 'image|max:300|dimensions:max_width=600,max_height=400']);
 

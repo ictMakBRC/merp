@@ -8,6 +8,7 @@ use App\Models\Department;
 use App\Models\Humanresource\Employee;
 use App\Models\Station;
 use App\Models\User;
+use App\Notifications\SendPasswordNotification;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,7 +16,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\Rules;
 use Illuminate\Validation\Rules\Password;
-use App\Notifications\SendPasswordNotification;
 
 class RegisteredUserController extends Controller
 {

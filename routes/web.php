@@ -32,3 +32,4 @@ Route::get('/scheduler_start', function () {
 require __DIR__.'/auth.php';
 require __DIR__.'/assets.php';
 require __DIR__.'/humanresource.php';
+require __DIR__.'/inventory.php';

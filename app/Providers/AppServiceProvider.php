@@ -29,10 +29,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // View::share('facilityInfo', FacilityInformation::first());
-        // View::share('birthdays', Employee::whereMonth('birthday', date('m'))->whereDay('birthday', date('d'))->latest()->get());
-        // View::share('holidays', Holiday::whereMonth('start_date', '=', date('m'))->whereDay('start_date', '=', (date('d') + 1))->get());
-        // View::share('suggestions', Suggestion::latest()->get());
-        // View::share('departments', Department::where(['status' => 'Active', 'type' => 'Unit'])->orWhere('type', 'Laboratory')->latest()->get());
+        View::share('facilityInfo', FacilityInformation::first());
+        View::share('birthdays', Employee::whereMonth('birthday', date('m'))->whereDay('birthday', date('d'))->latest()->get());
+        View::share('holidays', Holiday::whereMonth('start_date', '=', date('m'))->whereDay('start_date', '=', (date('d') + 1))->get());
+        View::share('suggestions', Suggestion::latest()->get());
+        View::share('departments', Department::where(['status' => 'Active', 'type' => 'Unit'])->orWhere('type', 'Laboratory')->latest()->get());
     }
 }

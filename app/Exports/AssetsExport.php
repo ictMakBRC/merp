@@ -20,7 +20,7 @@ class AssetsExport implements FromCollection, WithMapping, WithHeadings
     public function collection()
     {
         return Asset::with('category:id,category_name', 'subcategory:id,subcategory_name', 'user:id,name', 'vendor:id,vendor_name', 'station:id,station_name',
-        'department:id,department_name', 'insurer:id,vendor_name', 'insurancetype:id,type')->orderBy('created_at', 'desc')->get();
+            'department:id,department_name', 'insurer:id,vendor_name', 'insurancetype:id,type')->orderBy('created_at', 'desc')->get();
     }
 
     public function map($asset): array

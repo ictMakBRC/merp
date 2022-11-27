@@ -27,8 +27,8 @@ class AssetController extends Controller
     public function index()
     {
         $assets = Asset::with('category:id,category_name', 'subcategory:id,subcategory_name',
-                        'user:id,name', 'vendor:id,vendor_name', 'station:id,station_name',
-                        'department:id,department_name', 'insurer:id,vendor_name')->orderBy('created_at', 'desc')->get();
+            'user:id,name', 'vendor:id,vendor_name', 'station:id,station_name',
+            'department:id,department_name', 'insurer:id,vendor_name')->orderBy('created_at', 'desc')->get();
 
         $departmentCount = Department::count();
         $issueCount = AssetIssue::count();
@@ -150,8 +150,8 @@ class AssetController extends Controller
             'assignmenthistory.touser:id,name', ])->where('id', $asset->id)->get();
 
         $asset->load('category:id,category_name', 'subcategory:id,subcategory_name',
-                    'user:id,name', 'vendor:id,vendor_name', 'station:id,station_name',
-                    'department:id,department_name', 'insurer:id,vendor_name', 'insurancetype:id,type')->get();
+            'user:id,name', 'vendor:id,vendor_name', 'station:id,station_name',
+            'department:id,department_name', 'insurer:id,vendor_name', 'insurancetype:id,type')->get();
         //return $maintenancehistory;
         return view('assets.showAsset', compact('asset', 'users', 'stations', 'departments', 'categories', 'subcats', 'vendors', 'insurancetypes', 'assignments', 'maintenancehistory'));
     }

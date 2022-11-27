@@ -30,7 +30,6 @@ class LaratrustSeeder extends Seeder
         $mapPermission = collect(config('laratrust_seeder.permissions_map'));
 
         foreach ($config as $key => $modules) {
-
             // Create a new role
             $role = \App\Models\Role::firstOrCreate([
                 'name' => $key,

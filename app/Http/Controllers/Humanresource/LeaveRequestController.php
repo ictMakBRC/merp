@@ -28,7 +28,7 @@ class LeaveRequestController extends Controller
         $yearStart->day = 01;
         $myjuniorsList = [];
 
-        $myjuniors = Employee::select('id')->where(['status'=>'Active','reporting_to'=>Auth::user()->employee_id])->get();
+        $myjuniors = Employee::select('id')->where(['status' => 'Active', 'reporting_to' => Auth::user()->employee_id])->get();
         foreach ($myjuniors as $junior) {
             array_push($myjuniorsList, $junior->id);
         }

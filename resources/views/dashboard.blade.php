@@ -132,7 +132,7 @@
                             materials in the store, maintaining appropriate stock levels allowing users of consumables
                             (labs) to directly make requests to the store managers.
                         </p>
-                         <a href="#" class="btn btn-success mt-4 mb-2 btn-rounded not_active">Continue</a>
+                         <a href="{{route('inventory')}}" class="btn btn-success mt-4 mb-2 btn-rounded">Continue</a>
                         <!--<a class="btn btn-success mt-4 mb-2 btn-rounded">Continue</a>-->
                     </div>
                 </div>
