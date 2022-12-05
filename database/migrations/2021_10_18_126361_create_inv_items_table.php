@@ -19,7 +19,7 @@ class CreateInvItemsTable extends Migration
             $table->foreignId('inv_subunit_id')->nullable()->constrained()->onUpdate('restrict')->onDelete('restrict');
             $table->float('cost_price ,60,2')->default('0');
             $table->foreignId('inv_uom_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('restrict');
-            $table->foreignId('inv_supplier_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('restrict');
+            $table->foreignId('supplier_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('restrict');
             $table->float('max_qty')->default('0');
             $table->float('min_qty')->default('0');
             $table->foreignId('inv_store_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('restrict');

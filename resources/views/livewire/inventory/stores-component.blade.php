@@ -95,24 +95,24 @@
         <!-- end row-->
 
     </div>
-    <div class="modal fade" wire:ignore.self id="delete_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabeld" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Delete Info</h5>
-                <button type="button" class="btn-close" wire:click="cancel()" data-bs-dismiss="modal"
-                    aria-label="Close"></button>
-            </div>
-            <div class="modal-body pt-4 pb-4">
-                <h6>Are you sure you want to delete this Record?</h6>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-sm btn-primary" wire:click="cancel()" data-bs-dismiss="modal"
-                    aria-label="Close">Cancel</button>
-                <button class="btn btn-sm btn-danger" wire:click="deleteData()">Yes! Delete</button>
+<div class="modal fade" wire:ignore.self id="delete_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabeld" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Delete Info</h5>
+                    <button type="button" class="btn-close" wire:click="cancel()" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body pt-4 pb-4">
+                    <h6>Are you sure you want to delete this Record?</h6>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-sm btn-primary" wire:click="cancel()" data-bs-dismiss="modal"
+                        aria-label="Close">Cancel</button>
+                    <button class="btn btn-sm btn-danger" wire:click="deleteData()">Yes! Delete</button>
+                </div>
             </div>
         </div>
-    </div>
 </div>
      <!-- ADD NEW Category Modal -->
  <div class="modal fade" wire:ignore.self id="addStore" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

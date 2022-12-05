@@ -1,39 +1,32 @@
 <?php
 
-//use Illuminate\Support\Facades\Route;
-//use App\Http\Controllers\inventory\DashboardController;
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
+use App\Http\Controllers\DepartmentController;
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // })->middleware(['auth'])->name('dashboard');
 
 //-----------------------------------------------INVENTORY SYSTEM ROUTES............................................
 // use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\inventory\SubUnitsController;
 use App\Http\Controllers\inventory\SuppliersController;
 use App\Http\Controllers\inventory\UofMeasureController;
 use App\Http\Livewire\Inventory\Dashboards\MainDashboardComponent;
+use App\Http\Livewire\Inventory\Manage\CategoryComponent;
+use App\Http\Livewire\Inventory\Manage\ItemsComponent;
+use App\Http\Livewire\Inventory\Manage\UOMComponent;
 use App\Http\Livewire\Inventory\StoresComponent;
+use App\Http\Livewire\Manage\SupplierComponent;
+use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['auth', 'role:InvAdmin|SuperAdmin']], function () {
     Route::group(['prefix' => 'inventory'], function () {
         Route::get('/', MainDashboardComponent::class)->name('inventory');
         Route::get('/store', StoresComponent::class)->name('stores');
+        Route::get('/incategories', CategoryComponent::class)->name('invcategories');
+        Route::get('/unitOfMeasure', UOMComponent::class)->name('invuom');
+        Route::get('/invSuppliers', SupplierComponent::class)->name('invSuppliers');
+        Route::get('/invItems', ItemsComponent::class)->name('invItems');
+
         Route::get('/dashboard', [App\Http\Controllers\inventory\DashboardController::class, 'index']);
         Route::get('/newItem', [App\Http\Controllers\inventory\ItemsController::class, 'create']);
         Route::get('/Items', [App\Http\Controllers\inventory\ItemsController::class, 'index']);
@@ -88,7 +81,7 @@ Route::group(['middleware' => ['auth', 'role:InvAdmin|SuperAdmin']], function ()
         Route::post('/update-DepartUser/{id}', [App\Http\Controllers\inventory\UserDepartmentsController::class, 'update']);
     });
 });
-Route::group([ 'middleware' => ['auth', 'role:InvUser|InvAdmin'], 'prefix' => 'inventory'], function () {
+Route::group(['middleware' => ['auth', 'role:InvUser|InvAdmin'], 'prefix' => 'inventory'], function () {
     //----------------------------------request routes---------------------------------------------
     Route::get('/', MainDashboardComponent::class)->name('inventory');
     // Route::get('/', [App\Http\Controllers\inventory\DashboardController::class, 'index'])->name('inventory');

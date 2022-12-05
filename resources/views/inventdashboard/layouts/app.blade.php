@@ -75,6 +75,7 @@
         <!-- bundle -->
         <script src="{{ asset('assets/js/vendor.min.js') }}"></script>
         <script src="{{ asset('assets/js/app.min.js') }}"></script>
+        <script src="{{ asset('assets/js/sort.js') }}"></script>
         <script src="{{ asset('assets/js/izitoast/js/iziToast.min.js') }}"></script>
         <!-- third party js -->
         <script src="{{ asset('assets/sweetalert/sweetalert.min.js')}}"></script>

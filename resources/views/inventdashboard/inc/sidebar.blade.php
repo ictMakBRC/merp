@@ -51,7 +51,7 @@
                             <a  href="{{url('inventory/newItem')}}">New Item</a>
                         </li>
                         <li>
-                            <a href="{{url('inventory/Items')}}">Item List</a>
+                            <a href="{{route('invItems')}}">Item List</a>
                         </li>
                         <li>
                             <a href="{{url('inventory/department/items')}}">Department Items</a>
@@ -87,7 +87,7 @@
             </li>
 
             <li class="side-nav-item">
-                <a href="{{url('inventory/suppliers')}}" class="side-nav-link">
+                <a href="{{route('invSuppliers')}}" class="side-nav-link">
                     <i class="uil-truck-loading"></i>
                     <span>Suppliers</span>
                 </a>
@@ -100,11 +100,11 @@
                 </a>
                 <div class="collapse" id="categories">
                     <ul class="side-nav-second-level">
-                        <li>
+                        {{-- <li>
                             <a href="{{url('inventory/categories')}}">Departments</a>
-                        </li>
+                        </li> --}}
                         <li>
-                            <a href="{{url('inventory/SubCategories')}}">Categories</a>
+                            <a href="{{route('invcategories')}}">Categories</a>
                         </li>
                         <li>
                             <a href="{{url('inventory/department/users')}}">Department users</a>
@@ -114,7 +114,7 @@
             </li>
 
             <li class="side-nav-item">
-                <a href="{{url('inventory/uom')}}" class="side-nav-link">
+                <a href="{{route('invuom')}}" class="side-nav-link">
                     <i class="uil-balance-scale"f></i>
                     <span>Units Of measurements</span>
                 </a>

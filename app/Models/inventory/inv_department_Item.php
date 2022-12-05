@@ -14,7 +14,7 @@ class inv_department_Item extends Model
         'inv_item_id', 'department_id',
     ];
 
-    public function departmentItems()
+    public function departmentItem()
     {
         return $this->belongsTo(Department::class, 'department_id', 'id');
     }
@@ -24,6 +24,11 @@ class inv_department_Item extends Model
     //     ->groupBy('ProjectAcronym');
 
     // }
+
+    public function depatmentItems()
+    {
+        return $this->hasMany(invItems::class, 'inv_item_id', 'id');
+    }
 
     public function itemDpeartments()
     {

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\inventory\inv_department_Item;
+use App\Models\inventory\invUserdeparment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
@@ -30,6 +32,16 @@ class Department extends Model
     public function child()
     {
         return $this->hasMany(Department::class, 'parent_department', 'id');
+    }
+
+    public function invdepatmentItems()
+    {
+        return $this->hasMany(inv_department_Item::class, 'department_id', 'id');
+    }
+
+    public function depatmentUsers()
+    {
+        return $this->hasMany(invUserdeparment::class, 'department_id', 'id');
     }
 
     public function assets()
