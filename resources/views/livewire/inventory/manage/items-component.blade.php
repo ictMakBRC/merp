@@ -24,33 +24,27 @@
                 <div class="card">
                 <div class="card-header pt-0">
                     <div class="row mb-2">
-                        <div class="col-sm-4">
-                            <div class="text-sm-end mt-3">
-                            <h4 class="header-title mb-3 col-6  text-center"> MakBRC Items</h4>
-                        </div>
+                        <x-inventory.table-utilities>
+                            <div class="text-sm-end mt-1 ms-auto position-relative">
+                                <a type="button" href="#" class="btn btn-primary mb-2 me-1" data-bs-toggle="modal" data-bs-target="#addData">Add New</a>
+                            </div>
+                        </x-inventory.table-utilities> 
                     </div>
-                    <div class="col-sm-8">
-                        <div class="text-sm-end mt-3">
-                            <a type="button" href="#" class="btn btn-primary mb-2 me-1" data-bs-toggle="modal" data-bs-target="#addData">Add Items</a>
-                        </div>
-                    </div><!-- end col-->
-                </div>
             </div>
             <div class="card-body">
 
                 <div class="tab-content">
                     <div class="tab-pane show active" id="scroll-horizontal-preview">
-                        <table id="example1" class="table w-100 nowrap sortable">
+                        <table class="table table-centered w-100 dt-responsive nowrap" id="example2">
                             <thead>
                                 <tr>
                                     <th>No.</th>
-                                    <th>Supplier Name</th>
-                                    <th>Supplier Email</th>
-                                    <th>Supplier Address</th>
-                                    <th>Supplier contact</th>
-                                    <th>Supplier Tin</th>
-                                    <th>Supplier Name</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Subcategory</th>
+                                    <th>Costprice</th>
                                     <th>Status</th>
+                                    <th>Date added</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -60,13 +54,14 @@
                                 @foreach($values as $value)
                                 <tr>
                                     <td>{{$i++}}</td>
-                                    <td>{{ $value->supplier_name}}</td>
-                                    <td>{{ $value->email}}</td>
-                                    <td>{{ $value->address}}</td>
-                                    <td>{{ $value->contact}}</td>
-                                    <td>{{ $value->tin_number}}</td>
-                                    <td>{{ $value->contact_person}}</td>
-                                    <td>@if($value->is_active==1)
+                                    <td>{{$value->item_name}}</td>
+                                    <td>{{ $value->description}}</td>
+                                    <td>{{ $value->parentcategory->subunit_name}}</td>
+                                    <td>{{ $value->cost_price}}</td>
+                                    <td>{{ $value->date_added}}</td>
+
+                                    <td class="table-action">
+                                        @if($value->is_active==1)
                                         <span class="badge badge-success-lighten float-center">Active</span>
                                         @php($satate='Active' AND $Stvalue=1)
                                         @elseif($value->is_active==0)
@@ -76,10 +71,10 @@
                                     </td>
                                     <td class="table-action">
                                         <a href="javascript: void(0);" class="action-ico text-info mx-1"> <i
-                                            class="mdi mdi-pencil" data-bs-toggle="modal"
+                                            class="mdi mdi-pencil" data-bs-toggle="modal" data-bs-target="#addData"
                                             wire:click="editdata({{ $value->id}})"
                                             data-bs-target="#editcourier"></i></a>
-                                    <a href="javascript: void(0);"
+                                    <a href="javascript: void(0);" 
                                         wire:click="deleteConfirmation({{ $value->id }})" class="action-ico text-danger  mx-1">
                                         <i class="mdi mdi-delete"></i></a>
                                        
@@ -87,6 +82,8 @@
                                 </tr>
                                 @endforeach
                                 @endif
+
+
                             </tbody>
                         </table>
                     </div> <!-- end preview-->
@@ -124,109 +121,167 @@
             </div>
         </div>
     </div>
-     <!-- ADD NEW Items Modal -->
-     <div class="modal fade" wire:ignore.self data-bs-backdrop="static"  id="editData" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-full-width">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="EditData">Edit Items</h5>
-                    <button type="button" wire:click="cancel()" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
-                </div> <!-- end modal header -->
-                <div class="modal-body">
-                    <form wire:submit.prevent="updateData" method="POST">
-                        @csrf
 
-                        <div class="row">
-                            <div class="col-md-12">
-
-
-                                <div class="mb-3 col-6">
-                                    <label for="ItemsName" class="form-label">Items Name</label>
-                                    <input type="text" id="ItemsName"  class="form-control" name="Items_name" wire:model="Items_name" required>
-                                    @error('Items_name')
-                                    <div class="text-danger text-small">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 col-6">
-                                    <label for="isActive" class="form-label">State</label>
-                                    <select class="form-select" id="is_active" wire:model="is_active">
-                                        <option value="">select</option>
-                                        <option value="1" style="color: green" selected>Active</option>
-                                        <option value="0" style="color: red">Suspended</option>
-                                    </select>
-                                </div>
-
-                            </div> <!-- end col -->
-
-                        </div>
-                        <!-- end row-->
-                        <div class="d-grid mb-0 text-center">
-                            <button class="btn btn-primary" type="submit">Update Items</button>
-                        </div>
-
-                    </form>
-
-                </div>
-
-            </div> <!-- end modal content-->
-        </div> <!-- end modal dialog-->
-    </div> <!-- end modal-->
      <!-- ADD NEW Items Modal -->
     <div class="modal fade" wire:ignore.self id="addData" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-full-width">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Add a new Item</h5>
+                <div class="modal-header text-center h3">
+                    @if ($is_update=='false')
+                     <h4 class="modal-title text-center" id="staticBackdropLabel">Add a new Item</h4>
+                    @else
+                    <h4 class="modal-title text-center" id="staticBackdropLabel">Update Item</h4>
+                    @endif
+                   
                     <button type="button"  wire:click="cancel()" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                 </div> <!-- end modal header -->
                 <div class="modal-body">
-                    <form wire:submit.prevent="storeData" method="POST">
+                    @if ($is_update=='false')
+                    <form wire:submit.prevent="storeData">
+                   @else
+                   <form wire:submit.prevent="updateData">
+                   @endif
+                   
                         @csrf
 
                         <div class="row">
-                                <div class="mb-3 col-6">
-                                    <label for="supplier_name" class="form-label">Items Name</label>
-                                    <input type="text" id="supplier_name" name="Items_name" wire:model='supplier_name' class="form-control"  required>
-                                    @error('supplier_name')
-                                    <div class="text-danger text-small">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 col-6">
-                                    <label for="tin_number" class="form-label">Items Tin</label>
-                                    <input type="text" id="tin_number" name="tin_number" wire:model='tin_number' class="form-control"  required>
-                                    @error('tin_number')
-                                    <div class="text-danger text-small">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 col-6">
-                                    <label for="address" class="form-label">Items Address</label>
-                                    <input type="text" id="address" name="address" wire:model='address' class="form-control"  required>
-                                    @error('address')
-                                    <div class="text-danger text-small">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 col-6">
-                                    <label for="contact" class="form-label">Items contact</label>
-                                    <input type="text" id="contact" name="contact" wire:model='contact' class="form-control"  required>
-                                    @error('contact')
-                                    <div class="text-danger text-small">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 col-6">
-                                    <label for="email" class="form-label">Items email</label>
-                                    <input type="email" id="email" name="email" wire:model='email' class="form-control"  required>
-                                    @error('email')
-                                    <div class="text-danger text-small">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3 col-6">
-                                    <label for="contact_person" class="form-label">Items Contact person</label>
-                                    <input type="text" id="contact_person" name="contact_person" wire:model='contact_person' class="form-control"  required>
-                                    @error('contact_person')
-                                    <div class="text-danger text-small">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+        
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div>
+                                                        <h4 class="header-title mb-3 text- text-center"> General item Information</h4>
+                                                    </div>
+                                                    <hr>
+                                                    <div class="mb-3">
+                                                        <label for="subCategory" class="form-label">Category</label>
+                                                        <select name="inv_subunit_id" id="subunit" onchange="makeCode()" wire:model.lazy="inv_subunit_id" class="form-control">
+                                                            <option value="">Select</option>
+                                                            @if(count($subcat)>0)
+                                                            @foreach($subcat as $sub)
+                                                                <option value="{{ $sub->id }}">{{ $sub->subunit_name}}</option>
+                                                            @endforeach
+                                                            @endif
+                                                        </select>
+                                                        @error('inv_subunit_id')
+                                                        <div class="text-danger text-small">{{ $message }}</div>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="item_name" class="form-label">Item Name</label>
+                                                        <input type="text" id="item_name" class="form-control" name="item_name" wire:model.lazy="item_name" required>
+                                                        @error('item_name')
+                                                        <div class="text-danger text-small">{{ $message }}</div>
+                                                        @enderror
+                                                    </div>
+                                                 
+                                                    <div class="mb-3">
+                                                        <label for="item_code" class="form-label">Item code</label>
+                                                        <input type="text" id="item_code" class="form-control" name="item_code" wire:model.lazy="item_code" required>
+                                                        @error('item_code')
+                                                        <div class="text-danger text-small">{{ $message }}</div>
+                                                        @enderror
+                                                    </div>
+        
+                                                    <div class="mb-3">
+                                                        <label for="cost_price" class="form-label">Cost price</label>
+                                                        <input type="text" id="cost_price" class="form-control" name="cost_price" wire:model.lazy="cost_price" required>
+                                                        @error('cost_price')
+                                                        <div class="text-danger text-small">{{ $message }}</div>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="inv_uom_id" class="form-label">UOM</label>
+                                                        <select class="form-select " id="inv_uom_id" name="inv_uom_id" wire:model.lazy="inv_uom_id" required>
+                                                            <option value="">Select</option>
+                                                            @if(count($uoms)>0)
+                                                            @foreach($uoms as $uom)
+                                                                <option value="{{ $uom->id }}">{{ $uom->uom_name}}</option>
+                                                            @endforeach
+                                                            @endif
+                                                            @error('inv_uom_id')
+                                                            <div class="text-danger text-small">{{ $message }}</div>
+                                                            @enderror
+                                                        </select>
+                                                    </div>
+                                                    <div class="input-group">
+                                                    <label for="">Expires</label>? &nbsp 
+                                                    &nbsp<input type="checkbox" id="switch1" wire:model.lazy="expires" name="expires" checked data-switch="bool"/>
+                                                    <label for="switch1" data-on-label="True" data-off-label="False"></label>
+                                                    </div>
+                                                  
+        
+                                                </div>
+                                                <!-- end col -->
+        
+                                                <div class="col-lg-6">
+                                                    <div>
+                                                        <h4 class="header-title mb-3 text-center"> Item Details</h4>
+                                                    </div>
+                                                    <hr>
+        
+        
+                                                    <div class="mb-3">
+                                                        <label for="max_qty" class="form-label">Max Qty</label>
+                                                        <input class="form-control" id="max_qty" type="text" wire:model.lazy="max_qty" name="max_qty" required>
+                                                        @error('max_qty')
+                                                        <div class="text-danger text-small">{{ $message }}</div>
+                                                        @enderror
+                                                    </div>
+        
+                                                    <div class="mb-3">
+                                                        <label for="min_qty" class="form-label">Min Qty</label>
+                                                        <input class="form-control" id="min_qty" type="text" name="min_qty" wire:model.lazy="min_qty" required>
+                                                        @error('min_qty')
+                                                        <div class="text-danger text-small">{{ $message }}</div>
+                                                        @enderror
+                                                    </div>
+        
+        
+                                                  
+                                                    <div class="mb-3">
+                                                        <label  class="form-label">Supplier</label>
+                                                        <select class="form-select " id="supplier_id" name="supplier_id" wire:model.lazy="supplier_id" wire:model="supplier_id">
+                                                            <option value="">Select Supplier</option>
+                                                            @if(count($suppliers)>0)
+                                                            @foreach($suppliers as $supplier)
+                                                                <option value="{{ $supplier->id }}">{{ $supplier->supplier_name}}</option>
+                                                            @endforeach
+                                                            @endif
+                                                        </select>
+                                                        @error('supplier_id')
+                                                        <div class="text-danger text-small">{{ $message }}</div>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="description" class="form-label">Description on Purchase transactions</label>
+                                                        <textarea class="form-control" name="description" wire:model.lazy="description" required></textarea>
+                                                        @error('description')
+                                                        <div class="text-danger text-small">{{ $message }}</div>
+                                                        @enderror
+                                                    </div>
+                                          
+                                                    <div class="mb-3">
+                                                        <label for="date_added" class="form-label">As of</label>
+                                                        <input class="form-control" id="date_added" type="date" name="date_added" wire:model="date_added" required>
+                                                        @error('date_added')
+                                                        <div class="text-danger text-small">{{ $message }}</div>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="d-grid mb-3 text-center">
+        
+                                            </div>
+                                                </div> <!-- end col -->
+                                               
+                                            </div>
+                                            <!-- end row-->
+        
+        
+                                    </div><!-- end card body-->
+                                </div><!-- end card -->
+                            </div> <!-- end col -->
                         </div>
                         <!-- end row-->
                         <div class="d-grid mb-0 text-center">
@@ -250,11 +305,21 @@
         });
 
         window.addEventListener('edit-modal', event => {
-            $('#editData').modal('show');
+            $('#addData').modal('show');
         });
         window.addEventListener('delete-modal', event => {
             $('#delete_modal').modal('show');
         });
+    </script>
+    <script>
+        function makeCode(){
+            var e = document.getElementById("subunit");                                                    
+            var currentY = <?php echo time().rand(1,10); ?>;
+            var name = e.options[e.selectedIndex].text;
+            var prefix =  name.slice(0, 3).toUpperCase()
+            document.getElementById('item_code').value = prefix + currentY;
+        }
+       
     </script>
     @endpush
 </div>

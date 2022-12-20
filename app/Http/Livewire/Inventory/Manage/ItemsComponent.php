@@ -3,6 +3,10 @@
 namespace App\Http\Livewire\Inventory\Manage;
 
 use App\Models\inventory\invItems;
+use App\Models\inventory\invStores;
+use App\Models\inventory\invSubunits;
+use App\Models\inventory\invUom;
+use App\Models\Supplier;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -50,6 +54,8 @@ class ItemsComponent extends Component
 
     public $delete_id;
 
+    public $is_update = 'false';
+
     protected $paginationTheme = 'bootstrap';
 
     public function updatingSearch()
@@ -69,7 +75,6 @@ class ItemsComponent extends Component
             'inv_subunit_id' => 'required',
             'cost_price' => 'required|numeric',
             'inv_uom_id' => 'required',
-            'inv_supplier_id',
             'max_qty' => 'required|numeric',
             'min_qty' => 'required|numeric',
             'item_code' => 'required|unique:inv_items,item_code',
@@ -92,7 +97,6 @@ class ItemsComponent extends Component
             'inv_subunit_id' => 'required',
             'cost_price' => 'required|numeric',
             'inv_uom_id' => 'required',
-            'inv_supplier_id',
             'max_qty' => 'required|numeric',
             'min_qty' => 'required|numeric',
             'item_code' => 'required|unique:inv_items,item_code',
@@ -106,16 +110,15 @@ class ItemsComponent extends Component
         $value->inv_subunit_id = $this->inv_subunit_id;
         $value->cost_price = $this->cost_price;
         $value->inv_uom_id = $this->inv_uom_id;
-        $value->inv_supplier_id = $this->inv_supplier_id != '' ? $this->inv_supplier_id : null;
+        $value->supplier_id = $this->supplier_id != '' ? $this->supplier_id : null;
         $value->max_qty = $this->max_qty;
         $value->min_qty = $this->min_qty;
         $value->item_code = $this->item_code;
-        $value->expires = $this->expires!= '' ? $this->expires : 'Off';
+        $value->expires = $this->expires != '' ? $this->expires : 'Off';
         $value->description = $this->description;
         $value->date_added = $this->date_added;
         $value->user_id = auth()->user()->id;
         $value->save();
-
 
         $this->resetInputs();
         $this->dispatchBrowserEvent('close-modal');
@@ -126,50 +129,51 @@ class ItemsComponent extends Component
     {
         $value = invItems::where('id', $id)->first();
         $this->item_name = $value->item_name;
-        $this->inv_subunit_id= $value->inv_subunit_id ;
-        $this->cost_price = $value->cost_price ;
+        $this->inv_subunit_id = $value->inv_subunit_id;
+        $this->cost_price = $value->cost_price;
         $this->inv_uom_id = $value->inv_uom_id;
-        $this->inv_supplier_id = $value->inv_supplier_id ;
+        $this->supplier_id = $value->supplier_id;
         $this->max_qty = $value->max_qty;
         $this->min_qty = $value->min_qty;
-        $this->item_code = $value->item_code ;
+        $this->item_code = $value->item_code;
         $this->expires = $value->expires;
         $this->description = $value->description;
         $this->is_active = $value->is_active;
+        $this->is_update = 'true';
         $this->edit_id = $id;
-        $this->dispatchBrowserEvent('edit-modal');
+        // $this->dispatchBrowserEvent('edit-modal');
     }
 
     public function resetInputs()
     {
         $this->reset([
-        'item_name',
-        'inv_subunit_id',
-        'cost_price',
-        'inv_uom_id',
-        'supplier_id',
-        'max_qty',
-        'min_qty',
-        'inv_store_id',
-        'description',
-        'date_added',
-        'is_active',
-        'expires',
-        'item_code',
-         ]);
+            'item_name',
+            'inv_subunit_id',
+            'cost_price',
+            'inv_uom_id',
+            'supplier_id',
+            'max_qty',
+            'min_qty',
+            'inv_store_id',
+            'description',
+            'date_added',
+            'is_active',
+            'expires',
+            'item_code',
+        ]);
+        $this->is_update = 'false';
     }
 
     public function updateData()
     {
         $this->validate([
-            'item_name' => 'required|unique:inv_items,item_name',
+            'item_name' => 'required|unique:inv_items,item_name,'.$this->edit_id.'',
             'inv_subunit_id' => 'required',
             'cost_price' => 'required|numeric',
             'inv_uom_id' => 'required',
-            'inv_supplier_id',
             'max_qty' => 'required|numeric',
             'min_qty' => 'required|numeric',
-            'item_code' => 'required|unique:inv_items,item_code',
+            'item_code' => 'required|unique:inv_items,item_code,'.$this->edit_id.'',
             'description' => 'required',
             'date_added' => 'required',
             'is_active' => 'required',
@@ -180,16 +184,17 @@ class ItemsComponent extends Component
         $value->inv_subunit_id = $this->inv_subunit_id;
         $value->cost_price = $this->cost_price;
         $value->inv_uom_id = $this->inv_uom_id;
-        $value->inv_supplier_id = $this->inv_supplier_id != '' ? $this->inv_supplier_id : null;
+        $value->supplier_id = $this->supplier_id != '' ? $this->supplier_id : null;
         $value->max_qty = $this->max_qty;
         $value->min_qty = $this->min_qty;
         $value->item_code = $this->item_code;
-        $value->expires = $this->expires!= '' ? $this->expires : 'Off';
+        $value->expires = $this->expires != '' ? $this->expires : 'Off';
         $value->description = $this->description;
+        $value->date_added = $this->date_added;
         $value->is_active = $this->is_active;
         $value->update();
 
-
+        $this->is_update = 'false';
         $this->resetInputs();
         $this->dispatchBrowserEvent('close-modal');
         $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => 'value updated successfully!']);
@@ -227,6 +232,7 @@ class ItemsComponent extends Component
     public function cancel()
     {
         $this->delete_id = '';
+        $this->resetInputs();
     }
 
     public function close()
@@ -236,10 +242,15 @@ class ItemsComponent extends Component
 
     public function render()
     {
-        $values = invItems::search($this->search)
+        $data['values'] = invItems::search($this->search)->with('parentcategory')
         ->orderBy($this->orderBy, $this->orderAsc ? 'asc' : 'desc')
         ->paginate($this->perPage);
 
-        return view('livewire.inventory.manage.items-component', compact('values'))->layout('inventdashboard.layouts.app');
+        $data['subcat'] = invSubunits::orderBy('subunit_name', 'asc')->get();
+        $data['uoms'] = invUom::orderBy('uom_name', 'asc')->get();
+        $data['suppliers'] = Supplier::orderBy('supplier_name', 'asc')->get();
+        $data['stores'] = invStores::orderBy('store_name', 'asc')->get();
+
+        return view('livewire.inventory.manage.items-component', $data)->layout('inventdashboard.layouts.app');
     }
 }
