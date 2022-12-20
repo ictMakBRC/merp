@@ -24,16 +24,14 @@
                 <div class="card">
                 <div class="card-header pt-0">
                     <div class="row mb-2">
-                        <div class="col-sm-4">
-                            <div class="text-sm-end mt-3">
-                            <h4 class="header-title mb-3  text-center"> MakBRC UOM</h4>
-                        </div>
+                        <div class="col-sm-12">
+                            <x-inventory.table-utilities>
+                                <div class="text-sm-end mt-1 ms-auto position-relative">
+                                    <a type="button" href="#" class="btn btn-primary mb-2 me-1" data-bs-toggle="modal" data-bs-target="#addData">Add UOM</a>
+                                </div>
+                            </x-inventory.table-utilities>
                     </div>
-                    <div class="col-sm-8">
-                        <div class="text-sm-end mt-3">
-                            <a type="button" href="#" class="btn btn-primary mb-2 me-1" data-bs-toggle="modal" data-bs-target="#addData">Add UOM</a>
-                        </div>
-                    </div><!-- end col-->
+                  
                 </div>
             </div>
             <div class="card-body">
@@ -85,6 +83,8 @@
 
 
                 </div> <!-- end tab-content-->
+
+                
 
             </div> <!-- end card body-->
                 </div> <!-- end card -->

@@ -54,7 +54,7 @@
                             <a href="{{route('invItems')}}">Item List</a>
                         </li>
                         <li>
-                            <a href="{{url('inventory/department/items')}}">Department Items</a>
+                            <a href="{{route('dptItems')}}">Department Items</a>
                         </li>
                     </ul>
                 </div>

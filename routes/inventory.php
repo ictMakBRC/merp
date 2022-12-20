@@ -12,6 +12,7 @@ use App\Http\Controllers\inventory\SuppliersController;
 use App\Http\Controllers\inventory\UofMeasureController;
 use App\Http\Livewire\Inventory\Dashboards\MainDashboardComponent;
 use App\Http\Livewire\Inventory\Manage\CategoryComponent;
+use App\Http\Livewire\Inventory\Manage\DepartmentItemsComponent;
 use App\Http\Livewire\Inventory\Manage\ItemsComponent;
 use App\Http\Livewire\Inventory\Manage\UOMComponent;
 use App\Http\Livewire\Inventory\StoresComponent;
@@ -26,6 +27,7 @@ Route::group(['middleware' => ['auth', 'role:InvAdmin|SuperAdmin']], function ()
         Route::get('/unitOfMeasure', UOMComponent::class)->name('invuom');
         Route::get('/invSuppliers', SupplierComponent::class)->name('invSuppliers');
         Route::get('/invItems', ItemsComponent::class)->name('invItems');
+        Route::get('/departmentItems', DepartmentItemsComponent::class)->name('dptItems');
 
         Route::get('/dashboard', [App\Http\Controllers\inventory\DashboardController::class, 'index']);
         Route::get('/newItem', [App\Http\Controllers\inventory\ItemsController::class, 'create']);

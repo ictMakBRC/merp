@@ -11,7 +11,7 @@ class inv_department_Item extends Model
     use HasFactory;
 
     protected $fillable = [
-        'inv_item_id', 'department_id',
+        'inv_item_id', 'department_id','brand'
     ];
 
     public function departmentItem()

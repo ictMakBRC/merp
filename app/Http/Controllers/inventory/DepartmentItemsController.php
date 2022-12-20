@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\inventory;
 
-use App\Http\Controllers\Controller;
 use App\Models\Department;
-use App\Models\inventory\inv_department_Item;
-use App\Models\inventory\invItems;
 use Illuminate\Http\Request;
+use App\Models\inventory\invItems;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
+use App\Models\inventory\inv_department_Item;
 
 class DepartmentItemsController extends Controller
 {
@@ -76,8 +77,8 @@ class DepartmentItemsController extends Controller
                 $value->save();
             }
         }
-
-        return redirect('inventory/department/items')->with('success', 'Record Successfully added !!');
+        Session::flash('alert', ['type' => 'success',  'message' => 'value created successfully!']);
+        return redirect()->back()->with('success', 'Record Successfully added !!');
     }
 
     /**

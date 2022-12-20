@@ -9,6 +9,7 @@ use App\Models\inventory\invStores;
 use App\Models\inventory\invSubUnits;
 use App\Models\inventory\invSuppliers;
 use App\Models\inventory\invUom;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -102,7 +103,7 @@ class ItemsController extends Controller
     {
         $units = Department::orderBy('name', 'asc')->get();
         $uoms = invUom::orderBy('uom_name', 'asc')->get();
-        $suppliers = invSuppliers::orderBy('sup_name', 'asc')->get();
+        $suppliers = Supplier::orderBy('sup_name', 'asc')->get();
         $stores = invStores::orderBy('store_name', 'asc')->get();
 
         return view('inventdashboard.EditItemddd', compact('units', 'uoms', 'suppliers', 'stores'));
