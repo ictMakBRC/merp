@@ -1,24 +1,20 @@
 <x-super-admin-layout>
-    <!-- start page title -->
-    <x-page-title>
-        Edit {{ Str::ucfirst($type) }}
-    </x-page-title>
+    <!-- start quote -->
+    <x-quote>
+        {{-- Edit {{ Str::ucfirst($type) }} --}}
+    </x-quote>
 
     <!-- end row-->
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-header pt-0">
-                    <div class="row mb-2">
-                        <div class="col-sm-4">
-                            <div class="text-sm-end mt-3">
-                                <h4 class="header-title mb-3  text-center">Edit {{ Str::ucfirst($type) }}</h4>
-                            </div>
-                        </div>
-                        <div class="col-sm-8">
-                        </div><!-- end col-->
-                    </div>
-                </div>
+                <x-card-header>
+                    Edit {{ Str::ucfirst($type) }}
+                    <x-slot:buttons>
+
+                    </x-slot>
+                </x-card-header>
+
                 <div class="card-body">
                     <form method="POST" action="{{ $model ? route("user-{$type}s.update", $model->id) : route("user-{$type}s.store") }}">
                         @csrf
@@ -61,14 +57,15 @@
                         </div>
                         @endif
                         <!-- end row-->
-                        <div class="row">
+                        {{-- <div class="row">
                             <div class="col-md-8">
 
                             </div>
                             <div class="col-md-4 text-end">
                                     <button class="btn btn-success" type="submit">Save</button>
                             </div>
-                        </div>
+                        </div> --}}
+                        @include('layouts.inc.form-submit')
                         
                     </form>
 

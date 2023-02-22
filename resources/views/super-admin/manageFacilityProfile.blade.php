@@ -1,11 +1,11 @@
 <x-super-admin-layout>
-    <x-page-title>
-        <h6 class="page-title-left">
+    <x-quote>
+        {{-- <h6 class="page-title-left">
             @if (!$profile)
                 Create
             @endif Facility Profile
-        </h6>
-    </x-page-title>
+        </h6> --}}
+    </x-quote>
     <div class="row ">
         <div class="col-12">
             <div class="card">
@@ -217,11 +217,12 @@
                                                                 <textarea type="text" id="about2" class="form-control" name="about">{{ old('about', '') }}</textarea>
                                                             </div>
 
-                                                            <div class="mb-3 mt-1 col-md-12 text-end">
+                                                            {{-- <div class="mb-3 mt-1 col-md-12 text-end">
                                                                 <button class="btn btn-success" type="submit"
                                                                     id="submitBt">Save</button>
-                                                            </div>
+                                                            </div> --}}
                                                         </div>
+                                                        @include('layouts.inc.form-submit')
                                                     </form>
                                                 </div>
                                             @endif
@@ -335,11 +336,12 @@
                                             <label for="about" class="form-label">About/Description</label>
                                             <textarea type="text" id="about" class="form-control" name="about" rows="5">{{ $profile->about }}</textarea>
                                         </div>
-                                        <div class="mb-3 mt-1 col-md-12 text-end">
+                                        {{-- <div class="mb-3 mt-1 col-md-12 text-end">
                                             <button class="btn btn-success" type="submit"
                                                 id="submitBt">Update</button>
-                                        </div>
+                                        </div> --}}
                                     </div>
+                                    @include('layouts.inc.form-submit')
                                 </form>
                             @else
                                 <div class="alert alert-warning" role="alert">

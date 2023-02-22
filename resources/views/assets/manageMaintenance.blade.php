@@ -1,9 +1,8 @@
 <x-asset-layout>
-    <!-- start page title -->
-    <x-page-title>
-        Maintenance Info
-    </x-page-title>
-    <!-- end page title -->
+    <!-- start quote -->
+    <x-quote>
+    </x-quote>
+    <!-- end quote -->
     <div class="row">
         <div class="col-12">
             <div class="card">

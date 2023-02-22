@@ -77,7 +77,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- end page title -->
+                <!-- end quote -->
                 <div class="row">
                     <div class="col-12">
                         <div class="card widget-inline">

@@ -76,10 +76,11 @@
                         </div>
                     </div>
                     <!-- end row-->
-                    <div class="d-grid mb-0 text-center">
+                    {{-- <div class="d-grid mb-0 text-center">
                         <button class="btn btn-success" type="submit"> Add leave</button>
-                    </div>
+                    </div> --}}
                 </form>
+                @include('layouts.inc.form-submit')
             </div>
         </div> <!-- end modal content-->
     </div> <!-- end modal dialog-->

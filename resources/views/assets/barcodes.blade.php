@@ -99,7 +99,7 @@
                     </div>
 
                 </div>
-                <!-- end page title -->
+                <!-- end quote -->
                 <div class="row" id="barcodeContainer">
 
                     <!-- Barcodes go here -->

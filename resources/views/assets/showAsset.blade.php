@@ -1,8 +1,7 @@
 <x-asset-layout>
-    <!-- start page title -->
-    <x-page-title>
-        Asset Details
-    </x-page-title>
+    <!-- start quote -->
+    <x-quote>
+    </x-quote>
 
     <div class="tab-content">
 
