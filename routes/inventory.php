@@ -14,6 +14,8 @@ use App\Http\Livewire\Inventory\Dashboards\MainDashboardComponent;
 use App\Http\Livewire\Inventory\Manage\CategoryComponent;
 use App\Http\Livewire\Inventory\Manage\DepartmentItemsComponent;
 use App\Http\Livewire\Inventory\Manage\ItemsComponent;
+use App\Http\Livewire\Inventory\Manage\ReceiveStockComponent;
+use App\Http\Livewire\Inventory\Manage\StockDocumentsComponent;
 use App\Http\Livewire\Inventory\Manage\UOMComponent;
 use App\Http\Livewire\Inventory\StoresComponent;
 use App\Http\Livewire\Manage\SupplierComponent;
@@ -25,9 +27,11 @@ Route::group(['middleware' => ['auth', 'role:InvAdmin|SuperAdmin']], function ()
         Route::get('/store', StoresComponent::class)->name('stores');
         Route::get('/incategories', CategoryComponent::class)->name('invcategories');
         Route::get('/unitOfMeasure', UOMComponent::class)->name('invuom');
-        Route::get('/invSuppliers', SupplierComponent::class)->name('invSuppliers');
-        Route::get('/invItems', ItemsComponent::class)->name('invItems');
-        Route::get('/departmentItems', DepartmentItemsComponent::class)->name('dptItems');
+        Route::get('/inv-suppliers', SupplierComponent::class)->name('invSuppliers');
+        Route::get('/inv-items', ItemsComponent::class)->name('invItems');
+        Route::get('/department-items', DepartmentItemsComponent::class)->name('dptItems');
+        Route::get('/new/stock_card/{id}', ReceiveStockComponent::class)->name('receiveStock');
+        Route::get('/stock_documents', StockDocumentsComponent::class)->name('StockEntries');
 
         Route::get('/dashboard', [App\Http\Controllers\inventory\DashboardController::class, 'index']);
         Route::get('/newItem', [App\Http\Controllers\inventory\ItemsController::class, 'create']);

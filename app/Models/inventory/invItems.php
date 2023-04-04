@@ -42,6 +42,11 @@ class invItems extends Model
         return $this->belongsTo(Supplier::class, 'supplier_id', 'id');
     }
 
+    public function subUmit()
+    {
+        return $this->belongsTo(invSubunits::class, 'inv_subunit_id', 'id');
+    }
+
     public function parentUom()
     {
         return $this->belongsTo(invUom::class, 'inv_uom_id', 'id');
@@ -52,6 +57,14 @@ class invItems extends Model
         return empty($search) ? static::query()
             : static::query()
                 ->where('item_name', 'like', '%'.$search.'%')
-                ->orWhere('item_code', 'like', '%'.$search.'%');
+                ->orWhere('item_code', 'like', '%'.$search.'%')
+                ->orWhereHas('subUmit', function ($query) use ($search) {
+                    $query->where('name', 'like', '%'.$search.'%');
+                })
+                ->orWhereHas('parentUom', function ($query) use ($search) {
+                    $query->where('name', 'like', '%'.$search.'%');
+                })
+                    
+                    ;
     }
 }

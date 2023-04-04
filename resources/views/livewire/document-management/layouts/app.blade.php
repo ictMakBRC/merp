@@ -21,14 +21,13 @@
         <link href="{{ asset('assets/css/app.min.css') }}" rel="stylesheet" type="text/css" id="light-style">
         <link href="{{ asset('assets/css/app-dark.min.css') }}" rel="stylesheet" type="text/css" id="dark-style">
         @livewireStyles
-        @powerGridStyles
     </head>
 
     <body class="loading" data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
         <!-- Begin page -->
         <div class="wrapper">
              <!-- ========== Left Sidebar Start ========== -->
-             @include("inventdashboard.inc.sidebar")
+             @include("livewire.document-management.layouts.sidebar")
              <!-- Left Sidebar End -->
 
             <!-- ============================================================== -->
@@ -39,11 +38,11 @@
                 <div class="content">
                     <!-- Topbar Start -->
 
-                    @include("inventdashboard.inc.topbar")
+                    @include("livewire.document-management.layouts.topbar")
                     <!-- end Topbar -->
                     <!-- Start Content-->
                     <main>
-                        @include("inventdashboard.inc.messages")
+                        @include("livewire.document-management.layouts.messages")
                         {{ $slot }}
                     </main>
                     <!-- container -->
@@ -53,7 +52,7 @@
                 <!-- content -->
 
                 <!-- Footer Start -->
-                  @include("inventdashboard.inc.footer")
+                  @include("livewire.document-management.layouts.footer")
                 <!-- end Footer -->
 
             </div>
@@ -204,7 +203,6 @@
         </script>
         @stack('scripts')
         @livewireScripts
-        @powerGridScripts
         <!-- demo app -->
         <script src="{{ asset('assets/js/pages/demo.dashboard-analytics.js') }}"></script>
         <!-- end demo js-->

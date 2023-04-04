@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers\inventory;
 
-use App\Http\Controllers\Controller;
-use App\Models\inventory\inv_department_Item;
-use App\Models\inventory\invItems;
-use App\Models\inventory\invStocklevel;
-use App\Models\inventory\invStores;
-use App\Models\inventory\invSuppliers;
 use Illuminate\Http\Request;
+use App\Models\inventory\invItems;
 use Illuminate\Support\Facades\DB;
+use App\Models\inventory\invStores;
+use App\Http\Controllers\Controller;
+use App\Models\inventory\invSuppliers;
+use App\Models\inventory\invStocklevel;
+use App\Models\Inventory\InvStockDocument;
+use App\Models\inventory\inv_department_Item;
+use App\Models\Inventory\InvStockDocumentItem;
 
 class StockLevelController extends Controller
 {
@@ -203,14 +205,11 @@ class StockLevelController extends Controller
 
         ]);
         $stockcode = $request->input('stockcode');
-        invStocklevel::where('inv_stocklevels.stock_code', $stockcode)
+        InvStockDocument::where('stock_code', $stockcode)
         ->update(['is_active' => '1', 'delivery_no' => $request->input('delivery_no'), 'lpo' => $request->input('lpo'), 'grn' => $request->input('grn')]);
-        // $value = invItems::where('inv_stocklevels.stock_code', $stockcode);
-        // $value->is_active = 1;
-        // $value->delivery_no = $request->input('delivery_no');
-        // $value->lpo = $request->input('lpo');
-        // $value->grn = $request->input('grn');
-        // $value->update();
+ 
+        InvStockDocumentItem::where('stock_code', $stockcode)
+        ->update(['is_active' => '1', 'delivery_no' => $request->input('delivery_no'), 'lpo' => $request->input('lpo'), 'grn' => $request->input('grn')]);
         foreach ($request->input('item') as $key => $value) {
             $item = $value;
             $qty = $request->input('quantity')[$key];

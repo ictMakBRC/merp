@@ -71,7 +71,10 @@
                             <a  href="{{url('inventory/stockLevels')}}">Stock levels</a>
                         </li>
                         <li>
-                            <a href="{{url('inventory/receiveStock/S'.mt_rand(1000, 9999).time())}}">Receive stock</a>
+                            <a  href="{{route('StockEntries')}}">Stock Entries</a>
+                        </li>
+                        <li>
+                            <a href="{{route('receiveStock','SC'.date('y').mt_rand(100, 999).time())}}">New stock card</a>
                         </li>
                         <li>
                             <a href="{{url('inventory/stock/unsettled')}}">Borrowed</a>

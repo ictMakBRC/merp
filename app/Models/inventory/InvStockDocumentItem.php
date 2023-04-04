@@ -1,23 +1,17 @@
 <?php
 
-namespace App\Models\inventory;
-
+namespace App\Models\Inventory;
+use App\Models\Department;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class invStocklevel extends Model
+class InvStockDocumentItem extends Model
 {
     use HasFactory;
 
-    
-    public function department()
-    {
-        return $this->belongsTo(Department::class, 'department_id', 'id');
-    }
-
     public function item()
     {
-        return $this->belongsTo(invItems::class, 'inv_item_id', 'id');
+        return $this->belongsTo(invItems::class, 'item_id', 'id');
     }
     public static function search($search)
     {

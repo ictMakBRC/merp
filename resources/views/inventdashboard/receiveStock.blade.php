@@ -292,5 +292,5 @@
         document.getElementById("saveStk").disabled = true; 
         //btn.removeAttribute("disabled");
     }
-    </script>
+</script>
 @endsection
