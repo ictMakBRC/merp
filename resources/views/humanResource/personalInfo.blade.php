@@ -55,7 +55,7 @@
 
         <div class="mb-3 col-md-4">
             <label for="birthday" class="form-label">Date of Birth<span class="text-danger">*</span></label>
-            <input type="date" id="birthday" class="form-control" name="birthday" required
+            <input type="date" id="birthday" class="form-control" name="birthday"
                 value="{{ old('birthday', '') }}">
 
         </div>

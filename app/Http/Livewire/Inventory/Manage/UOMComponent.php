@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Livewire\Inventory;
+namespace App\Http\Livewire\Inventory\Manage;
 
-use App\Models\inventory\invStores;
+use App\Models\inventory\invUom;
 use Exception;
-use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class StoresComponent extends Component
+class UOMComponent extends Component
 {
     use WithPagination;
 
@@ -16,15 +15,11 @@ class StoresComponent extends Component
 
     public $search = '';
 
-    public $orderBy = 'Store_name';
+    public $orderBy = 'uom_name';
 
     public $orderAsc = true;
 
-    public $store_name;
-
-    public $store_location;
-
-    public $store_description;
+    public $uom_name;
 
     public $edit_id;
 
@@ -47,9 +42,7 @@ class StoresComponent extends Component
     public function updated($fields)
     {
         $this->validateOnly($fields, [
-            'store_name' => 'required',
-            'store_location' => 'required',
-            'store_description' => 'required',
+            'uom_name' => 'required|unique:inv_uoms,uom_name',
             'is_active' => 'required',
 
         ]);
@@ -63,15 +56,11 @@ class StoresComponent extends Component
     public function storeData()
     {
         $this->validate([
-            'store_name' => 'required',
-            'store_location' => 'required',
-            'store_description' => 'required',
+            'uom_name' => 'required|unique:inv_uoms,uom_name',
         ]);
 
-        $value = new invStores();
-        $value->store_name = $this->store_name;
-        $value->store_location = $this->store_location;
-        $value->store_description = $this->store_description;
+        $value = new invUom();
+        $value->uom_name = $this->uom_name;
         $value->user_id = auth()->user()->id;
         $value->save();
 
@@ -82,10 +71,8 @@ class StoresComponent extends Component
 
     public function editdata($id)
     {
-        $value = invStores::where('id', $id)->first();
-        $this->store_name = $value->store_name;
-        $this->store_location = $value->store_location;
-        $this->store_description = $value->store_description;
+        $value = invUom::where('id', $id)->first();
+        $this->uom_name = $value->uom_name;
         $this->is_active = $value->is_active;
         $this->edit_id = $id;
         $this->dispatchBrowserEvent('edit-modal');
@@ -93,21 +80,17 @@ class StoresComponent extends Component
 
     public function resetInputs()
     {
-        $this->reset(['store_name', 'store_location', 'store_description', 'is_active']);
+        $this->reset(['uom_name', 'is_active']);
     }
 
     public function updateData()
     {
         $this->validate([
-            'store_name' => 'required',
-            'store_location' => 'required',
-            'store_description' => 'required',
+            'uom_name' => 'required|unique:inv_uoms,uom_name,'.$this->edit_id.'',
             'is_active' => 'required',
         ]);
-        $value = invStores::find($this->edit_id);
-        $value->store_name = $this->store_name;
-        $value->store_location = $this->store_location;
-        $value->store_description = $this->store_description;
+        $value = invUom::find($this->edit_id);
+        $value->uom_name = $this->uom_name;
         $value->is_active = $this->is_active;
         $value->update();
 
@@ -128,14 +111,14 @@ class StoresComponent extends Component
         // if (Auth::user()->hasPermission(['manage-users'])) {
 
         // } else {
-        //     $this->dispatchBrowserEvent('cant-delete', ['type' => 'warning',  'message' => 'Oops! You do not have the necessary permissions to delete this resource!']);
+            //     $this->dispatchBrowserEvent('cant-delete', ['type' => 'warning',  'message' => 'Oops! You do not have the necessary permissions to delete this resource!']);
         // }
     }
 
     public function deleteData()
     {
         try {
-            $value = invStores::where('id', $this->delete_id)->first();
+            $value = invUom::where('id', $this->delete_id)->first();
             $value->delete();
             $this->delete_id = '';
             $this->dispatchBrowserEvent('close-modal');
@@ -157,10 +140,10 @@ class StoresComponent extends Component
 
     public function render()
     {
-        $data = invStores::search($this->search)
+        $values = invUom::search($this->search)
         ->orderBy($this->orderBy, $this->orderAsc ? 'asc' : 'desc')
         ->paginate($this->perPage);
 
-        return view('livewire.inventory.stores-component', compact('data'))->layout('inventdashboard.layouts.app');
+        return view('livewire.inventory.manage.u-o-m-component', compact('values'))->layout('inventdashboard.layouts.app');
     }
 }

@@ -11,10 +11,10 @@ class inv_department_Item extends Model
     use HasFactory;
 
     protected $fillable = [
-        'inv_item_id', 'department_id',
+        'inv_item_id', 'department_id','brand'
     ];
 
-    public function departmentItems()
+    public function departmentItem()
     {
         return $this->belongsTo(Department::class, 'department_id', 'id');
     }
@@ -25,7 +25,12 @@ class inv_department_Item extends Model
 
     // }
 
-    public function itemDpeartments()
+    public function department()
+    {
+        return $this->belongsTo(Department::class, 'department_id', 'id');
+    }
+
+    public function item()
     {
         return $this->belongsTo(invItems::class, 'inv_item_id', 'id');
     }

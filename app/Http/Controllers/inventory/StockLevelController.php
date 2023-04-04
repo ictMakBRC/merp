@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers\inventory;
 
-use App\Http\Controllers\Controller;
-use App\Models\inventory\inv_department_Item;
-use App\Models\inventory\invItems;
-use App\Models\inventory\invStocklevel;
-use App\Models\inventory\invStores;
-use App\Models\inventory\invSuppliers;
 use Illuminate\Http\Request;
+use App\Models\inventory\invItems;
 use Illuminate\Support\Facades\DB;
+use App\Models\inventory\invStores;
+use App\Http\Controllers\Controller;
+use App\Models\inventory\invSuppliers;
+use App\Models\inventory\invStocklevel;
+use App\Models\Inventory\InvStockDocument;
+use App\Models\inventory\inv_department_Item;
+use App\Models\Inventory\InvStockDocumentItem;
 
 class StockLevelController extends Controller
 {
@@ -89,7 +91,7 @@ class StockLevelController extends Controller
         ->leftJoin('inv_items', 'inv_department__items.inv_item_id', '=', 'inv_items.id')
         ->leftJoin('departments', 'inv_department__items.department_id', '=', 'departments.id')
         ->leftJoin('inv_uoms', 'inv_items.inv_uom_id', '=', 'inv_uoms.id')
-        ->leftJoin('inv_suppliers', 'inv_items.inv_supplier_id', '=', 'inv_suppliers.id')
+        ->leftJoin('inv_suppliers', 'inv_items.supplier_id', '=', 'inv_suppliers.id')
         ->select('*', 'inv_stocklevels.id as stock_id', 'inv_department__items.id as dptitemid')
         ->where('inv_stocklevels.stock_code', $id)
         ->where('inv_stocklevels.is_active', 0)
@@ -106,7 +108,7 @@ class StockLevelController extends Controller
         ->leftJoin('inv_items', 'inv_department__items.inv_item_id', '=', 'inv_items.id')
         ->leftJoin('departments', 'inv_department__items.department_id', '=', 'departments.id')
         ->leftJoin('inv_uoms', 'inv_items.inv_uom_id', '=', 'inv_uoms.id')
-        ->leftJoin('inv_suppliers', 'inv_items.inv_supplier_id', '=', 'inv_suppliers.id')
+        ->leftJoin('inv_suppliers', 'inv_items.supplier_id', '=', 'inv_suppliers.id')
         ->select('*', 'inv_stocklevels.id as stock_id', 'inv_items.id as itemid')
         ->where('inv_stocklevels.stock_code', $id)
         ->where('inv_stocklevels.is_active', 1)
@@ -125,17 +127,17 @@ class StockLevelController extends Controller
     {
         $this->validate($request, [
             'department_id' => 'required',
-            'inv_supplier_id' => 'required',
+            'supplier_id' => 'required',
             'stock_qty' => 'required|numeric',
             'unit_cost' => 'required',
             'date_added' => 'required',
             'inv_items_id' => 'required',
             'stock_code' => 'required',
         ]);
-        if ($request->input('inv_supplier_id') == 'null') {
+        if ($request->input('supplier_id') == 'null') {
             $sup = null;
         } else {
-            $sup = $request->input('inv_supplier_id');
+            $sup = $request->input('supplier_id');
         }
         $code = $request->route('id');
         $total_cost = $request->input('unit_cost') * $request->input('stock_qty');
@@ -158,7 +160,7 @@ class StockLevelController extends Controller
         } else {
             $value = new invStocklevel();
             $value->department_id = $request->input('department_id');
-            $value->inv_supplier_id = $sup;
+            $value->supplier_id = $sup;
             $value->stock_qty = $request->input('stock_qty');
             $value->batch_no = $request->input('batch_no');
             $value->unit_cost = $request->input('unit_cost');
@@ -183,7 +185,7 @@ class StockLevelController extends Controller
         // Fetch Employees by Departmentid
         $itemData['data'] = inv_department_Item::leftJoin('inv_items', 'inv_department__items.inv_item_id', '=', 'inv_items.id')
         ->leftJoin('departments', 'inv_department__items.department_id', '=', 'departments.id')
-        ->leftJoin('inv_suppliers', 'inv_items.inv_supplier_id', '=', 'inv_suppliers.id')
+        ->leftJoin('inv_suppliers', 'inv_items.supplier_id', '=', 'inv_suppliers.id')
                     ->select('departments.id as dptid', 'departments.department_name as dptname', 'inv_suppliers.id as supid', 'inv_suppliers.sup_name as suppliername', 'inv_items.cost_price as cost', 'inv_department__items.qty_left as qtyleft', 'inv_department__items.qty_held as qtyheld', 'expires')
                     ->where('inv_department__items.id', $request->item_id)
                     ->get();
@@ -203,14 +205,11 @@ class StockLevelController extends Controller
 
         ]);
         $stockcode = $request->input('stockcode');
-        invStocklevel::where('inv_stocklevels.stock_code', $stockcode)
+        InvStockDocument::where('stock_code', $stockcode)
         ->update(['is_active' => '1', 'delivery_no' => $request->input('delivery_no'), 'lpo' => $request->input('lpo'), 'grn' => $request->input('grn')]);
-        // $value = invItems::where('inv_stocklevels.stock_code', $stockcode);
-        // $value->is_active = 1;
-        // $value->delivery_no = $request->input('delivery_no');
-        // $value->lpo = $request->input('lpo');
-        // $value->grn = $request->input('grn');
-        // $value->update();
+ 
+        InvStockDocumentItem::where('stock_code', $stockcode)
+        ->update(['is_active' => '1', 'delivery_no' => $request->input('delivery_no'), 'lpo' => $request->input('lpo'), 'grn' => $request->input('grn')]);
         foreach ($request->input('item') as $key => $value) {
             $item = $value;
             $qty = $request->input('quantity')[$key];
