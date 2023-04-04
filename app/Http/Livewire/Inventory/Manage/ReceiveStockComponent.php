@@ -213,7 +213,6 @@ class ReceiveStockComponent extends Component
         ]);
         $this->expires = 'Off';
     }
-
    
 
     public function refresh()

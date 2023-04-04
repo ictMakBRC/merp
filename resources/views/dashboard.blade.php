@@ -86,7 +86,7 @@
         <div class="container">
 
             <div class="row">
-                <div class="col-lg-4">
+                <div class="col-lg-3">
                     <div class="text-center p-1">
                         <div class="avatar-sm m-auto">
                             <span class="avatar-title bg-primary-lighten rounded-circle">
@@ -103,7 +103,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-4">
+                <div class="col-lg-3">
                     <div class="text-center p-1">
                         <div class="avatar-sm m-auto">
                             <span class="avatar-title bg-primary-lighten rounded-circle">
@@ -120,7 +120,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-4">
+                <div class="col-lg-3">
                     <div class="text-center p-1">
                         <div class="avatar-sm m-auto">
                             <span class="avatar-title bg-primary-lighten rounded-circle">
@@ -133,6 +133,23 @@
                             (labs) to directly make requests to the store managers.
                         </p>
                          <a href="{{route('inventory')}}" class="btn btn-success mt-4 mb-2 btn-rounded">Continue</a>
+                        <!--<a class="btn btn-success mt-4 mb-2 btn-rounded">Continue</a>-->
+                    </div>
+                </div>
+
+                <div class="col-lg-3">
+                    <div class="text-center p-1">
+                        <div class="avatar-sm m-auto">
+                            <span class="avatar-title bg-primary-lighten rounded-circle">
+                                <i class="uil  uil-calculator-alt text-primary font-24"></i>
+                            </span>
+                        </div>
+                        <h4 class="mt-3">DOCUMENT MANAGEMENT</h4>
+                        <p class="text-muted mt-2 mb-0">Organize and maintain the stock of laboratory supplies and
+                            materials in the store, maintaining appropriate stock levels allowing users of consumables
+                            (labs) to directly make requests to the store managers.
+                        </p>
+                         <a href="{{route('document.dashboard')}}" class="btn btn-success mt-4 mb-2 btn-rounded">Continue</a>
                         <!--<a class="btn btn-success mt-4 mb-2 btn-rounded">Continue</a>-->
                     </div>
                 </div>

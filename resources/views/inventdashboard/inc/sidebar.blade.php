@@ -51,10 +51,10 @@
                             <a  href="{{url('inventory/newItem')}}">New Item</a>
                         </li>
                         <li>
-                            <a href="{{url('inventory/Items')}}">Item List</a>
+                            <a href="{{route('invItems')}}">Item List</a>
                         </li>
                         <li>
-                            <a href="{{url('inventory/department/items')}}">Department Items</a>
+                            <a href="{{route('dptItems')}}">Department Items</a>
                         </li>
                     </ul>
                 </div>
@@ -71,7 +71,10 @@
                             <a  href="{{url('inventory/stockLevels')}}">Stock levels</a>
                         </li>
                         <li>
-                            <a href="{{url('inventory/receiveStock/S'.mt_rand(1000, 9999).time())}}">Receive stock</a>
+                            <a  href="{{route('StockEntries')}}">Stock Entries</a>
+                        </li>
+                        <li>
+                            <a href="{{route('receiveStock','SC'.date('y').mt_rand(100, 999).time())}}">New stock card</a>
                         </li>
                         <li>
                             <a href="{{url('inventory/stock/unsettled')}}">Borrowed</a>
@@ -87,7 +90,7 @@
             </li>
 
             <li class="side-nav-item">
-                <a href="{{url('inventory/suppliers')}}" class="side-nav-link">
+                <a href="{{route('invSuppliers')}}" class="side-nav-link">
                     <i class="uil-truck-loading"></i>
                     <span>Suppliers</span>
                 </a>
@@ -100,11 +103,11 @@
                 </a>
                 <div class="collapse" id="categories">
                     <ul class="side-nav-second-level">
-                        <li>
+                        {{-- <li>
                             <a href="{{url('inventory/categories')}}">Departments</a>
-                        </li>
+                        </li> --}}
                         <li>
-                            <a href="{{url('inventory/SubCategories')}}">Categories</a>
+                            <a href="{{route('invcategories')}}">Categories</a>
                         </li>
                         <li>
                             <a href="{{url('inventory/department/users')}}">Department users</a>
@@ -114,7 +117,7 @@
             </li>
 
             <li class="side-nav-item">
-                <a href="{{url('inventory/uom')}}" class="side-nav-link">
+                <a href="{{route('invuom')}}" class="side-nav-link">
                     <i class="uil-balance-scale"f></i>
                     <span>Units Of measurements</span>
                 </a>

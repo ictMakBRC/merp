@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::view('/powergrid', 'powergrid-demo');
 
 Route::get('/', [AuthenticatedSessionController::class, 'home'])->middleware('guest')->name('home');
 
@@ -33,3 +34,4 @@ require __DIR__.'/auth.php';
 require __DIR__.'/assets.php';
 require __DIR__.'/humanresource.php';
 require __DIR__.'/inventory.php';
+require __DIR__.'/documents.php';

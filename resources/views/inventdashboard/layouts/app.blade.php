@@ -21,7 +21,7 @@
         <link href="{{ asset('assets/css/app.min.css') }}" rel="stylesheet" type="text/css" id="light-style">
         <link href="{{ asset('assets/css/app-dark.min.css') }}" rel="stylesheet" type="text/css" id="dark-style">
         @livewireStyles
-
+        @powerGridStyles
     </head>
 
     <body class="loading" data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
@@ -43,10 +43,11 @@
                     <!-- end Topbar -->
                     <!-- Start Content-->
                     <main>
+                        @include("inventdashboard.inc.messages")
                         {{ $slot }}
                     </main>
                     <!-- container -->
-                    @include("inventdashboard.inc.messages")
+                   
 
                 </div>
                 <!-- content -->
@@ -75,9 +76,11 @@
         <!-- bundle -->
         <script src="{{ asset('assets/js/vendor.min.js') }}"></script>
         <script src="{{ asset('assets/js/app.min.js') }}"></script>
+        <script src="{{ asset('assets/js/sort.js') }}"></script>
         <script src="{{ asset('assets/js/izitoast/js/iziToast.min.js') }}"></script>
         <!-- third party js -->
-        <script src="{{ asset('assets/sweetalert/sweetalert.min.js')}}"></script>
+        <script src="{{ asset('assets/js/sweetalert/sweetalert.min.js')}}"></script>
+        
         <script type="text/javascript">
            $(document).ready(function() {
                 $('.myselect').select2();
@@ -169,8 +172,39 @@
                 $("html").attr("class", `${event.detail.theme}`)
             });
         </script>
+        <script>
+  
+            window.addEventListener('swal:modal', event => { 
+                swal({
+                  title: event.detail.message,
+                  text: event.detail.text,
+                  icon: event.detail.type,
+                });
+            });
+              
+            window.addEventListener('swal:confirm', event => { 
+                swal({
+                  title: event.detail.message,
+                  text: event.detail.text,
+                  icon: event.detail.type,
+                  buttons: true,
+                  dangerMode: true,
+                })
+                .then((willDelete) => {
+                  if (willDelete) {
+                    window.livewire.emit('remove');
+                  }
+                  else{
+                        window.livewire.emit('cancel');
+                }
+                });
+            });
+
+           
+        </script>
         @stack('scripts')
         @livewireScripts
+        @powerGridScripts
         <!-- demo app -->
         <script src="{{ asset('assets/js/pages/demo.dashboard-analytics.js') }}"></script>
         <!-- end demo js-->
