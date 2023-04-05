@@ -1,30 +1,22 @@
 <x-hr-layout>
-    <!-- start page title -->
-    <x-page-title>
-        Warnings
-    </x-page-title>
-    <!-- end page title -->
+    <!-- start quote -->
+    <x-quote>
+    </x-quote>
+    <!-- end quote -->
 
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-header pt-0">
-                    <div class="row mb-0">
-                        <div class="col-sm-4">
-                            <div class="text-sm-end mt-3">
-                                <h4 class="header-title mb-3  text-center">Employee Warnings</h4>
-                            </div>
-                        </div>
-                        <div class="col-sm-8">
-                            <div class="text-sm-end mt-3">
-                                @if (Auth::user()->hasRole(['HrAdmin']))
-                                    <a type="button" href="{{ route('warnings.create') }}"
-                                        class="btn btn-success mb-2 me-1">New Warning</a>
-                                @endif
-                            </div>
-                        </div><!-- end col-->
-                    </div>
-                </div>
+                <x-card-header>
+                    Employee Warnings
+                    <x-slot:buttons>
+                        @if (Auth::user()->hasRole(['HrAdmin']))
+                        <a type="button" href="{{ route('warnings.create') }}"
+                            class="btn btn-success mb-2 me-1">New Warning</a>
+                    @endif
+                    </x-slot>
+                </x-card-header>
+
                 <div class="card-body">
                     <div class="tab-content">
                         <div class="table-responsive" id="scroll-horizontal-preview">

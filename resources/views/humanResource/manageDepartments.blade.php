@@ -1,30 +1,21 @@
 <x-hr-layout>
-    <!-- start page title -->
-    <x-page-title>
-        Departments
-    </x-page-title>
-    <!-- end page title -->
+    <!-- start quote -->
+    <x-quote>
+    </x-quote>
+    <!-- end quote -->
 
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-header pt-0">
-                    <div class="row mb-2">
-                        <div class="col-sm-4">
-                            <div class="text-sm-end mt-3">
-                                <h4 class="header-title mb-3  text-center"> MakBRC Departments</h4>
-                            </div>
-                        </div>
-                        <div class="col-sm-8">
-                            <div class="text-sm-end mt-3">
-                                <a type="button" href="#" class="btn btn-success mb-2 me-1"
-                                    data-bs-toggle="modal" data-bs-target="#staticBackdrop">Add Department</a>
-                            </div>
-                        </div><!-- end col-->
-                    </div>
-                </div>
+                <x-card-header>
+                    Departments
+                    <x-slot:buttons>
+                        <a type="button" href="#" class="btn btn-success mb-2 me-1"
+                        data-bs-toggle="modal" data-bs-target="#staticBackdrop">Add Department</a>
+                    </x-slot>
+                </x-card-header>
+                
                 <div class="card-body">
-
                     <div class="tab-content">
                         <div class="table-responsive" id="scroll-horizontal-preview">
                             <table id="datableButtons" class="table border-bottom border-primary mb-0 w-100">
@@ -154,9 +145,10 @@
                                 </div> <!-- end col -->
                             </div>
                             <!-- end row-->
-                            <div class="d-grid mb-0 text-center">
+                            {{-- <div class="d-grid mb-0 text-center">
                                 <button class="btn btn-success" type="submit">Update Department</button>
-                            </div>
+                            </div> --}}
+                            @include('layouts.inc.form-submit')
                         </form>
                     </div>
                 </div> <!-- end modal content-->

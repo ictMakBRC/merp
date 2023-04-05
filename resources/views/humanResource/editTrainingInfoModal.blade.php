@@ -50,12 +50,13 @@
                                 <label for="training_description" class="form-label">Description Of Training</label>
                                 <textarea type="text" id="training_description" class="form-control" rows="3" name="training_description">{{ $training->training_description }}</textarea>
                             </div>
-                            <div class="col-md-8"></div>
+                            {{-- <div class="col-md-8"></div>
                             <div class="col-md-4 text-end pt-1">
                                 <button class="btn btn-success" type="submit">Update</button>
-                            </div>
+                            </div> --}}
 
                         </div>
+                        @include('layouts.inc.form-submit')
                     </form>
                 </div>
             </div> <!-- end modal content-->

@@ -1,23 +1,20 @@
 <x-hr-layout>
-    <!-- start page title -->
-    <x-page-title>
-        Create Termination
-    </x-page-title>
-    <!-- end page title -->
+    <!-- start quote -->
+    <x-quote>
+    </x-quote>
+    <!-- end quote -->
 
     <!-- end row-->
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-header pt-0">
-                    <div class="row mb-2">
-                        <div class="col-sm-12">
-                            <div class="text-sm-end mt-3">
-                                <h4 class="header-title mb-3  text-center">Upload Official Termination Letter</h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <x-card-header>
+                    Upload Official Termination Letter
+                    <x-slot:buttons>
+        
+                    </x-slot>
+                </x-card-header>
+
                 <div class="card-body">
                     <form method="POST" enctype="multipart/form-data" id="terminationForm">
                         @csrf
@@ -59,16 +56,13 @@
                                 <input type="date" id="terminationDate" class="form-control" name="termination_date"
                                     required>
                             </div>
-                            <div class="col-md-12">
+                            <div class="mb-3 col-md-12">
                                 <label for="letter" class="form-label">Termination Letter</label>
                                 <input name="letter" type="file" id="letter" class="form-control" required
                                     accept=".pdf,.doc,.docx">
                             </div>
-                            <div class="col-md-8"></div>
-                            <div class="col-md-4 text-end pt-1">
-                                <button class="btn btn-success" type="submit">Submit</button>
-                            </div>
                         </div>
+                        @include('layouts.inc.form-submit')
                     </form>
                 </div> <!-- end card body-->
             </div> <!-- end card -->

@@ -10,14 +10,14 @@
                 <div class="col-12">
                     <a class="dropdown-icon-item" href="#" data-bs-toggle="modal" data-bs-target="#suggestion">
                         <i class="uil-edit me-1 font-24 text-success"></i>
-                        <span>Suggest</span>
+                        <span>Make Suggestion</span>
                     </a>
                 </div>
                 @if (Auth::user()->hasRole(['HrAdmin', 'SuperAdmin', 'HrSupervisor']))
                     <div class="col-12">
                         <a class="dropdown-icon-item" href="#" data-bs-toggle="modal" data-bs-target="#notice">
                             <i class="uil-volume-up me-1 font-24 text-success"></i>
-                            <span>Notify</span>
+                            <span>Create Notice</span>
                         </a>
                     </div>
                 @endif
