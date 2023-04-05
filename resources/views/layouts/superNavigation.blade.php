@@ -14,7 +14,7 @@
     <!-- LOGO -->
     <a href="index.html" class="logo text-center logo-dark">
         <span class="logo-lg">
-            <img src="{{ asset('assets/images/logo-light.png') }}" alt="" height="16">
+            <img src="{{ asset('assets/images/merp-logo.png') }}" alt="" height="16">
         </span>
         <span class="logo-sm">
             <img src="{{ asset('assets/images/logo_sm_dark.png') }}" alt="" height="16">
