@@ -1,8 +1,7 @@
 <x-asset-layout>
-    <x-page-title>
-        Stations
-    </x-page-title>
-    <!-- end page title -->
+    <x-quote>
+    </x-quote>
+    <!-- end quote -->
 
     <div class="row">
         <div class="col-12">

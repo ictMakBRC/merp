@@ -1,5 +1,5 @@
 <x-asset-layout>
-    <!-- start page title -->
+    <!-- start quote -->
     <div class="row">
         <div class="col-12">
             <div class="page-title-box">
@@ -15,7 +15,7 @@
             </div>
         </div>
     </div>
-    <!-- end page title -->
+    <!-- end quote -->
 
     <div class="row">
         <div class="col-12">

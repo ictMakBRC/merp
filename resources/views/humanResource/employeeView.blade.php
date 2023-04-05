@@ -2,9 +2,9 @@
 
     <x-report-layout>
 
-        <x-slot:pagetitle>
+        {{-- <x-slot:pagetitle>
             Employee Personal Data
-            </x-slot>
+            </x-slot> --}}
             <x-slot:reporttitle>
                 Employee Bio/Personal Data Sheet
                 </x-slot>

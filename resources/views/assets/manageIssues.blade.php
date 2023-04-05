@@ -1,7 +1,6 @@
 <x-asset-layout>
-    <x-page-title>
-        Current Issues
-    </x-page-title>
+    <x-quote>
+    </x-quote>
     <div class="row">
         <div class="col-12">
             <div class="card">

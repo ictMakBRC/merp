@@ -5,7 +5,7 @@ namespace App\View\Components;
 use App\Helpers\GenerateQuote;
 use Illuminate\View\Component;
 
-class PageTitle extends Component
+class Quote extends Component
 {
     /**
      * Create a new component instance.
@@ -26,6 +26,6 @@ class PageTitle extends Component
      */
     public function render()
     {
-        return view('components.page-title');
+        return view('components.quote');
     }
 }

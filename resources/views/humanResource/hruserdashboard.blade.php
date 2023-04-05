@@ -1,7 +1,6 @@
 <x-hr-layout>
-    <x-page-title>
-        Dashboard
-    </x-page-title>
+    <x-quote>
+    </x-quote>
 
     <div class="row">
         <div class="col-xl-5 col-lg-5">
@@ -10,7 +9,7 @@
                     <div class="ribbon ribbon-danger float-end"><i class="mdi mdi-account me-1"></i>About Me</div>
                     <h5 class="text-primary float-start mt-0">Hello!</h5>
                     <div class="ribbon-content text-center ">
-                        <img src="{{ asset('storage/' . Auth::user()->employee->photo) }}" alt="user-image"
+                        <img src="{{Auth::user()->employee->photo ? asset('storage/' . Auth::user()->employee->photo) : asset('images/profile/avatar-1.png') }}" alt="user-image"
                             class="rounded-circle avatar-lg img-thumbnail">
                         <h4 class="mb-0 mt-2">{{ $employee->fullName }}</h4>
                         <p class="text-muted font-14">

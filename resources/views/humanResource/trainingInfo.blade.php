@@ -48,9 +48,6 @@
             <label for="certificate" class="form-label">End of Tranining Document</label>
             <input type="file" id="certificate" class="form-control" name="certificate" accept=".pdf">
         </div>
-        <div class="col-md-8"></div>
-        <div class="col-md-4 text-end pt-1">
-            <button class="btn btn-success" type="submit">Save</button>
-        </div>
     </div>
+    @include('layouts.inc.form-submit')
 </form>
