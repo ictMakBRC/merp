@@ -23,8 +23,8 @@
         <div class="container border-bottom border-primary">
 
             <!-- logo -->
-            <a href="index.html" class="navbar-brand me-lg-5">
-                <img src="{{ asset('assets/images/logo-dark.png') }}" alt="" class="logo-dark" height="18">
+            <a href="#" class="navbar-brand me-lg-5">
+                <img src="{{ asset('assets/images/merp-logo.png') }}" alt="" class="logo-dark" height="18">
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"

@@ -1,7 +1,6 @@
 <x-hr-layout>
-    <x-page-title>
-        Dashboard
-    </x-page-title>
+    <x-quote>
+    </x-quote>
     <div class="row">
         <div class="col-12">
             <div class="card widget-inline">

@@ -1,9 +1,8 @@
 <x-asset-layout>
-    <!-- start page title -->
-    <x-page-title>
-        Manage Categories
-    </x-page-title>
-    <!-- end page title -->
+    <!-- start quote -->
+    <x-quote>
+    </x-quote>
+    <!-- end quote -->
 
     <!-- end row-->
     <div class="row">

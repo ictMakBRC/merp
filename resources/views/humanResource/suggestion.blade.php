@@ -18,9 +18,10 @@
                         </div>
                     </div>
                     <!-- end row-->
-                    <div class="d-grid mb-0 text-center">
+                    {{-- <div class="d-grid mb-0 text-center">
                         <button class="btn btn-success" type="submit" data-bs-dismiss="modal">Submit</button>
-                    </div>
+                    </div> --}}
+                    @include('layouts.inc.form-submit')
                 </form>
             </div>
         </div> <!-- end modal content-->

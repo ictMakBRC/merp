@@ -25,7 +25,7 @@
 
             <!-- logo -->
             <a href="index.html" class="navbar-brand me-lg-5">
-                <img src="{{ asset('assets/images/logo-dark.png') }}" alt="" class="logo-dark" height="18">
+                <img src="{{ asset('assets/images/merp-logo.png') }}" alt="" class="logo-dark" height="18">
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
@@ -84,8 +84,345 @@
     <!-- START SERVICES -->
     <section class="py-2 mb-5">
         <div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <!-- Profile -->
+                    <div class="card bg-primary">
+                        <div class="card-body profile-user-box" style="padding-top: 3px; padding-bottom: 3px;">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="row align-items-center">
+                                        <div class="col-auto">
+                                            <div class="avatar-lg">
+                                                <img src="{{ asset('images/hr.jpg') }}" alt="" class="img-fluid img-thumbnail">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div>
+                                                <h4 class="mt-1 mb-1 text-white">Human Resource</h4>
+
+                                                <ul class="mb-0 list-inline text-light">
+                                                    <li class="list-inline-item me-3">
+                                                        <!-- <h5 class="mb-1">HRM Module</h5>-->
+                                                        <p class="mb-0 font-13 text-white">Recruitment, Compensation and Employee relations.</p>
+                                                    </li>
+                                                </ul>
+                                                <p class="font-13 text-white-50" style="margin-top: 5px;">
+                                                    <a href="{{ route('humanresource.dashboard') }}"
+                                                    class="btn btn-sm btn-light btn-rounded" >
+                                                    <i class="mdi dripicons-enter me-1"></i> Proceed Here..</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> <!-- end col-->
+                            </div> <!-- end row -->
+                        </div> <!-- end card-body/ profile-user-box-->
+                    </div><!--end profile/ card -->
+                </div> <!-- end col-->
+                
+                
+                <div class="col-sm-4">
+                    <!-- Profile -->
+                    <div class="card bg-warning">
+                        <div class="card-body profile-user-box" style="padding-top: 3px; padding-bottom: 3px;">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="row align-items-center">
+                                        <div class="col-auto">
+                                            <div class="avatar-lg">
+                                                <img src="{{ asset('images/assets.jpg') }}" alt="" class="img-fluid img-thumbnail">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div>
+                                                <h4 class="mt-1 mb-1 text-white">Assets Management</h4>
+
+                                                <ul class="mb-0 list-inline text-light">
+                                                    <li class="list-inline-item me-3">
+                                                        <!-- <h5 class="mb-1">HRM Module</h5>-->
+                                                        <p class="mb-0 font-13 text-white">Identification, Acquisition, Maintenance and Disposal.</p>
+                                                    </li>
+                                                </ul>
+                                                <p class="font-13 text-white-50" style="margin-top: 5px;">
+                                                    {{-- <a href="#"
+                                                    class="btn btn-sm btn-light btn-rounded not_activ" >
+                                                    <i class="mdi dripicons-enter me-1"></i> Proceed Here..</a> --}}
+                                                    <a href="{{ route('asset.index') }}"
+                                                    class="btn btn-sm btn-light btn-rounded" >
+                                                    <i class="mdi dripicons-enter me-1"></i> Proceed Here..</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> <!-- end col-->
+                            </div> <!-- end row -->
+                        </div> <!-- end card-body/ profile-user-box-->
+                    </div><!--end profile/ card -->
+                </div> <!-- end col-->
+
+                <div class="col-sm-4">
+                    <!-- Profile -->
+                    <div class="card bg-danger">
+                        <div class="card-body profile-user-box" style="padding-top: 3px; padding-bottom: 3px;">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="row align-items-center">
+                                        <div class="col-auto">
+                                            <div class="avatar-lg">
+                                                <img src="{{ asset('images/inventory.jpg') }}" alt="" class="img-fluid img-thumbnail">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div>
+                                                <h4 class="mt-1 mb-1 text-white">Inventory & Logistics</h4>
+
+                                                <ul class="mb-0 list-inline text-light">
+                                                    <li class="list-inline-item me-3">
+                                                        <!-- <h5 class="mb-1">HRM Module</h5>-->
+                                                        <p class="mb-0 font-13 text-white">Forecasting, Acquisition, Consumption, and Tracking.</p>
+                                                    </li>
+                                                </ul>
+                                                <p class="font-13 text-white-50"  style="margin-top: 5px;">
+                                                    <a href="#"
+                                                    class="btn btn-sm btn-light btn-rounded not_active" >
+                                                    <i class="mdi dripicons-enter me-1"></i> Proceed Here..</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> <!-- end col-->
+                            </div> <!-- end row -->
+                        </div> <!-- end card-body/ profile-user-box-->
+                    </div><!--end profile/ card -->
+                </div> <!-- end col-->
+            </div> <!-- end row-->
+
+            
 
             <div class="row">
+                <div class="col-sm-4">
+                    <!-- Profile -->
+                    <div class="card bg-dark">
+                        <div class="card-body profile-user-box" style="padding-top: 3px; padding-bottom: 3px;">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="row align-items-center">
+                                        <div class="col-auto">
+                                            <div class="avatar-lg">
+                                                <img src="{{ asset('images/finance.jpg') }}" alt="" class="img-fluid img-thumbnail">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div>
+                                                <h4 class="mt-1 mb-1 text-white">Finance & Accounting</h4>
+
+                                                <ul class="mb-0 list-inline text-light">
+                                                    <li class="list-inline-item me-3">
+                                                        <!-- <h5 class="mb-1">HRM Module</h5>-->
+                                                        <p class="mb-0 font-13 text-white">Budgeting, Accounting, Invoicing, and Requisition.</p>
+                                                    </li>
+                                                </ul>
+                                                <p class="font-13 text-white-50" style="margin-top: 5px;">
+                                                    <button type="button" class="btn btn-sm btn-light btn-rounded">
+                                                        <i class="mdi dripicons-enter me-1"></i> Proceed Here..
+                                                    </button>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> <!-- end col-->
+                            </div> <!-- end row -->
+                        </div> <!-- end card-body/ profile-user-box-->
+                    </div><!--end profile/ card -->
+                </div> <!-- end col-->
+                
+                
+                <div class="col-sm-4">
+                    <!-- Profile -->
+                    <div class="card bg-success">
+                        <div class="card-body profile-user-box" style="padding-top: 3px; padding-bottom: 3px;">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="row align-items-center">
+                                        <div class="col-auto">
+                                            <div class="avatar-lg">
+                                                <img src="{{ asset('images/procurement.jpg') }}" alt="" class="img-fluid img-thumbnail">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div>
+                                                <h4 class="mt-1 mb-1 text-white">Procurement</h4>
+
+                                                <ul class="mb-0 list-inline text-light">
+                                                    <li class="list-inline-item me-3">
+                                                        <!-- <h5 class="mb-1">HRM Module</h5>-->
+                                                        <p class="mb-0 font-13 text-white">Planning, Identification, Selection, and Aquisition.</p>
+                                                    </li>
+                                                </ul>
+                                                <p class="font-13 text-white-50"  style="margin-top: 5px;">
+                                                    <button type="button" class="btn btn-sm btn-light btn-rounded">
+                                                        <i class="mdi dripicons-enter me-1"></i> Proceed Here..
+                                                    </button>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> <!-- end col-->
+                            </div> <!-- end row -->
+                        </div> <!-- end card-body/ profile-user-box-->
+                    </div><!--end profile/ card -->
+                </div> <!-- end col-->
+
+                <div class="col-sm-4">
+                    <!-- Profile -->
+                    <div class="card bg-info">
+                        <div class="card-body profile-user-box" style="padding-top: 3px; padding-bottom: 3px;">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="row align-items-center">
+                                        <div class="col-auto">
+                                            <div class="avatar-lg">
+                                                <img src="{{ asset('images/documents.jpg') }}" alt="" class="img-fluid img-thumbnail">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div>
+                                                <h4 class="mt-1 mb-1 text-white">Document Control</h4>
+
+                                                <ul class="mb-0 list-inline text-light">
+                                                    <li class="list-inline-item me-3">
+                                                        <!-- <h5 class="mb-1">HRM Module</h5>-->
+                                                        <p class="mb-0 font-13 text-white">Reports, SoPs, Policies, Notices, and Templates.</p>
+                                                    </li>
+                                                </ul>
+                                                <p class="font-13 text-white-50"  style="margin-top: 5px;">
+                                                    <button type="button" class="btn btn-sm btn-light btn-rounded">
+                                                        <i class="mdi dripicons-enter me-1"></i> Proceed Here..
+                                                    </button>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> <!-- end col-->
+                            </div> <!-- end row -->
+                        </div> <!-- end card-body/ profile-user-box-->
+                    </div><!--end profile/ card -->
+                </div> <!-- end col-->
+            </div> <!-- end row-->
+
+            <div class="row">
+                <div class="col-sm-4">
+                    <!-- Profile -->
+                    <div class="card bg-info">
+                        <div class="card-body profile-user-box" style="padding-top: 3px; padding-bottom: 3px;">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="row align-items-center">
+                                        <div class="col-auto">
+                                            <div class="avatar-lg">
+                                                <img src="{{ asset('images/timesheets.jpg') }}" alt="" class="img-fluid img-thumbnail">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div>
+                                                <h4 class="mt-1 mb-1 text-white">Staff Timesheets</h4>
+
+                                                <ul class="mb-0 list-inline text-light">
+                                                    <li class="list-inline-item me-3">
+                                                        <!-- <h5 class="mb-1">HRM Module</h5>-->
+                                                        <p class="mb-0 font-13 text-white">Track employee work hours, leaves, and accruals.</p>
+                                                    </li>
+                                                </ul>
+                                                <p class="font-13 text-white-50"  style="margin-top: 5px;">
+                                                    <button type="button" class="btn btn-sm btn-light btn-rounded">
+                                                        <i class="mdi dripicons-enter me-1"></i> Proceed Here..
+                                                    </button>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> <!-- end col-->
+                            </div> <!-- end row -->
+                        </div> <!-- end card-body/ profile-user-box-->
+                    </div><!--end profile/ card -->
+                </div> <!-- end col-->
+                
+                
+                <div class="col-sm-4">
+                    <!-- Profile -->
+                    <div class="card bg-secondary">
+                        <div class="card-body profile-user-box" style="padding-top: 3px; padding-bottom: 3px;">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="row align-items-center">
+                                        <div class="col-auto">
+                                            <div class="avatar-lg">
+                                                <img src="{{ asset('images/monitoring.jpg') }}" alt="" class="img-fluid img-thumbnail">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div>
+                                                <h4 class="mt-1 mb-1 text-white">Internal Monitoring</h4>
+
+                                                <ul class="mb-0 list-inline text-light">
+                                                    <li class="list-inline-item me-3">
+                                                        <!-- <h5 class="mb-1">HRM Module</h5>-->
+                                                        <p class="mb-0 font-13 text-white">Monitoring and Evaluation, Projects progress tracking.</p>
+                                                    </li>
+                                                </ul>
+                                                <p class="font-13 text-white-50" style="margin-top: 5px;">
+                                                    <button type="button" class="btn btn-sm btn-light btn-rounded">
+                                                        <i class="mdi dripicons-enter me-1"></i> Proceed Here..
+                                                    </button>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> <!-- end col-->
+                            </div> <!-- end row -->
+                        </div> <!-- end card-body/ profile-user-box-->
+                    </div><!--end profile/ card -->
+                </div> <!-- end col-->
+
+                <div class="col-sm-4">
+                    <!-- Profile -->
+                    <div class="card bg-primary">
+                        <div class="card-body profile-user-box" style="padding-top: 3px; padding-bottom: 3px;">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="row align-items-center">
+                                        <div class="col-auto">
+                                            <div class="avatar-lg">
+                                                <img src="{{ asset('images/kpi.jpg') }}" alt="" class="img-fluid img-thumbnail">
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div>
+                                                <h4 class="mt-1 mb-1 text-white">KPI Dashboard</h4>
+
+                                                <ul class="mb-0 list-inline text-light">
+                                                    <li class="list-inline-item me-3">
+                                                        <!-- <h5 class="mb-1">HRM Module</h5>-->
+                                                        <p class="mb-0 font-13 text-white">Tracking KPIs, summaries and aggrigates.</p>
+                                                    </li>
+                                                </ul>
+                                                <p class="font-13 text-white-50" style="margin-top: 5px;">
+                                                    <button type="button" class="btn btn-sm btn-light btn-rounded">
+                                                        <i class="mdi dripicons-enter me-1"></i> Proceed Here..
+                                                    </button>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> <!-- end col-->
+                            </div> <!-- end row -->
+                        </div> <!-- end card-body/ profile-user-box-->
+                    </div><!--end profile/ card -->
+                </div> <!-- end col-->
+            </div> <!-- end row-->
+
+            {{-- <div class="row">
                 <div class="col-lg-4">
                     <div class="text-center p-1">
                         <div class="avatar-sm m-auto">
@@ -136,7 +473,7 @@
                         <!--<a class="btn btn-success mt-4 mb-2 btn-rounded">Continue</a>-->
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
 
         </div>

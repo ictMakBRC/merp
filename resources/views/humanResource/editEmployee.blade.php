@@ -1,9 +1,9 @@
 <x-hr-layout>
-    <!-- start page title -->
-    <x-page-title>
-        Edit Employee Information
-    </x-page-title>
-
+    <!-- start quote -->
+    <x-quote>
+    </x-quote>
+    <div class="card">
+        <div class="card-body">
     <ul class="nav nav-tabs nav-justified nav-bordered mb-3">
         <li class="nav-item">
             <a href="#personal_info" data-bs-toggle="tab" aria-expanded="false" class="nav-link active">
@@ -28,8 +28,8 @@
         <div class="tab-pane active" id="personal_info">
             <div class="row">
                 <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
+                    {{-- <div class="card">
+                        <div class="card-body"> --}}
                             <div class="accordion custom-accordion" id="custom-accordion-one">
                                 <div class="card mb-0">
                                     <div class="card-header" id="headingFour">
@@ -113,8 +113,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div><!-- end card body-->
-                    </div><!-- end card -->
+                  
                 </div> <!-- end col -->
             </div>
             <!--end of row-->
@@ -200,7 +199,8 @@
             <!--end of row-->
         </div>
     </div> <!-- end tab-content-->
-
+</div><!-- end card body-->
+</div><!-- end card -->
 
     @push('scripts')
         <script type="text/javascript">

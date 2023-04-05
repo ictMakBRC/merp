@@ -1,45 +1,50 @@
 <x-hr-layout>
-    <!-- start page title -->
-    <x-page-title>
-        Capture Employee Information
-    </x-page-title>
+    <!-- start quote -->
+    <x-quote>
+    </x-quote>
+    <div class="card">
+        <x-card-header>
+            Capture Employee Information
+            <x-slot:buttons>
 
-    <div class="tab-content">
-        <ul class="nav nav-tabs nav-justified nav-bordered mb-3">
-            <li class="nav-item">
-                <a href="#personal_info" data-bs-toggle="tab" aria-expanded="false" class="nav-link active">
-                    <i class="mdi mdi-account-box d-md-none d-block"></i>
-                    <span class="d-none d-md-block">Personal Information</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#education" data-bs-toggle="tab" aria-expanded="true" class="nav-link ">
-                    <i class="mdi mdi-book-education d-md-none d-block"></i>
-                    <span class="d-none d-md-block">Education</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="#other_info" data-bs-toggle="tab" aria-expanded="true" class="nav-link ">
-                    <i class="mdi mdi-book-clock-outline d-md-none d-block"></i>
-                    <span class="d-none d-md-block">Other Information</span>
-                </a>
-            </li>
-            @if (Auth::user()->hasRole(['HrAdmin']) && Auth::user()->isAbleTo('employee-create'))
-                <li class="nav-item">
-                    <a href="#files" data-bs-toggle="tab" aria-expanded="true" class="nav-link ">
-                        <i class="mdi mdi-cloud-upload d-md-none d-block"></i>
-                        <span class="d-none d-md-block">File Uploads</span>
-                    </a>
-                </li>
-            @endif
-        </ul>
+            </x-slot>
+        </x-card-header>
 
-        <div class="tab-content">
-            <div class="tab-pane active" id="personal_info">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body">
+        <div class="card-body">
+            <div class="tab-content">
+                <ul class="nav nav-tabs nav-justified nav-bordered mb-3">
+                    <li class="nav-item">
+                        <a href="#personal_info" data-bs-toggle="tab" aria-expanded="false" class="nav-link active">
+                            <i class="mdi mdi-account-box d-md-none d-block"></i>
+                            <span class="d-none d-md-block">Personal Information</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#education" data-bs-toggle="tab" aria-expanded="true" class="nav-link ">
+                            <i class="mdi mdi-book-education d-md-none d-block"></i>
+                            <span class="d-none d-md-block">Education</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#other_info" data-bs-toggle="tab" aria-expanded="true" class="nav-link ">
+                            <i class="mdi mdi-book-clock-outline d-md-none d-block"></i>
+                            <span class="d-none d-md-block">Other Information</span>
+                        </a>
+                    </li>
+                    @if (Auth::user()->hasRole(['HrAdmin']) && Auth::user()->isAbleTo('employee-create'))
+                        <li class="nav-item">
+                            <a href="#files" data-bs-toggle="tab" aria-expanded="true" class="nav-link ">
+                                <i class="mdi mdi-cloud-upload d-md-none d-block"></i>
+                                <span class="d-none d-md-block">File Uploads</span>
+                            </a>
+                        </li>
+                    @endif
+                </ul>
+
+                <div class="tab-content">
+                    <div class="tab-pane active" id="personal_info">
+                        <div class="row">
+                            <div class="col-12">
                                 <div class="accordion custom-accordion" id="custom-accordion-one">
                                     @if (Auth::user()->isAbleTo('employee-create'))
                                         <div class="card mb-0">
@@ -121,38 +126,21 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div><!-- end card body-->
-                        </div><!-- end card -->
-                    </div> <!-- end col -->
-                </div>
-                <!--end of row-->
-            </div>
-            <div class="tab-pane show" id="education">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header pt-0">
-                                <div class="row mb-2">
-                                    <div class="col-sm-12">
-                                        <div class="text-sm-end mt-3">
-                                            <h4 class="header-title mb-3  text-center">Education Information</h4>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-body">
+                            </div> <!-- end col -->
+                        </div>
+                        <!--end of row-->
+                    </div>
+                    <div class="tab-pane show" id="education">
+                        <div class="row">
+                            <div class="col-12">
                                 @include('humanResource.educationInfo')
-                            </div> <!-- end card body-->
-                        </div> <!-- end card -->
-                    </div><!-- end col-->
-                </div>
-            </div>
+                            </div><!-- end col-->
+                        </div>
+                    </div>
 
-            <div class="tab-pane show" id="other_info">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body">
+                    <div class="tab-pane show" id="other_info">
+                        <div class="row">
+                            <div class="col-12">
                                 <div class="accordion custom-accordion" id="custom-accordion-two">
                                     <div class="card mb-0">
                                         <div class="card-header" id="experience">
@@ -211,85 +199,79 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div><!-- end card body-->
-                        </div><!-- end card -->
-                    </div> <!-- end col -->
-                </div>
-                <!--end of row-->
-            </div>
-            @if (Auth::user()->hasRole(['HrAdmin']) && Auth::user()->isAbleTo('employee-create'))
-                <div class="tab-pane show" id="files">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="accordion custom-accordion" id="custom-accordion-three">
-                                        <div class="card mb-0">
-                                            <div class="card-header" id="experience">
-                                                <h5 class="m-0">
-                                                    <a class="custom-accordion-title d-block py-1"
-                                                        data-bs-toggle="collapse" href="#experienceInfo"
-                                                        aria-expanded="true" aria-controls="experienceInfo">
-                                                        Official Contract <i
-                                                            class="mdi mdi-chevron-down accordion-arrow"></i>
-                                                    </a>
-                                                </h5>
-                                            </div>
-                                            <div id="experienceInfo" class="collapse show"
-                                                aria-labelledby="experience" data-bs-parent="#custom-accordion-three">
-                                                <div class="card-body">
-                                                    @include('humanResource.officialContract')
-                                                </div>
-                                            </div>
+                            </div> <!-- end col -->
+                        </div>
+                        <!--end of row-->
+                    </div>
+                    @if (Auth::user()->hasRole(['HrAdmin']) && Auth::user()->isAbleTo('employee-create'))
+                        <div class="tab-pane show" id="files">
+                            <div class="row">
+                                <div class="accordion custom-accordion" id="custom-accordion-three">
+                                    <div class="card mb-0">
+                                        <div class="card-header" id="experience">
+                                            <h5 class="m-0">
+                                                <a class="custom-accordion-title d-block py-1"
+                                                    data-bs-toggle="collapse" href="#experienceInfo"
+                                                    aria-expanded="true" aria-controls="experienceInfo">
+                                                    Official Contract <i
+                                                        class="mdi mdi-chevron-down accordion-arrow"></i>
+                                                </a>
+                                            </h5>
                                         </div>
-                                        <hr>
-                                        <div class="card mb-0">
-                                            <div class="card-header" id="training">
-                                                <h5 class="m-0">
-                                                    <a class="custom-accordion-title collapsed d-block py-1"
-                                                        data-bs-toggle="collapse" href="#trainingInfo"
-                                                        aria-expanded="false" aria-controls="trainingInfo">
-                                                        Project Contract<i
-                                                            class="mdi mdi-chevron-down accordion-arrow"></i>
-                                                    </a>
-                                                </h5>
-                                            </div>
-                                            <div id="trainingInfo" class="collapse" aria-labelledby="training"
-                                                data-bs-parent="#custom-accordion-three">
-                                                <div class="card-body">
-                                                    @include('humanResource.projectContract')
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <div class="card mb-0">
-                                            <div class="card-header" id="other">
-                                                <h5 class="m-0">
-                                                    <a class="custom-accordion-title collapsed d-block py-1"
-                                                        data-bs-toggle="collapse" href="#otherInfo"
-                                                        aria-expanded="false" aria-controls="otherInfo">
-                                                        Other Information<i
-                                                            class="mdi mdi-chevron-down accordion-arrow"></i>
-                                                    </a>
-                                                </h5>
-                                            </div>
-                                            <div id="otherInfo" class="collapse" aria-labelledby="other"
-                                                data-bs-parent="#custom-accordion-three">
-                                                <div class="card-body">
-                                                    ...
-                                                </div>
+                                        <div id="experienceInfo" class="collapse show" aria-labelledby="experience"
+                                            data-bs-parent="#custom-accordion-three">
+                                            <div class="card-body">
+                                                @include('humanResource.officialContract')
                                             </div>
                                         </div>
                                     </div>
-                                </div><!-- end card body-->
-                            </div><!-- end card -->
-                        </div> <!-- end col -->
-                    </div>
-                    <!--end of row-->
+                                    <hr>
+                                    <div class="card mb-0">
+                                        <div class="card-header" id="training">
+                                            <h5 class="m-0">
+                                                <a class="custom-accordion-title collapsed d-block py-1"
+                                                    data-bs-toggle="collapse" href="#trainingInfo"
+                                                    aria-expanded="false" aria-controls="trainingInfo">
+                                                    Project Contract<i
+                                                        class="mdi mdi-chevron-down accordion-arrow"></i>
+                                                </a>
+                                            </h5>
+                                        </div>
+                                        <div id="trainingInfo" class="collapse" aria-labelledby="training"
+                                            data-bs-parent="#custom-accordion-three">
+                                            <div class="card-body">
+                                                @include('humanResource.projectContract')
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="card mb-0">
+                                        <div class="card-header" id="other">
+                                            <h5 class="m-0">
+                                                <a class="custom-accordion-title collapsed d-block py-1"
+                                                    data-bs-toggle="collapse" href="#otherInfo" aria-expanded="false"
+                                                    aria-controls="otherInfo">
+                                                    Other Information<i
+                                                        class="mdi mdi-chevron-down accordion-arrow"></i>
+                                                </a>
+                                            </h5>
+                                        </div>
+                                        <div id="otherInfo" class="collapse" aria-labelledby="other"
+                                            data-bs-parent="#custom-accordion-three">
+                                            <div class="card-body">
+                                                ...
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> <!-- end col -->
+                        </div>
+                        <!--end of row-->
                 </div>
-            @endif
-        </div>
-
+                @endif
+            </div>
+        </div> <!-- end tab-content-->
+    </div>
     </div> <!-- end tab-content-->
 
     @push('scripts')
