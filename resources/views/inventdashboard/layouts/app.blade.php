@@ -79,7 +79,7 @@
         <script src="{{ asset('assets/js/sort.js') }}"></script>
         <script src="{{ asset('assets/js/izitoast/js/iziToast.min.js') }}"></script>
         <!-- third party js -->
-        <script src="{{ asset('assets/sweetalert/sweetalert.min.js')}}"></script>
+        <script src="{{ asset('assets/js/sweetalert/sweetalert.min.js')}}"></script>
         
         <script type="text/javascript">
            $(document).ready(function() {
@@ -194,8 +194,13 @@
                   if (willDelete) {
                     window.livewire.emit('remove');
                   }
+                  else{
+                        window.livewire.emit('cancel');
+                }
                 });
             });
+
+           
         </script>
         @stack('scripts')
         @livewireScripts

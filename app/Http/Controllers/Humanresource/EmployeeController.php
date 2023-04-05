@@ -125,7 +125,7 @@ class EmployeeController extends Controller
             'first_name' => 'required|string|max:40',
             'gender' => 'required|string|max:6',
             'nationality' => 'required|string',
-            'birthday' => 'date|required',
+            //'birthday' => 'date|required',
             // 'civil_status' => 'required|string',
             // 'address' => 'string|required',
             'email' => 'required|string|email|max:255|unique:employees',
@@ -161,8 +161,12 @@ class EmployeeController extends Controller
             $photoPath = null;
             $signaturePath = null;
         }
+        if($request->birthday != null){
         $age = Carbon::createFromFormat('Y-m-d', $request->birthday)->diffInYears(Carbon::today());
-
+        }
+        else{
+             $age = null;
+        }
         $randomAlphabetIndex = mt_rand(0, strlen($alphabets) - 1);
         $randomAlphabet = $alphabets[$randomAlphabetIndex];
 

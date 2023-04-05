@@ -424,6 +424,7 @@
 
             {{-- <div class="row">
                 <div class="col-lg-4">
+
                     <div class="text-center p-1">
                         <div class="avatar-sm m-auto">
                             <span class="avatar-title bg-primary-lighten rounded-circle">
@@ -440,7 +441,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-4">
+                <div class="col-lg-3">
                     <div class="text-center p-1">
                         <div class="avatar-sm m-auto">
                             <span class="avatar-title bg-primary-lighten rounded-circle">
@@ -457,7 +458,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-4">
+                <div class="col-lg-3">
                     <div class="text-center p-1">
                         <div class="avatar-sm m-auto">
                             <span class="avatar-title bg-primary-lighten rounded-circle">
@@ -474,6 +475,7 @@
                     </div>
                 </div>
             </div> --}}
+
         </div>
 
         </div>

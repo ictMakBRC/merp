@@ -99,26 +99,26 @@
                                      <label for="emp_id2" class="form-label">Emp-No</label>
                                      <input type="text" style="text-transform: uppercase" id="emp_id2"
                                          class="form-control" name="emp_id" required readonly
-                                         value="{{ $user->employee->emp_id }}">
+                                         value="{{ $user->employee->emp_id??'N/A' }}">
                                  </div>
                                  <div class="mb-3 col-md-4">
                                      <label for="is_active2" class="form-label">Status</label>
                                      <select class="form-select" id="is_active2" name="is_active" required>
-                                         @if ($user->employee->status == 'Active')
+                                         @if ($user->employee->status??'N/A' == 'Active')
                                              <option value="1" style="color: rgb(130, 199, 130)" selected>
-                                                 {{ $user->employee->status }}</option>
+                                                 {{ $user->employee->status??'N/A' }}</option>
                                          @else
                                              <option value="0" style="color: red" selected>
-                                                 {{ $user->employee->status }}</option>
+                                                 {{ $user->employee->status??'N/A' }}</option>
                                          @endif
                                      </select>
                                  </div>
                                  <input type="text" id="employee_id" hidden class="form-control"
-                                     name="employee_id" value="{{ $user->employee->id }}" required>
+                                     name="employee_id" value="{{ $user->employee->id??'N/A' }}" required>
                                  <div class="mb-3 col-md-4">
                                      <label for="title2" class="form-label">Title</label>
                                      <select class="form-select" id="title2" name="title" required>
-                                         <option value="{{ $user->employee->prefix }}">{{ $user->employee->prefix }}
+                                         <option value="{{ $user->employee->prefix??'N/A' }}">{{ $user->employee->prefix??'N/A' }}
                                          </option>
                                      </select>
                                  </div>
@@ -126,19 +126,19 @@
                                      <label for="name2" class="form-label">Name</label>
                                      <input type="text" id="name2" class="form-control" readonly
                                          name="name" required
-                                         value="{{ $user->employee->first_name . ' ' . $user->employee->surname }}">
+                                         value="{{ $user->employee->first_name??'N/A' . ' ' . $user->employee->surname??'N/A' }}">
                                  </div>
                                  <div class="mb-3 col-md-6">
                                      <label for="email2" class="form-label">Email</label>
                                      <input type="email" id="email2" class="form-control" name="email"
-                                         readonly required value="{{ $user->employee->email }}">
+                                         readonly required value="{{ $user->employee->email??'N/A' }}">
                                  </div>
                              </div> <!-- end col -->
 
                              <div class="mb-3 col-md-6">
                                  <label for="contact2" class="form-label">Contact</label>
                                  <input type="text" id="contact2" class="form-control" name="contact" readonly
-                                     required value="{{ $user->employee->contact }}">
+                                     required value="{{ $user->employee->contact??'N/A' }}">
                              </div>
                              <div class="mb-3 col-md-6">
                                  <label for="image2" class="form-label">Image</label>

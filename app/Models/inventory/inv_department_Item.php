@@ -5,6 +5,7 @@ namespace App\Models\inventory;
 use App\Models\Department;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class inv_department_Item extends Model
 {
@@ -25,12 +26,14 @@ class inv_department_Item extends Model
 
     // }
 
-    public function depatmentItems()
+
+
+    public function department()
     {
-        return $this->hasMany(invItems::class, 'inv_item_id', 'id');
+        return $this->belongsTo(Department::class, 'department_id', 'id');
     }
 
-    public function itemDpeartments()
+    public function item()
     {
         return $this->belongsTo(invItems::class, 'inv_item_id', 'id');
     }

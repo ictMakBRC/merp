@@ -115,7 +115,7 @@ class HrDepartmentController extends Controller
         $request->validate([
             'department_name' => 'required', 'string', 'max:255',
             'type' => 'required', 'string',
-            'description' => 'required', 'string', 'max:255',
+            //'description' => 'required', 'string', 'max:255',
             'status' => 'required', 'string',
         ]);
 

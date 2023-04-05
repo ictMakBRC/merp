@@ -36,10 +36,10 @@ class HrStationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+   public function store(Request $request)
     {
         $request->validate([
-            'department_id' => 'required', 'integer',
+            'station_name' => 'required', 'string', 'max:255', 'unique:stations',
             'description' => 'required', 'string', 'max:255',
             'status' => 'required', 'string',
         ]);

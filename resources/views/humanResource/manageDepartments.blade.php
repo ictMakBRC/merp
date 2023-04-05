@@ -127,7 +127,7 @@
                                             Prefix
                                         </label>
                                         <input type="text" id="prefix" class="form-control" name="prefix"
-                                            value="{{ $department->prefix }}" readonly>
+                                            value="{{ $department->prefix }}">
                                     </div>
                                     <div class="mb-3 col-md-4">
                                         <label for="is_active" class="form-label">Status</label>

@@ -34,3 +34,4 @@ require __DIR__.'/auth.php';
 require __DIR__.'/assets.php';
 require __DIR__.'/humanresource.php';
 require __DIR__.'/inventory.php';
+require __DIR__.'/documents.php';
