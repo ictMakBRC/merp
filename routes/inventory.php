@@ -11,6 +11,7 @@ use App\Http\Controllers\inventory\SubUnitsController;
 use App\Http\Controllers\inventory\SuppliersController;
 use App\Http\Controllers\inventory\UofMeasureController;
 use App\Http\Livewire\Inventory\Dashboards\MainDashboardComponent;
+use App\Http\Livewire\Inventory\Dashboards\UserDashboardComponent;
 use App\Http\Livewire\Inventory\Manage\CategoryComponent;
 use App\Http\Livewire\Inventory\Manage\DepartmentItemsComponent;
 use App\Http\Livewire\Inventory\Manage\ItemsComponent;
@@ -21,9 +22,11 @@ use App\Http\Livewire\Inventory\StoresComponent;
 use App\Http\Livewire\Manage\SupplierComponent;
 use Illuminate\Support\Facades\Route;
 
-Route::group(['middleware' => ['auth', 'role:InvAdmin|SuperAdmin']], function () {
-    Route::group(['prefix' => 'inventory'], function () {
-        Route::get('/', MainDashboardComponent::class)->name('inventory');
+        
+// Route::group(['middleware' => ['auth', 'permission:inventory-approve|requestInventory|inventory-manage', 'role:InvAdmin|SuperAdmin'], 'prefix' => 'inventory'], function () {
+    Route::group(['middleware' => ['auth'], 'prefix' => 'inventory'], function () {
+        Route::get('/', [App\Http\Controllers\inventory\DashboardController::class, 'index']);
+        Route::get('/admin', MainDashboardComponent::class)->name('inv_admin.dashboard');
         Route::get('/store', StoresComponent::class)->name('stores');
         Route::get('/incategories', CategoryComponent::class)->name('invcategories');
         Route::get('/unitOfMeasure', UOMComponent::class)->name('invuom');
@@ -32,6 +35,10 @@ Route::group(['middleware' => ['auth', 'role:InvAdmin|SuperAdmin']], function ()
         Route::get('/department-items', DepartmentItemsComponent::class)->name('dptItems');
         Route::get('/new/stock_card/{id}', ReceiveStockComponent::class)->name('receiveStock');
         Route::get('/stock_documents', StockDocumentsComponent::class)->name('StockEntries');
+
+
+        //user management routes
+        
 
         Route::get('/dashboard', [App\Http\Controllers\inventory\DashboardController::class, 'index']);
         Route::get('/newItem', [App\Http\Controllers\inventory\ItemsController::class, 'create']);
@@ -85,11 +92,12 @@ Route::group(['middleware' => ['auth', 'role:InvAdmin|SuperAdmin']], function ()
         Route::post('/addDepartmentUsers', [App\Http\Controllers\inventory\UserDepartmentsController::class, 'store']);
         Route::get('/delete-departUser/{id}', [App\Http\Controllers\inventory\UserDepartmentsController::class, 'destroy']);
         Route::post('/update-DepartUser/{id}', [App\Http\Controllers\inventory\UserDepartmentsController::class, 'update']);
-    });
-});
-Route::group(['middleware' => ['auth', 'role:InvUser|InvAdmin'], 'prefix' => 'inventory'], function () {
+    
     //----------------------------------request routes---------------------------------------------
-    Route::get('/', MainDashboardComponent::class)->name('inventory');
+
+    Route::get('/', [App\Http\Controllers\inventory\DashboardController::class, 'index'])->name('inventory');
+    Route::get('user/dashboard', UserDashboardComponent::class)->name('inv_user.dashboard');
+
     // Route::get('/', [App\Http\Controllers\inventory\DashboardController::class, 'index'])->name('inventory');
     Route::get('/request/new', [App\Http\Controllers\inventory\RequestsController::class, 'index']);
     Route::get('/request/lend', [App\Http\Controllers\inventory\RequestsController::class, 'external']);

@@ -5,6 +5,7 @@ namespace App\Models\inventory;
 use App\Models\Department;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class inv_department_Item extends Model
 {
@@ -24,6 +25,8 @@ class inv_department_Item extends Model
     //     ->groupBy('ProjectAcronym');
 
     // }
+
+
 
     public function department()
     {
