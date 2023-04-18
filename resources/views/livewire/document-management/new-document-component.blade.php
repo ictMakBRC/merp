@@ -84,8 +84,112 @@
 
                                 @endif 
 
-                                
-                                @if ($addDocements)
+                           
+
+                            @if (count($myRequest->documents)>0) 
+                                @php
+                                    $display ='';
+                                @endphp
+                                @foreach ($myRequest->documents as $document)     
+                                    <div class="card">  
+                                        <div class="card-header">
+                                           <a href="javacript:void()" wire:click="downloadDocument({{ $document->id }})">{{$document->title}}{{$active_document_id}}</a>
+                                            <a class="text-danger" wire:click='deleteDocument({{$document->id}})' href="javascript:void(0)">Delete</a>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">    
+                                                <div class="col-md-6 p-3">                                                   
+                                                    <div class="row">
+                                                        <h5>Document Signatories</h5>                                                   
+                                                        <div class="row">
+                                                            <a wire:click="$set('my_document_id',{{$document->id}})" href="javascript: void(0);" class=" btn btn-primary btn-sm  float-end" data-bs-toggle="modal" data-bs-target="#addNewSignatories">New Document Signatories</a>
+                                                            @if (count($myRequest->documents)>0 && count($document->signatories)>0)                            
+                                                                <div class="mt-2 col-12">
+                                                                    <table class="table">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Name</th>
+                                                                                <th>Title</th>
+                                                                                <th>Level</th>
+                                                                                <th>Action</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            @foreach ($document->signatories as $signatory)                                        
+                                                                                <tr>
+                                                                                    <td>{{$signatory->user->name}}</td>
+                                                                                    <td>{{$signatory->title}}</td>
+                                                                                    <td>{{$signatory->signatory_level}}</td>
+                                                                                    <td>
+                                                                                        <a href="javascript: void(0);" 
+                                                                                        wire:click="deleteSignatory({{ $signatory->id }})" class="action-ico text-danger  mx-1">
+                                                                                        <i class="mdi mdi-delete"></i></a>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            @endforeach
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            @else
+                                                            @php
+                                                                $display ='d-none';
+                                                            @endphp
+                                                                <h6 class="text-center text-success mt-4"> No Signatory attached</h6>
+                                                            @endif
+                                                        </div>
+                                                        
+                                                    </div> 
+                                                </div> 
+                                                <div class="col-md-6 p-3">                                                   
+                                                    <div class="row">
+                                                        <h5>Support documents {{$active_document_id}}</h5>
+                                                        <a wire:click="$set('my_document_id',{{$document->id}})" href="javascript: void(0);" class=" btn btn-primary btn-sm ms-auto float-end" data-bs-toggle="modal" data-bs-target="#addNewSuportDoc">New Support document</a>
+                                                        @if (count($myRequest->documents)>0 && count($document->suportDocuments)>0)                            
+                                                            <div class="mt-2 col-12">
+                                                                <table class="table">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Document Name</th>
+                                                                            <th>Action</th>
+                                                                           
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        @foreach ($document->suportDocuments as $document)                                        
+                                                                            <tr>
+                                                                                <td>{{$document->title}}</td>
+                                                                                <td>
+                                                                                    <a href="javascript: void(0);" 
+                                                                                    wire:click="deleteSupportDocument({{ $document->id }})" class="action-ico text-danger  mx-1">
+                                                                                    <i class="mdi mdi-delete"></i></a>
+                                                                                    <a href="javascript: void(0);" 
+                                                                                      wire:click="downloadSupportDocument({{ $document->id }})" class="action-ico text-success  mx-1">
+                                                                                    <i class="mdi mdi-download"></i></a>
+                                                                                </td>
+                                                                            </tr>
+                                                                        @endforeach
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        @else
+                                                            <h6 class="text-center text-success mt-4"> No Support documents attached</h6>
+                                                        @endif
+                                                    </div>     
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>                                
+                                @endforeach                                
+                                @include('livewire.document-management.support_modal') 
+                                    <button wire:click='submitRequest' class="btn btn-success {{$display}}">Submit Documents</button>
+                                @else
+                                    <h6 class="text-center text-success mt-2"> No support documents attached</h6>
+                                @endif
+                                                         
+                            @endif                      
+                        
+                                 
+                            @if ($addDocements)
                                 <div class="row">
                                     <form wire:submit.prevent='addDocument'>
                                         <div class="row">
@@ -115,171 +219,9 @@
                                 </div>
                             @endif
 
-                                @if (count($myRequest->documents)>0) 
-                                @foreach ($myRequest->documents as $document)     
-                                    <div class="card">  
-                                        <div class="card-header">
-                                            {{$document->title}}{{$active_document_id}}
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="row">    
-                                                <div class="col-md-6 p-3">                                                   
-                                                    <div class="row">
-                                                        <h5>Document Signatories</h5>                                                   
-                                                        <div class="row">
-                                                            <a wire:click="$set('active_document_id',{{$document->id}})" href="javascript: void(0);" class=" btn btn-info btn-sm  float-end" data-bs-toggle="modal" data-bs-target="#addNewSignatories">New Document Signatories</a>
-                                                            @if (count($myRequest->documents)>0 && count($document->signatories)>0)                            
-                                                                <div class="mt-2 col-12">
-                                                                    <table class="table">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th>Name</th>
-                                                                                <th>Title</th>
-                                                                                <th>Level</th>
-                                                                                <th>Action</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            @foreach ($document->signatories as $signatory)                                        
-                                                                                <tr>
-                                                                                    <td>{{$signatory->user->name}}</td>
-                                                                                    <td>{{$signatory->title}}</td>
-                                                                                    <td>{{$signatory->signatory_level}}</td>
-                                                                                    <td>
-                                                                                        <a href="javascript: void(0);" 
-                                                                                        wire:click="deleteSignatory({{ $signatory->id }})" class="action-ico text-danger  mx-1">
-                                                                                        <i class="mdi mdi-delete"></i></a>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            @endforeach
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                            @else
-                                                                <h6 class="text-center text-success mt-4"> No Signatory attached</h6>
-                                                            @endif
-                                                        </div>
-                                                        
-                                                    </div> 
-                                                </div> 
-                                                <div class="col-md-6 p-3">                                                   
-                                                    <div class="row">
-                                                        <h5>Support documents</h5>
-                                                        <a wire:click="$set('active_document_id',{{$document->id}})" href="javascript: void(0);" class=" btn btn-info btn-sm ms-auto float-end" data-bs-toggle="modal" data-bs-target="#addNewSuportDoc">New Support document</a>
-                                                        @if (count($myRequest->documents)>0 && count($document->suportDocuments)>0)                            
-                                                            <div class="mt-2 col-12">
-                                                                <table class="table">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>Document Name</th>
-                                                                            <th>Action</th>
-                                                                           
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        @foreach ($document->suportDocuments as $document)                                        
-                                                                            <tr>
-                                                                                <td>{{$document->title}}</td>
-                                                                                <td>
-                                                                                    <a href="javascript: void(0);" 
-                                                                                    wire:click="deleteSignatory({{ $document->id }})" class="action-ico text-danger  mx-1">
-                                                                                    <i class="mdi mdi-delete"></i></a>
-                                                                                </td>
-                                                                            </tr>
-                                                                        @endforeach
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                        @else
-                                                            <h6 class="text-center text-success mt-4"> No Support documents attached</h6>
-                                                        @endif
-                                                    </div>     
-                                                </div>
-                                                @include('livewire.document-management.support_modal') 
-                                            </div>
-                                        </div>
-                                    </div>                                
-                                @endforeach
-                                @else
-                                    <h6 class="text-center text-success mt-2"> No support documents attached</h6>
-                                @endif
-                                                         
-                            @endif                      
-                        
-                        
-
                         <a type="button" href="javascript:void()" class="btn btn-outline-danger float-end"
                         wire:click="$set('createNew',{{ !$createNew }})"><i class="mdi mdi-caret-up"></i>Close </a>
-                        {{-- @if ($addSignatory)
-                            <div class="row">
-                                @if ($active_document && count($active_document->signatories)>0)                            
-                                    <div class="mt-2">
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th>Name</th>
-                                                    <th>Title</th>
-                                                    <th>Level</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($active_document->signatories as $signatory)                                        
-                                                    <tr>
-                                                        <td>{{$signatory->user->name}}</td>
-                                                        <td>{{$signatory->title}}</td>
-                                                        <td>{{$signatory->signatory_level}}</td>
-                                                        <td>
-                                                            <a href="javascript: void(0);" 
-                                                            wire:click="deleteSignatory({{ $signatory->id }})" class="action-ico text-danger  mx-1">
-                                                            <i class="mdi mdi-delete"></i></a>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                @else
-                                    <h6 class="text-center text-success"> No Signatory attached</h6>
-                                @endif
-                                <div class="col-12">
-                                    <form wire:submit.prevent='addSignatory'>
-                                        <div class=" add-input">
-                                            <div class="row">
-                                                <div class="col-2">
-                                                    <div class="form-group">
-                                                        <input type="number"class="form-control" id="signatory_level" wire:model.lazy="signatory_level" placeholder="Enter level ">
-                                                        @error('signatory_level') <span class="text-danger error">{{ $message }}</span>@enderror
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <select name="signatory_id" class="form-control form-select" id="signatory_id" wire:model.lazy="signatory_id">
-                                                            <option value="">Select...</option>
-                                                            @forelse ($users as $user)
-                                                                <option value="{{$user->id}}">{{$user->name}}</option>
-                                                            @empty
-                                                                <option value="">No user</option>
-                                                            @endforelse
-                                                        </select>
-                                                        @error('signatory_id') <span class="text-danger error">{{ $message }}</span>@enderror
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <input type="text"class="form-control" id="name_title.0" wire:model.lazy="name_title" placeholder="Enter signatory title for level ">
-                                                        @error('name_title') <span class="text-danger error">{{ $message }}</span>@enderror
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <button type="submit" class="btn text-white btn-info btn-sm">Add</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>                    
-                                </div>
-                            </div>
-                        @endif --}}
+                       
                     </div>
                 </div>
                 {{-- @if ($active_document && count($active_document->signatories)>0)
@@ -334,7 +276,7 @@
                                     <th>{{$requests->status??'N/A'}}</th>
                                     <td>
                                         
-                                    <a href="{{route('document.preview',$requests->request_code)}}" class="text-success" ><i class='mdi mdi-eye font-20'></i></a> 
+                                    <a href="{{route('document.sign',$requests->request_code)}}" class="text-success" ><i class='mdi mdi-eye font-20'></i></a> 
                                     @if ($requests->status == 'Pending')
                                     <a href="javascript:void()" wire:click="attachDocument({{$requests->id}})" class="text-info" ><i class='mdi mdi-pencil font-16'></i></a> 
                                     @endif                                

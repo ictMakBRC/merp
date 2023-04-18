@@ -18,6 +18,10 @@ class DmRequestDocuments extends Model
     {
         return $this->hasMany(DmRequestSupportDocuments::class, 'parent_id', 'id');
     }
+    public function documentRequest()
+    {
+        return $this->belongsTo(DmRequestDocuments::class, 'request_id', 'id');
+    }
     public static function boot()
     {
         parent::boot();

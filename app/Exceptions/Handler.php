@@ -2,10 +2,12 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
-
+use Exception;
+use Illuminate\Session\TokenMismatchException; // Import the TokenMismatchException class
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 class Handler extends ExceptionHandler
+
 {
     /**
      * A list of the exception types that are not reported.
@@ -37,5 +39,16 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    public function render($request, $exception)
+    {
+        // Handle TokenMismatchException
+        if ($exception instanceof TokenMismatchException) {
+            // Custom logic to handle CSRF token mismatch
+            return redirect()->back()->withInput()->with('error', 'CSRF token has expired. Please try again.'); // Example: Redirect back with an error message
+        }
+
+        return parent::render($request, $exception);
     }
 }

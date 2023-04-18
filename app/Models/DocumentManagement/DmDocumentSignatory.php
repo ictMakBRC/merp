@@ -23,4 +23,8 @@ class DmDocumentSignatory extends Model
     {
         return $this->belongsTo(User::class, 'signatory_id', 'id');
     }
+    public function document()
+    {
+        return $this->belongsTo(DmRequestDocuments::class, 'document_id', 'id');
+    }
 }

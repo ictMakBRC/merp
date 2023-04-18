@@ -3,7 +3,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">New document</h5>
+                <h5 class="modal-title" id="staticBackdropLabel">New support document</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
             </div> <!-- end modal header -->
             <div class="modal-body">
@@ -20,7 +20,9 @@
                         <div class="col-12 mb-1">
                             <label for="file" class="form-label">Upload File</label>
                             <input type="file" id="support_file{{$iteration}}" class="form-control"
-                                wire:model.lazy="support_file">
+                                wire:model.lazy="support_file">                                
+                                <div class="text-success text-small" wire:loading
+                                wire:target="support_file">Uploading document...</div> 
                             @error('support_file')
                                 <div class="text-danger text-small">{{ $message }}</div>
                             @enderror
@@ -41,7 +43,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">New document</h5>
+                <h5 class="modal-title" id="staticBackdropLabel">New document Signatory</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
             </div> <!-- end modal header -->
             <div class="modal-body">
@@ -52,13 +54,13 @@
                             <div class="col-12 mb-1">
                                 <div class="form-group">
                                     <label for="title" class="form-label">Level</label>
-                                    <input type="number"class="form-control" id="signatory_level" wire:model.lazy="signatory_level" placeholder="Enter level ">
+                                    <input readonly type="number"class="form-control" id="signatory_level" wire:model.lazy="signatory_level" placeholder="Enter level ">
                                     @error('signatory_level') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
                             </div>
                             <div class="col-md-12 mb-1">
                                 <div class="form-group">
-                                    <label for="title" class="form-label">Signatory</label>
+                                    <label for="title" class="form-label">Signatory @if ($person_exists)<small> This signatory already exists on this document</small>@endif</label>
                                     <select name="signatory_id" class="form-control form-select" id="signatory_id" wire:model.lazy="signatory_id">
                                         <option value="">Select...</option>
                                         @forelse ($users as $user)
@@ -75,6 +77,13 @@
                                     <label for="title" class="form-label">Title</label>
                                     <input type="text"class="form-control" id="name_title.0" wire:model.lazy="name_title" placeholder="Enter signatory title for level ">
                                     @error('name_title') <span class="text-danger error">{{ $message }}</span>@enderror
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-1">
+                                <div class="form-group">
+                                    <label for="title" class="form-label">Page(s) to sign in summary</label>
+                                    <input type="text"class="form-control" id="summary.0" wire:model.lazy="summary" placeholder="Enter a summary of pages you want this person to sign">
+                                    @error('summary') <span class="text-danger error">{{ $message }}</span>@enderror
                                 </div>
                             </div>
                             <div class="col-md-12 mt-2">

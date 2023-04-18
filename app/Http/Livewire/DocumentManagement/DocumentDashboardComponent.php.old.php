@@ -2,16 +2,14 @@
 
 namespace App\Http\Livewire\DocumentManagement;
 
-use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
 use App\Models\DocumentManagement\DmDocument;
-use App\Models\DocumentManagement\DmDocumentRequest;
 use App\Models\DocumentManagement\DmDocumentCategory;
 use App\Models\DocumentManagement\DmDocumentSignatory;
-use App\Models\DocumentManagement\DmRequestDocuments;
+use App\Models\User;
 
 class DocumentDashboardComponent extends Component
 {
@@ -249,14 +247,6 @@ class DocumentDashboardComponent extends Component
             })->with(['category','signatories','user'])->limit(10)->get();
             $data['categories'] = DmDocumentCategory::where('parent_id', $this->parent_id)->get();
             $data['users'] = User::all();
-            $data['submited_requets'] = DmDocumentRequest::where('status','!=','Pending')->get();
-            $data['submited_documents'] = DmRequestDocuments::where('status','!=','Pending')->get();
-
-            $data['incomingRequsests'] = DmDocumentRequest::with(['category','documents','user'])
-            ->WhereHas('documents.signatories', function ($query) {$query->where('signatory_id', auth()->user()->id);})
-            ->when($this->document_category, function ($query) {$query->where('request_category', $this->document_category);})
-            ->when($this->active_status, function ($query) { $query->where('status',  $this->active_status);})->where('status','!=','Pending')
-            ->get();
         
         return view('livewire.document-management.document-dashboard-component',$data)->layout('livewire.document-management.layouts.app');
     }
