@@ -181,6 +181,7 @@
                                     </div>                                
                                 @endforeach                                
                                 @include('livewire.document-management.support_modal') 
+                                @include('livewire.document-management.signaroty_modal') 
                                     <button wire:click='submitRequest' class="btn btn-success {{$display}}">Submit Documents</button>
                                 @else
                                     <h6 class="text-center text-success mt-2"> No support documents attached</h6>

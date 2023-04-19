@@ -29,11 +29,11 @@
                 <div class="col-4 card">
                     <div class="card-body">                
                         <div class="list-group" id="list-tab" role="tablist"> 
-                            <a href="#" class="list-group-item list-group-item-action active">
+                            <a href="javascript:void(0)" class="list-group-item list-group-item-action active">
                                 Submitted Documents
                             </a>
                             @forelse ($requestData->documents as $key=>$document)                          
-                                <a class="list-group-item list-group-item-action" id="list-home-list"
+                                <a class="list-group-item list-group-item-action @if ($document->status =='Rejected') alert-warning text-warning @endif"  id="list-home-list"
                                     data-toggle="list" href="javascript:void(0)" wire:click="$set('active_document_id',{{$document->id}})" role="tab"><strong>Doc #{{$key+1}}</strong> : {{ $document->title }}</a>
                             @empty
                             @endforelse                                    
@@ -52,10 +52,10 @@
                             @else
                             <div class="row">  
                                 <div class="col-12">
-                                    <h4 class="text-center"><b>Doc: </b>{{$active_document->title}}</h4>
+                                    <a href="javascript:void(0)" wire:click="$set('action',0)" class="text-center h4"><b>Doc: </b>{{$active_document->title}}</a>
                                 </div>
                                 <div class="col">
-                                    @if ($active_document->status =="Submitted" && auth()->user()->id == $active_document->created_by)
+                                @if ($active_document->status =="Submitted" && auth()->user()->id == $active_document->created_by)
                                     <tr class="alert alert-success" >
                                         <td colspan="3">
                                             <div class="row">
@@ -78,7 +78,7 @@
                                                   
                                             </div>
                                         </td>
-                                    </tr>
+                                    </tr>                             
                                 @endif
                                 </div>                              
                                 
@@ -128,7 +128,7 @@
                                                                                     @endif
                                                                                     <div class="col-md-6">
                                                                                         <h6>Signed Version</h6>                                                                                    
-                                                                                       
+                                                                                       @if ($action=='approve')
                                                                                         <form wire:submit.prevent='uploadSignedDoc'>
                                                                                             <div class="input-group">
                                                                                             <input type="file"  id="{{$iteration}}" class="form-control"
@@ -141,6 +141,23 @@
                                                                                             <div class="text-danger text-small">{{ $message }}</div>
                                                                                             @enderror
                                                                                         </form>
+                                                                                        @elseif ($action=='reject')
+                                                                                        <form wire:submit.prevent='rejectDocument'>
+                                                                                            <div class="input-group">
+                                                                                           <textarea name="comments" class="form-control" wire:model.differ="comments" required id="comment" ></textarea>
+                                                                                                <button type="submit" class="btn btn-danger">Reject</button>
+                                                                                            </div>
+                                                                                            @error('comments')
+                                                                                            <div class="text-danger text-small">{{ $message }}</div>
+                                                                                            @enderror
+                                                                                        </form>
+                                                                                       @else
+                                                                                       <div class="btn-group mb-2">
+                                                                                            <button type="button" wire:click="$set('action','approve')" class="btn btn-success">Approve Doc</button>
+                                                                                            <button type="button" wire:click="$set('action','reject')" class="btn btn-danger">Reject Doc</button>
+                                                                                        </div>
+                                                                                       @endif
+                                                                                      
                                                                                     </div>
                                                                                 </div>
                                                                             </td>
@@ -166,11 +183,43 @@
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
+                                                                    @elseif ($signatory->signatory_status =="Rejected")
+                                                                        @if (auth()->user()->id == $signatory->signatory_id || auth()->user()->id == $active_document->created_by)
+                                                                                
+                                                                            <tr class="alert alert-warning" >
+                                                                                <td colspan="3">
+                                                                                    <div class="row">
+                                                                                        @if (auth()->user()->id == $active_document->created_by)
+                                                                                            <div class="col-md-6">
+                                                                                                <h6>Take Action</h6>
+                                                                                                <div class="btn-group mb-2">
+                                                                                                    <button type="button" data-bs-toggle="modal" data-bs-target="#addNewSuportDoc" class="btn btn-primary">Add Support Document</button>
+                                                                                                    <button type="button" wire:click="resubmitDocument({{$active_document->id}})" class="btn btn-success">Re-submit Document</button>
+                                                                                                </div>
+                                                                                            </div> 
+                                                                                        @else
+                                                                                        <div class="col-md-6">
+                                                                                            <h6>Original Version</h6>
+                                                                                        <a href="javascript:void()" wire:click='downloadDocument({{$active_document->id}})'> 
+                                                                                            <i class="mdi mdi-file font-20"></i>
+                                                                                                Download Original
+                                                                                            </a>
+                                                                                        </div> 
+                                                                                        @endif
+                                                                                        <div class="col-md-6 text-success">
+                                                                                            <h6>Comment</h6>
+                                                                                        <textarea class="form-control" readonly>{{$signatory->comments}}</textarea>
+                                                                                        </div> 
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+                                                                        @endif
                                                                     @endif
                                                             @endforeach
                                                         </tbody>
                                                     </table>
                                                 </div>
+                                                @include('livewire.document-management.support_modal') 
                                             @else
                                                 <h6 class="text-center text-success mt-1"> No Signatory attached</h6>
                                             @endif
@@ -218,6 +267,20 @@
             </div>
         </div>
     </div>
+    @push('scripts')
 
+    <script>
+        window.addEventListener('close-modal', event => {
+            $('#addNewSuportDoc').modal('hide');
+            $('#addNewSignatories').modal('hide');
+        });
+        window.addEventListener('comment-modal', event => {
+            $('#comment-modal').modal('show');
+        });
+        window.addEventListener('lab-preview', event => {
+            $('#lab-preview').modal('show');
+        });
+    </script>
+@endpush
 
 </div>

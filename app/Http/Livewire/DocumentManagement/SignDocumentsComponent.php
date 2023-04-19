@@ -15,7 +15,9 @@ class SignDocumentsComponent extends Component
 {
     use WithFileUploads, WithPagination;
     public $requestCode, $active_document_id, $iteration=1, $signed_file;
-
+    public $action = false;
+    public $comments, $support_file, $support_document_title;
+    public $active_request;
     public function mount($request_code)
     {
         $this->requestCode = $request_code;
@@ -46,6 +48,11 @@ class SignDocumentsComponent extends Component
         }
     }
 
+    public function updatedActiveDocumentId()
+    {
+        $this->action = false;
+    }
+
     public function uploadSignedDoc()
     {
         $this->validate([
@@ -74,6 +81,45 @@ class SignDocumentsComponent extends Component
         $this->dispatchBrowserEvent('alert', ['type' => 'Success',  'message' => 'File uploaded successfully! ']);
     }
 
+
+    public function rejectDocument()
+    {
+        $this->validate([
+           
+            'comments' => 'required|string',
+        ]);
+
+        $data = DmRequestDocuments::where('id', $this->active_document_id)->first();        
+        $data->status = 'Rejected';
+        $data->update();
+
+        DmDocumentSignatory::Where(['document_id' => $this->active_document_id, 'signatory_id'=>auth()->user()->id])
+        ->update(['signatory_status'=>'Rejected','comments'=>$this->comments]);
+
+        $this->dispatchBrowserEvent('alert', ['type' => 'Success',  'message' => 'Decument successfully rejected! ']);
+    }
+
+    public function resubmitDocument($id)
+    {
+        
+        $data = DmRequestDocuments::where(['id'=> $id, 'created_by'=>auth()->user()->id,])->first();        
+        $data->status = 'Submitted';
+        $data->update();        
+
+        $signatory = DmDocumentSignatory::Where(['document_id' => $id,  'signatory_status'=>'Rejected'])
+        ->orderBy('signatory_level', 'asc')->first();
+        if( $signatory ){            
+            $signatory->update(['signatory_status'=>'Active']);
+        }      
+
+        $otherSignatory = DmDocumentSignatory::Where(['document_id' => $id, 'signatory_status'=>'Rejected'])->first();
+        if( $otherSignatory ){            
+            $otherSignatory->update(['signatory_status'=>'Pending']);
+        }
+
+        $this->dispatchBrowserEvent('alert', ['type' => 'Success',  'message' => 'Decument successfully resubmitted! ']);
+    }
+
     public function downloadSignedDocument(DmRequestDocuments $document)
     {
         if($document){
@@ -88,10 +134,48 @@ class SignDocumentsComponent extends Component
         }
     }
 
+    public function addSupportDocument()
+    {
+        
+        $this->validate([
+            'support_file' => 'required|mimes:pdf,docx|max:20240|file|min:10', // 20MB Max
+            'support_document_title' => 'required|string',
+        ]);
+
+        
+        $path = 'Merp/documents/support/'.date("Y-m");
+        $permit_name = date('Ymdhis').'_'.time().'.'.$this->support_file->extension();
+        $document_path = $this->support_file->storeAs($path, $permit_name);
+        $document = new DmRequestSupportDocuments();
+        $document->title = $this->support_document_title;
+        $document->document_code =$this->getNumber(12);
+        $document->parent_id =  $this->active_document_id;
+        $document->request_id =  $this->active_request->id;
+        $document->original_file = $document_path;
+        $document->save();
+        $this->iteration = rand();
+        $this->support_document_title = null;
+        $this->support_file = null;
+        $this->dispatchBrowserEvent('close-modal');
+        $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => 'Document created successfully!']);
+
+    }
+    public function getNumber($length)
+    {
+        $characters = '1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+
+        return $randomString;
+    }
+
     public function render()
     {
 
-        $data['requestData'] = $request= DmDocumentRequest::where('request_code',$this->requestCode)->with(['category','documents','user'])->first();
+        $data['requestData'] = $this->active_request = DmDocumentRequest::where('request_code',$this->requestCode)->with(['category','documents','user'])->first();
         
         $data['documents'] = DmRequestDocuments::where('request_code', $this->requestCode)->with(['signatories','suportDocuments'])->get();
 
