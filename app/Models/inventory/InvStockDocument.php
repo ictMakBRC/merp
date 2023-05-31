@@ -2,6 +2,7 @@
 
 namespace App\Models\Inventory;
 use App\Models\Department;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,6 +13,11 @@ class InvStockDocument extends Model
     public function department()
     {
         return $this->belongsTo(Department::class, 'department_id', 'id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     public static function search($search)

@@ -1,22 +1,22 @@
 <div class="leftside-menu">
 
     <!-- LOGO -->
-    <a href="index.html" class="logo text-center logo-light">
+    <a href="index.html" class="logo text-center logo-light p-2">
         <span class="logo-lg">
-            {{-- <img src="{{asset('assets/images/logo.png')}}" alt="" height="16"> --}}
+            <img src="{{ asset('assets/images/merp-logo.png') }}" alt="" width="50%">
         </span>
         <span class="logo-sm">
-            {{-- <img src="{{asset('assets/images/logo_sm.png')}}" alt="" height="16"> --}}
+            <img src="{{ asset('assets/images/merp-logo.png') }}" alt="" width="50%">
         </span>
     </a>
 
     <!-- LOGO -->
     <a href="index.html" class="logo text-center logo-dark">
         <span class="logo-lg">
-            <img src="{{asset('assets/images/merp-logo.png')}}" alt="" height="16">
+            <img src="{{ asset('assets/images/merp-logo.png') }}" alt="" width="40%">
         </span>
         <span class="logo-sm">
-            <img src="{{asset('assets/images/logo_sm_dark.png')}}" alt="" height="16">
+            <img src="{{ asset('assets/images/merp-logo.png') }}" alt="" width="40%">
         </span>
     </a>
 
@@ -149,12 +149,12 @@
                 </a>
             </li>
             @endrole
-
+{{-- ====================================USER ROUTES======================= --}}
             @role('InvUser')
             @if (session()->has('department')) 
                 <li class="side-nav-item">{{ Session::get('department_name') }}</li>
                 <li class="side-nav-item">
-                    <a href="{{url('inventory/manage/dashboard')}}" class="side-nav-link">
+                    <a href="{{route('inv_user.dashboard')}}" class="side-nav-link">
                         <i class="uil-file"></i>
                         <span>Dashboard</span>
                     </a>
@@ -174,16 +174,53 @@
                     <div class="collapse" id="stock">
                         <ul class="side-nav-second-level">
                             <li>
-                                <a  href="{{url('inventory/manage/stockLevels')}}">Stock levels</a>
+                                <a  href="{{route('inv_user.stockCard')}}">Stock levels</a>
                             </li>
                             <li>
-                                <a href="{{url('inventory/manage/stock/history')}}">Stock history</a>
+                                <a href="{{route('inv_user.stockHistory')}}">Stock history</a>
                             </li>
                         </ul>
                     </div>
                 </li>
-            @endif
-            <li class="side-nav-item">
+                <li class="side-nav-item">
+                    <a data-bs-toggle="collapse" href="#managerequests" aria-expanded="false" aria-controls="makerequests" class="side-nav-link">
+                        <i class="uil-shopping-trolley"></i>
+                        <span>Manage requests</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="managerequests">
+                        <ul class="side-nav-second-level">
+                            <li>
+                                <a href="{{route('inv_user.requests')}}">My Requests</a>
+                            </li>
+                            <li>
+                                <a href="{{route('inv_user.requestNew','RQ-'.rand(1,99).time())}}">New request</a>
+                            </li>
+                       
+    
+                        </ul>
+                    </div>
+                </li>
+                @permission('inventory-approve')
+                <li class="side-nav-item">
+                    <a data-bs-toggle="collapse" href="#myapprovels" aria-expanded="false" aria-controls="approvels" class="side-nav-link">
+                        <i class="uil-folder-plus"></i>
+                        <span>Request Approvals</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <div class="collapse" id="myapprovels">
+                        <ul class="side-nav-second-level">
+                            <li>
+                                <a href="{{url('inventory/requests/approvels/pending')}}">Pending approvals</a>
+                            </li>
+                            <li>
+                                <a href="{{url('inventory/requests/approvels/approved')}}">Approved requests</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>           
+                @endpermission
+            <li class="side-nav-item d-none">
                 <a data-bs-toggle="collapse" href="#makerequests" aria-expanded="false" aria-controls="makerequests" class="side-nav-link">
                     <i class="uil-shopping-trolley"></i>
                     <span>Make requests</span>
@@ -201,7 +238,7 @@
                     </ul>
                 </div>
             </li>
-            <li class="side-nav-item">
+            <li class="side-nav-item d-none">
                 <a data-bs-toggle="collapse" href="#myrequests" aria-expanded="false" aria-controls="myrequests" class="side-nav-link">
                     <i class="uil-folder-minus"></i>
                     <span>My requests</span>
@@ -220,7 +257,7 @@
                 </div>
             </li>
             @permission('inventory-approve')
-            <li class="side-nav-item">
+            <li class="side-nav-item d-none">
                 <a data-bs-toggle="collapse" href="#approvels" aria-expanded="false" aria-controls="approvels" class="side-nav-link">
                     <i class="uil-folder-plus"></i>
                     <span>My Approvals</span>
@@ -237,7 +274,7 @@
                     </ul>
                 </div>
             </li>
-            <li class="side-nav-item">
+            <li class="side-nav-item d-none">
                 <a href="{{url('inventory/manage/reports')}}" class="side-nav-link">
                     <i class="uil-file"></i>
                     <span>Manage</span>
@@ -246,6 +283,7 @@
             @endpermission
             @endrole
 
+            @endif
         </ul>
 
         <!-- Help Box -->

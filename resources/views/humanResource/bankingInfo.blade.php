@@ -40,6 +40,9 @@
             <label for="account_number" class="form-label">Account Number</label>
             <input name="account_number" type="text" id="account_number" class="form-control" required>
         </div>
+        <div class="col-md-8"></div>
+        <div class="col-md-4 text-end pt-1">
+            <button class="btn btn-success" type="submit">Save</button>
+        </div>
     </div>
-    @include('layouts.inc.form-submit')
 </form>

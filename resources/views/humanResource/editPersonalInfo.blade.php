@@ -263,10 +263,9 @@
             <label for="signature" class="form-label">Signature</label>
             <input type="file" id="signature" class="form-control" name="signature" accept=".jpg,.jpeg,.png">
         </div>
-        {{-- <div class="col-md-8"></div>
+        <div class="col-md-8"></div>
         <div class="col-md-4 text-end pt-1">
             <button class="btn btn-success" type="submit">Update</button>
-        </div> --}}
+        </div>
     </div>
-    @include('layouts.inc.form-submit')
 </form>

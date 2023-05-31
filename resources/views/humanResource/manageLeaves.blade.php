@@ -1,20 +1,28 @@
 <x-hr-layout>
-    <!-- start quote -->
-    <x-quote>
-    </x-quote>
-    <!-- end quote -->
+    <!-- start page title -->
+    <x-page-title>
+        Leaves
+    </x-page-title>
+    <!-- end page title -->
 
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <x-card-header>
-                    Leave Types
-                    <x-slot:buttons>
-                        <a type="button" href="#" class="btn btn-success mb-2 me-1"
+                <div class="card-header pt-0 pb-0">
+                    <div class="row mb-2">
+                        <div class="col-sm-4">
+                            <div class="text-sm-end mt-3">
+                                <h4 class="header-title mb-3  text-center"> MakBRC Leaves</h4>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="text-sm-end mt-3">
+                                <a type="button" href="#" class="btn btn-success mb-2 me-1"
                                     data-bs-toggle="modal" data-bs-target="#staticBackdrop">Add leave</a>
-                    </x-slot>
-                </x-card-header>
-
+                            </div>
+                        </div><!-- end col-->
+                    </div>
+                </div>
                 <div class="card-body">
                     <div class="tab-content">
                         <div class="table-responsive" id="scroll-horizontal-preview">
@@ -160,10 +168,9 @@
 
                             </div>
                             <!-- end row-->
-                            {{-- <div class="d-grid mb-0 text-center">
+                            <div class="d-grid mb-0 text-center">
                                 <button class="btn btn-success" type="submit">Update leave</button>
-                            </div> --}}
-                            @include('layouts.inc.form-submit')
+                            </div>
                         </form>
                     </div>
                 </div> <!-- end modal content-->

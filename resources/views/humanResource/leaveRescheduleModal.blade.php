@@ -82,10 +82,9 @@
                         <input type="text" hidden id="reschedule{{ $request->id }}" class="form-control"
                             name="reschedule" value='rescheduling' required>
                         <!-- end row-->
-                        {{-- <div class="d-grid mb-0 text-center">
+                        <div class="d-grid mb-0 text-center">
                             <button class="btn btn-success" type="submit" id="submitBtn{{ $request->id }}">Submit</button>
-                        </div> --}}
-                        @include('layouts.inc.form-submit')
+                        </div>
                     </form>
                 </div>
             </div> <!-- end modal content-->

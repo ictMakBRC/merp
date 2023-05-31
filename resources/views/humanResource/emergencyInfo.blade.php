@@ -34,6 +34,9 @@
             <label for="contact_address" class="form-label">Address</label>
             <input name="contact_address" type="text" id="contact_address" class="form-control" required>
         </div>
+        <div class="col-md-8"></div>
+        <div class="col-md-4 text-end pt-1">
+            <button class="btn btn-success" type="submit">Save</button>
+        </div>
     </div>
-    @include('layouts.inc.form-submit')
 </form>

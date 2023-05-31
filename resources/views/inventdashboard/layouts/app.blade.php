@@ -16,6 +16,8 @@
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <!-- third party css end -->
         <link href="{{ asset('assets/js/izitoast/css/iziToast.min.css') }}" rel="stylesheet" type="text/css">
+        
+        <link href="{{ asset('assets/css/vendor/dataTables.bootstrap5.css') }}" rel="stylesheet" type="text/css">
         <!-- App css -->
         <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css">
         <link href="{{ asset('assets/css/app.min.css') }}" rel="stylesheet" type="text/css" id="light-style">
@@ -86,27 +88,7 @@
                 $('.myselect').select2();
             });
             </script>
-        <!-- third party js ends -->
-        <script>
-            $(function () {
-              $("#example2").DataTable({
-                "responsive": true,
-                "lengthChange": false,
-                "autoWidth": false,
-                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-              }).buttons().container().appendTo('#example2_wrapper .col-md-6:eq(0)');
-    
-              $('#example1').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "responsive": true,
-              });
-            });
-        </script>
+        
           <script>
             window.addEventListener('alert', event => {
     

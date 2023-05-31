@@ -51,7 +51,15 @@
                                     <td>{{ $value->lop??'N/A'}}</td>
                                     <td>{{ $value->grn??'N/A'}} </td>
                                     <td>{{ $value->delivery_no??'N/A'}}</td>
-                                    <td> <a  href="javascript: void(0);" wire:click="deleteConfirmation({{$value->id}})" title="Delete!" class="action-icon {{$active}}"> <i class="mdi mdi-delete"></i></a></td>
+                                    <td> 
+                                        @if ($value->is_active ==0)
+                                        <a  href="javascript: void(0);" wire:click="deleteStockDoc('{{$value->stock_code}}')" title="Delete!" class="action-icon"> <i class="mdi mdi-delete"></i></a>
+                                        <a  href="{{route('receiveStock',$value->stock_code)}}"  title="Resume!" class="action-icon"> <i class="mdi mdi-pencil"></i></a>
+                                        @else
+                                        <a  href="javascript: void(0);" wire:click='deleteStockDoc' title="view details!" class="action-icon"> <i class="mdi mdi-eye"></i></a>
+                                        @endif
+                                        
+                                    </td>
                                 </tr>
                                 @endforeach
                                 @endif
@@ -72,6 +80,7 @@
                               @csrf
                                <div class="row mb-2 mt-3">                                  
                                 <div class="col-sm-4" >
+                                    <input type="hidden" name="" wire:model='document_id' id="">
                                     <label for="invitemid">Select Item</label>
                                     <select class="form-select select2" id="invitemid" wire:model="invitemid" required>
                                         <option value="">Select store</option>
@@ -125,7 +134,7 @@
                                     <div class="col-sm-2">
                                         <div class="text-sm">
                                             <label>Batch No.</label>
-                                            <input type="text" @if($expires == 'On') required @endif class="form-control" id="batch_no" wire:models="batch_no">
+                                            <input type="text" @if($expires == 'On') required @endif class="form-control" id=";plo " wire:models="batch_no">
                                         </div>
                                     </div><!-- end col-->
                                     <div class="col-sm-1">
@@ -178,6 +187,7 @@
                                         <tbody>
                                             @if(count($stock_items)>0)
                                             @php($i=1)
+                                            @php($display='block')
                                             @foreach($stock_items as $value)
                                             <tr>
                                                 <td>{{$i++}}</td>
@@ -187,9 +197,14 @@
                                                 <td>{{ $value->stock_qty}} <input type="hidden" name="quantity[]" value="{{$value->stock_qty}}"></td>
                                                 <td>{{ $value->unit_cost}}</td>
                                                 <td>{{ $value->unit_cost*$value->stock_qty}} <input type="hidden" name="amount" value="{{ $value->unit_cost*$value->stock_qty}} "></td>
-                                                <td> <a  href="javascript: void(0);" wire:click="deleteConfirmation({{$value->id}})" title="Delete!" class="action-icon {{$active}}"> <i class="mdi mdi-delete"></i></a></td>
+                                                <td> 
+                                                    <a  href="javascript: void(0);" wire:click="deleteConfirmation({{$value->id}})" title="Delete!" class="action-icon {{$active}}"> <i class="mdi mdi-delete"></i></a>
+                                                </td>
                                             </tr>
-                                            @endforeach
+                                            @endforeach                                           
+                                                
+                                            @else                                                
+                                                @php($display='d-none')
                                             @endif
                                         </tbody>
                                     </table>
@@ -216,8 +231,8 @@
                                         <input type="text" name="delivery_no" value="{{$stock_docement->delivery_no??''}}" class="form-control" placeholder="" required>
                                         </div>
                                     </div>
-                                    <div class="text-sm-end col {{$active}}">
-                                        <button type="submit" id="saveStk" disabled class="btn btn-primary mb-2 me-1 mt-1 text-sm-end">Save stock</button>
+                                    <div class="text-sm-end col">
+                                        <button type="submit" id="saveStk" wire:click='SaveStock' class="btn btn-primary {{$display}} mb-2 me-1 mt-1 text-sm-end">Save stock</button>
                                     </div>
                                 </div>
                                
@@ -307,15 +322,15 @@
         document.getElementById('stktotalamt').value = sum;
         }
         sumInputs();
-        var numval = document.getElementById('stktotalamt').value-0;
-        if(numval > 0) { 
-            //btn.setAttribute('disabled', 'disabled');
-            document.getElementById("saveStk").disabled = false; 
-        }
-        else{
-            document.getElementById("saveStk").disabled = true; 
-            //btn.removeAttribute("disabled");
-        }
+        // var numval = document.getElementById('stktotalamt').value-0;
+        // if(numval > 0) { 
+        //     //btn.setAttribute('disabled', 'disabled');
+        //     document.getElementById("saveStk").disabled = false; 
+        // }
+        // else{
+        //     document.getElementById("saveStk").disabled = true; 
+        //     //btn.removeAttribute("disabled");
+        // }
     </script>
 @endpush
 </div>

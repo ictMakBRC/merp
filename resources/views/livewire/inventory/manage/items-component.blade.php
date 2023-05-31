@@ -179,7 +179,7 @@
                                                  
                                                     <div class="mb-3">
                                                         <label for="item_code" class="form-label">Item code</label>
-                                                        <input type="text" id="item_code" class="form-control" name="item_code" wire:model.lazy="item_code" required>
+                                                        <input type="text" id="item_code" class="form-control" name="item_code" wire:model.differ="item_code" required>
                                                         @error('item_code')
                                                         <div class="text-danger text-small">{{ $message }}</div>
                                                         @enderror

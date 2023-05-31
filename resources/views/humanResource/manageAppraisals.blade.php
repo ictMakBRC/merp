@@ -1,20 +1,28 @@
 <x-hr-layout>
-    <!-- start quote -->
-    <x-quote>
-    </x-quote>
-    <!-- end quote -->
+    <!-- start page title -->
+    <x-page-title>
+        Appraisals
+    </x-page-title>
+    <!-- end page title -->
 
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <x-card-header>
-                    Leave Requests
-                    <x-slot:buttons>
-                        <a type="button" href="{{ route('appraisals.create') }}"
-                        class="btn btn-success mb-2 me-1">New Appraisal</a>
-                    </x-slot>
-                </x-card-header>
-
+                <div class="card-header pt-0">
+                    <div class="row mb-0">
+                        <div class="col-sm-4">
+                            <div class="text-sm-end mt-3">
+                                <h4 class="header-title mb-3  text-center">Employee Appraisals</h4>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="text-sm-end mt-3">
+                                <a type="button" href="{{ route('appraisals.create') }}"
+                                    class="btn btn-success mb-2 me-1">New Appraisal</a>
+                            </div>
+                        </div><!-- end col-->
+                    </div>
+                </div>
                 <div class="card-body">
                     <div class="tab-content">
                         <div class="table-responsive" id="scroll-horizontal-preview">

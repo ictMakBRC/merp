@@ -28,7 +28,7 @@
                         <div class="card-header pt-2 pb-1 text-center bg-primar">
                             <a href="{{ route('login') }}" class="text-white">
                                 <span><img src="{{ asset('assets/images/merp-logo.png') }}" alt=""
-                                        height="40"></span>
+                                        height="45"></span>
                             </a>
                         </div>
                         <div class="card-body">

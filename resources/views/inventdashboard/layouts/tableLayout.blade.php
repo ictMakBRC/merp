@@ -10,11 +10,11 @@
         <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}">
         <!-- third party css -->
         <link href="{{ asset('assets/css/vendor/dataTables.bootstrap5.css') }}" rel="stylesheet" type="text/css">
-        <link href="{{ asset('assets/css/vendor/responsive.bootstrap5.css') }}" rel="stylesheet" type="text/css">
-        <link href="{{ asset('assets/css/vendor/buttons.bootstrap5.css') }}" rel="stylesheet" type="text/css">
-        <link href="{{ asset('assets/css/vendor/select.bootstrap5.css') }}" rel="stylesheet" type="text/css">
+        @include("inventdashboard.layouts.inc.data-table-style")
         <!-- third party css end -->
-
+        @push('styles')
+       
+        @endpush
         <!-- App css -->
         <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css">
         <link href="{{ asset('assets/css/app.min.css') }}" rel="stylesheet" type="text/css" id="light-style">
@@ -75,41 +75,16 @@
     <script src="{{ asset('assets/js/pages/demo.dashboard-projects.js') }}"></script>
     <!-- end demo js-->
     <!-- third party js -->
-
+    @include("inventdashboard.layouts.inc.data-table-scripts")
 
     <!-- third party js ends -->
-<script src="{{ asset('assets/datatables/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('assets/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-<script src="{{ asset('assets/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
-<script src="{{ asset('assets/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
-<script src="{{ asset('assets/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
-<script src="{{ asset('assets/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
-<script src="{{ asset('assets/datatables-buttons/js/buttons.html5.min.js') }}"></script>
-<script src="{{ asset('assets/datatables-buttons/js/buttons.print.min.js') }}"></script>
-<script src="{{ asset('assets/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+
     <!-- demo app -->
     <script src="{{ asset('assets/js/pages/demo.datatable-init.js') }}"></script>
     <script src="{{ asset('assets/sweetalert/sweetalert.min.js')}}"></script>
-    <script>
-        $(function () {
-          $("#example2").DataTable({
-            "responsive": true,
-            "lengthChange": false,
-            "autoWidth": false,
-            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-          }).buttons().container().appendTo('#example2_wrapper .col-md-6:eq(0)');
-
-          $('#example1').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": false,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false,
-            "responsive": true,
-          });
-        });
-      </script>
+   @push('scripts')
+       
+   @endpush
 
 <script type="text/javascript">
     $(document).ready(function() {

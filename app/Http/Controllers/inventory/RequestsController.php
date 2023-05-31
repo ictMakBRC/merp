@@ -271,7 +271,7 @@ public function getitemData(Request $request)
         $code = $request->route('id'); //getting the request code
         $requesters = invRequest::leftJoin('departments', 'inv_requests.department_id', '=', 'departments.id')
          ->leftJoin('users', 'inv_requests.approver_id', '=', 'users.id')
-         ->select('department_name as dname', 'users.name as uname', 'inv_requests.request_type as type', 'inv_requests.id as requestid', 'inv_requests.created_at as requestdate', 'inv_requests.request_state as state', 'acknowledged')
+         ->select('department_name as dname', 'users.name as uname', 'inv_requests.request_type as type', 'inv_requests.id as requestid', 'inv_requests.created_at as requestdate', 'inv_requests.request_state as state','acknowledged_by')
            ->where('inv_requests.request_code', $id)->first();
         $requestby = invRequest::leftJoin('users', 'inv_requests.user_id', '=', 'users.id')
          ->where('inv_requests.request_code', $id)->first();
@@ -323,7 +323,7 @@ public function getitemData(Request $request)
         $values = invRequest::leftJoin('departments', 'inv_requests.department_id', '=', 'departments.id')
         ->leftJoin('users', 'inv_requests.approver_id', '=', 'users.id')
         ->select('request_state', 'request_type', 'request_code', 'department_name as dname', 'users.name as uname', 'inv_requests.request_type as type', 'inv_requests.id as requestid', 'inv_requests.updated_at as requestdate')
-        ->where('inv_requests.request_state', '=', 'Not signed')
+        ->where('inv_requests.request_state', '=', 'Submitted')
         ->where('inv_requests.approver_id', auth()->user()->id)
         ->where('inv_requests.is_active', 1)->get();
 
@@ -434,7 +434,7 @@ public function getitemData(Request $request)
         ]);
         $id = $request->input('code');
         try {
-            invRequest::where('request_code', $id)->update(['acknowledged' => auth()->user()->id,
+            invRequest::where('request_code', $id)->update(['acknowledged_by' => auth()->user()->id,
                 'acknowledgement' => $request->input('approve'),
             ]);
 

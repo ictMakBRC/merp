@@ -27,10 +27,9 @@
             <input name="contact_address" type="text" id="contact_address" class="form-control"
                 value="{{ $emergencycontact->contact_address }}" required>
         </div>
-        {{-- <div class="col-md-8"></div>
+        <div class="col-md-8"></div>
         <div class="col-md-4 text-end pt-1">
             <button class="btn btn-success" type="submit">Update</button>
-        </div> --}}
+        </div>
     </div>
-    @include('layouts.inc.form-submit')
 </form>

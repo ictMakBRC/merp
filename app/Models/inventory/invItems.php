@@ -47,6 +47,12 @@ class invItems extends Model
         return $this->belongsTo(invSubunits::class, 'inv_subunit_id', 'id');
     }
 
+    public function subUnit()
+    {
+        return $this->belongsTo(invSubunits::class, 'inv_subunit_id', 'id');
+    }
+
+
     public function parentUom()
     {
         return $this->belongsTo(invUom::class, 'inv_uom_id', 'id');

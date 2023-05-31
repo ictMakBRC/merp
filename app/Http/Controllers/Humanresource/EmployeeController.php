@@ -39,23 +39,6 @@ class EmployeeController extends Controller
     {
         $childDepartments = [];
 
-        // public function getEmployees($unit)
-        // {
-        //     // Get all employees in the current unit
-        //     $employees = Employee::where('unit_id', $unit->id)->get();
-
-        //     // If the unit has any subunits, get the employees in those units as well
-        //     if ($unit->hasSubunits()) {
-        //         foreach ($unit->subunits as $subunit) {
-        //             $employees = $employees->merge($this->getEmployees($subunit));
-        //         }
-        //     }
-
-        //     return $employees;
-        // }
-        // $rootUnit = Unit::where('parent_id', null)->first();
-        // $employees = $this->getEmployees($rootUnit);
-
         $level1_children = Department::select('id')->where('parent_department', Auth::user()->employee->department_id)->get();
         if (! $level1_children->isEmpty()) {
             foreach ($level1_children as $level1_child) {

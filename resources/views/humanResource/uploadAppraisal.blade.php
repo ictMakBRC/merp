@@ -1,19 +1,23 @@
 <x-hr-layout>
-    <!-- start quote -->
-    <x-quote>
-    </x-quote>
-    <!-- end quote -->
+    <!-- start page title -->
+    <x-page-title>
+        Upload Appraisal
+    </x-page-title>
+    <!-- end page title -->
 
     <!-- end row-->
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <x-card-header>
-                    Upload Completed Performance Appraisal
-                    <x-slot:buttons>
-                    </x-slot>
-                </x-card-header>
-
+                <div class="card-header pt-0">
+                    <div class="row mb-2">
+                        <div class="col-sm-12">
+                            <div class="text-sm-end mt-3">
+                                <h4 class="header-title mb-3  text-center">Upload Completed Performance Appraisal</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="card-body">
                     <form method="POST" enctype="multipart/form-data" id="appraisalForm">
                         @csrf
@@ -43,8 +47,10 @@
                                 <input name="appraisal_file" type="file" id="appraisal" class="form-control" required
                                     accept=".pdf">
                             </div>
-
-                            @include('layouts.inc.form-submit')
+                            <div class="col-md-8"></div>
+                            <div class="col-md-4 text-end pt-1">
+                                <button class="btn btn-success" type="submit">Submit</button>
+                            </div>
                         </div>
                     </form>
                 </div> <!-- end card body-->

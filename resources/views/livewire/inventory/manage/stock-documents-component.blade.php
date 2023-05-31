@@ -29,53 +29,47 @@
                           
                             <div class="row">
                                 <div class="col mt-3">
-                                    <table class="table table-centered w-100 dt-responsive" id="example2">
+                                    <table id="example2" class="table w-100">
                                         <thead>
                                             <tr>
                                                 <th>No.</th>
-                                                <th>Name</th>
-                                                <th>Brand</th>
-                                                <th>Department</th>
-                                                <th>Category</th>
-                                                <th>Costprice</th>
-                                                <th>Date added</th>
+                                                <th>Stock Code</th>
+                                                <th>GRN</th>
+                                                <th>Delivery No</th>
+                                                <th>LPO</th>
+                                                <th>Created By</th>
+                                                <th>Date Recieved</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @if(count($values)>0)
                                             @php($i=1)
-                                            @foreach($values as $value)
+                                            @foreach($values as $stockDocument)
                                             <tr>
                                                 <td>{{$i++}}</td>
-                                                <td>{{$value->item_name}}</td>
-                                                <td ><p style="white-space: nowrap;
-                                                    overflow: hidden;
-                                                    text-overflow: ellipsis;
-                                                    max-width: 150px;">{{ $value->brand}}</p></td>
-                                                <td>{{ $value->department_name}}</td>
-                                                <td>{{ $value->subunit_name}}</td>
-                                                <td>{{ $value->cost_price}}</td>
-                                                <td>{{ $value->date_added}}</td>
-    
+                                                <td>{{$stockDocument->stock_code??''}}</td>
+                                                <td>{{$stockDocument->grn}}</td>
+                                                <td>{{ $stockDocument->delivery_no??''}}</td>
+                                                <td>{{ $stockDocument->lop??''}}</td>
+                                                <td>{{ $stockDocument->user->name??''}}</td>
+                                                <td>{{ $stockDocument->date_added}}</td>    
                                                 <td class="table-action">
-                                                    @if($value->is_active==1)
+                                                    @if($stockDocument->is_active==1)
                                                     <span class="badge badge-success-lighten float-center">Active</span>
                                                     @php($satate='Active' AND $Stvalue=1)
-                                                    @elseif($value->is_active==0)
+                                                    @elseif($stockDocument->is_active==0)
                                                     <span class="badge badge-danger-lighten float-center">InActive</span>
                                                     @php($satate='InActive' AND $Stvalue=0)
                                                     @endif
                                                     <a href="javascript: void(0);" 
-                                                    wire:click="deleteConfirmation({{ $value->item_id }})" class="action-ico text-danger  mx-1">
+                                                    wire:click="deleteConfirmation({{ $stockDocument->item_id }})" class="action-ico text-danger  mx-1">
                                                     <i class="mdi mdi-delete"></i></a>
                                                    
-                                                </td>
+                                                </td>                            
                                             </tr>
                                             @endforeach
                                             @endif
-    
-    
                                         </tbody>
                                     </table>
                                 </div>

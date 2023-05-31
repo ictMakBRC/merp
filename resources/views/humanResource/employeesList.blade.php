@@ -1,22 +1,31 @@
 <x-hr-layout>
-    <!-- start quote -->
-    <x-quote>
-    </x-quote>
-    <!-- end quote -->
+    <!-- start page title -->
+    <x-page-title>
+        Employee List
+    </x-page-title>
+    <!-- end page title -->
 
     <!-- end row-->
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <x-card-header>
-                    All Employees
-                    <x-slot:buttons>
-                        @if (Auth::user()->isAbleTo('employee-create'))
-                                <a href="{{ route('employees.create') }}" class="btn btn-success mb-2 me-1"><i class="mdi mdi-plus me-1"></i>New</a>
-                            @endif
-                    </x-slot>
-                </x-card-header>
-
+                <div class="card-header pt-0">
+                    <div class="row mb-2">
+                        <div class="col-sm-4">
+                            <div class="text-sm-end mt-3">
+                                <h4 class="header-title mb-3  text-center">All Employees</h4>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="text-sm-end mt-3">
+                                @if (Auth::user()->isAbleTo('employee-create'))
+                                    <a href="{{ route('employees.create') }}" class="btn btn-success mb-2 me-1">Add
+                                        Employee</a>
+                                @endif
+                            </div>
+                        </div><!-- end col-->
+                    </div>
+                </div>
                 <div class="card-body">
                     <div class="tab-content">
                         <div class="table-responsive">
@@ -45,9 +54,8 @@
                                             <td>{{ $employee->gender }}</td>
                                             <td>{{ $employee->contact }}</td>
                                             <td>{{ $employee->email }}</td>
-                                            <td>{{ $employee->designation ? $employee->designation->name : 'N/A' }}</td>
-                                            <td>{{ $employee->department ? $employee->department->department_name : 'N/A' }}
-                                            </td>
+                                            <td>{{ $employee->designation?$employee->designation->name:'N/A' }}</td>
+                                            <td>{{ $employee->department?$employee->department->department_name:'N/A' }}</td>
                                             <td>{{ $employee->work_type }}</td>
                                             @if ($employee->status != 'Active')
                                                 <td><span class="badge bg-danger">{{ $employee->status }}</span></td>

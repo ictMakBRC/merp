@@ -43,12 +43,11 @@
                                 <input name="account_number" type="text" id="account_number" class="form-control"
                                     value="{{ $bankinginfo->account_number }}" required>
                             </div>
-                            {{-- <div class="col-md-8"></div>
+                            <div class="col-md-8"></div>
                             <div class="col-md-4 text-end pt-1">
                                 <button class="btn btn-success" type="submit">Update</button>
-                            </div> --}}
+                            </div>
                         </div>
-                        @include('layouts.inc.form-submit')
                     </form>
                 </div>
             </div> <!-- end modal content-->

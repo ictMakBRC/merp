@@ -1,31 +1,37 @@
 <x-hr-layout>
-    <!-- start quote -->
-    <x-quote>
-    </x-quote>
-    <!-- end quote -->
+    <!-- start page title -->
+    <x-page-title>
+        Upload Exit Interview
+    </x-page-title>
+    <!-- end page title -->
 
     <!-- end row-->
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <x-card-header>
-                    Upload Completed Exit Interview
-                    <x-slot:buttons>
-                    </x-slot>
-                </x-card-header>
-
+                <div class="card-header pt-0">
+                    <div class="row mb-2">
+                        <div class="col-sm-12">
+                            <div class="text-sm-end mt-3">
+                                <h4 class="header-title mb-3  text-center">Upload Completed Exit Interview</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="card-body">
                     <form method="POST" enctype="multipart/form-data" id="interviewForm">
                         @csrf
-                        <div class="row">
-                            <div class="mb-3 col-md-12">
+                        <div class="row col-md-12">
+                            <div class=" mb-3 col-md-12">
                                 <label for="interview_file" class="form-label">Completed Interview File</label>
                                 <input name="interview_file" type="file" id="interview_file" class="form-control"
                                     required accept=".pdf">
                             </div>
-                            
+                            <div class="col-md-8"></div>
+                            <div class="col-md-4 text-end pt-1">
+                                <button class="btn btn-success" type="submit">Submit</button>
+                            </div>
                         </div>
-                        @include('layouts.inc.form-submit')
                     </form>
                 </div> <!-- end card body-->
             </div> <!-- end card -->

@@ -23,12 +23,10 @@
                             </div> <!-- end col -->
                         </div>
                         <!-- end row-->
-                        {{-- <div class="d-grid mb-0 text-center">
+                        <div class="d-grid mb-0 text-center">
                             <button class="btn btn-success" type="submit">Submit Comment</button>
-                        </div> --}}
-                        @include('layouts.inc.form-submit')
+                        </div>
                     </form>
-                    
                 </div>
             </div> <!-- end modal content-->
         </div> <!-- end modal dialog-->
