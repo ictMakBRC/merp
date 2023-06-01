@@ -14,6 +14,10 @@ class DmRequestDocuments extends Model
     {
         return $this->hasMany(DmDocumentSignatory::class, 'document_id', 'id');
     }
+    public function category()
+    {
+        return $this->belongsTo(DmDocumentCategory::class, 'document_category_id', 'id');
+    }
     public function suportDocuments()
     {
         return $this->hasMany(DmRequestSupportDocuments::class, 'parent_id', 'id');
@@ -30,5 +34,15 @@ class DmRequestDocuments extends Model
                 $model->created_by = auth()->id();
             });
         }
+    }
+    public static function search($search)
+    {
+        return empty($search) ? static::query()
+            : static::query()
+                ->where('title', 'like', '%'.$search.'%')
+                ->where('request_code', 'like', '%'.$search.'%')
+                ->orWhereHas('category', function ($query) use ($search) {
+                    $query->where('name', 'like', '%'.$search.'%');
+                });
     }
 }

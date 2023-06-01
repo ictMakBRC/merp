@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('dm_document_resources', function (Blueprint $table) {
             $table->id();
             $table->foreignId('resource_category_id')->references('id')->on('dm_document_resource_categories')->onDelete('restrict')->onUpdate('cascade');
+            $table->foreignId('department_id')->references('id')->on('departments')->onDelete('restrict')->onUpdate('cascade');
             $table->string('title');
             $table->string('version')->nullable();
             $table->string('code')->unique();

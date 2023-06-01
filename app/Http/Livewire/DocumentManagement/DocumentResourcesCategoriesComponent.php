@@ -4,13 +4,12 @@ namespace App\Http\Livewire\DocumentManagement;
 
 use Livewire\Component;
 use Livewire\WithPagination;
-use App\Models\DocumentManagement\DmDocumentCategory;
 
-class DocumentCategoryComponent extends Component
+class DocumentResourcesCategoriesComponent extends Component
 {
     use  WithPagination;
 
-    public $perPage = 10;
+    public $perPage = 15;
 
     public $search = '';
 
@@ -134,7 +133,6 @@ class DocumentCategoryComponent extends Component
     }
     public function render()
     {
-        $categories = DmDocumentCategory::with('parent')->get();
-        return view('livewire.document-management.document-category-component', compact('categories'))->layout('livewire.document-management.layouts.app');
+        return view('livewire.document-management.document-resources-categories-component');
     }
 }
