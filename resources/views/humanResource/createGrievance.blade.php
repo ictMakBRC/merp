@@ -1,20 +1,24 @@
 <x-hr-layout>
-    <!-- start quote -->
-    <x-quote>
-    </x-quote>
-    <!-- end quote -->
+    <!-- start page title -->
+    <x-page-title>
+        Create Grievance
+    </x-page-title>
+    <!-- end page title -->
 
     <!-- end row-->
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <x-card-header>
-                    Create Grievance
-                    <x-slot:buttons>
-        
-                    </x-slot>
-                </x-card-header>
+                <div class="card-header pt-0">
+                    <div class="row mb-2">
+                        <div class="col-sm-12">
+                            <div class="text-sm-end mt-3">
+                                <h4 class="header-title mb-3  text-center">Create Grievance</h4>
+                            </div>
+                        </div>
 
+                    </div>
+                </div>
                 <div class="card-body">
                     <!-- File Upload -->
                     <form method="POST" enctype="multipart/form-data" id="grievanceForm">

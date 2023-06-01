@@ -76,7 +76,7 @@ My requests
                                     <td>{{ $value->requestdate}}</td>
 
                                     <td class="table-action">
-                                        <a href="{{ url('inventory/request/inv/view/'.$value->request_code) }}" class=" {{$dis}} action-icon"> <i class="mdi mdi-fingerprint" ></i></a>
+                                        <a href="{{ route('admin.viewRequest',$value->request_code) }}" class=" {{$dis}} action-icon"> <i class="mdi mdi-fingerprint" ></i></a>
                                         <a href="{{ url('inventory/request/view/'.$value->request_code) }}" class="action-icon"> <i class="mdi mdi-eye" ></i></a>
                                     </td>
                                 </tr>

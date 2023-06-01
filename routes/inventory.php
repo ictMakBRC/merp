@@ -16,9 +16,14 @@ use App\Http\Livewire\Inventory\Manage\CategoryComponent;
 use App\Http\Livewire\Inventory\Manage\DepartmentItemsComponent;
 use App\Http\Livewire\Inventory\Manage\ItemsComponent;
 use App\Http\Livewire\Inventory\Manage\ReceiveStockComponent;
+use App\Http\Livewire\Inventory\Manage\RequestApprovalComponent;
 use App\Http\Livewire\Inventory\Manage\StockDocumentsComponent;
 use App\Http\Livewire\Inventory\Manage\UOMComponent;
 use App\Http\Livewire\Inventory\StoresComponent;
+use App\Http\Livewire\Inventory\User\MakeRequestComponent;
+use App\Http\Livewire\Inventory\User\MyRequestsComponent;
+use App\Http\Livewire\Inventory\User\StockCardComponent;
+use App\Http\Livewire\Inventory\User\StockHistoryComponent;
 use App\Http\Livewire\Manage\SupplierComponent;
 use Illuminate\Support\Facades\Route;
 
@@ -93,12 +98,19 @@ use Illuminate\Support\Facades\Route;
         Route::get('/delete-departUser/{id}', [App\Http\Controllers\inventory\UserDepartmentsController::class, 'destroy']);
         Route::post('/update-DepartUser/{id}', [App\Http\Controllers\inventory\UserDepartmentsController::class, 'update']);
     
-    //----------------------------------request routes---------------------------------------------
+    //----------------------------------user request routes---------------------------------------------
 
     Route::get('/', [App\Http\Controllers\inventory\DashboardController::class, 'index'])->name('inventory');
     Route::get('user/dashboard', UserDashboardComponent::class)->name('inv_user.dashboard');
-
+    Route::get('user/stock/levels', StockCardComponent::class)->name('inv_user.stockCard');
+    Route::get('user/stock/history', StockHistoryComponent::class)->name('inv_user.stockHistory');
+    Route::get('user/requests', MyRequestsComponent::class)->name('inv_user.requests');
+    Route::get('user/request/new/{code}', MakeRequestComponent::class)->name('inv_user.requestNew');
     // Route::get('/', [App\Http\Controllers\inventory\DashboardController::class, 'index'])->name('inventory');
+
+    //================INVETORY ADMIN REQUEST ACTION====================
+    Route::get('/request/admin/view/{request_code}', RequestApprovalComponent::class)->name('admin.viewRequest');
+
     Route::get('/request/new', [App\Http\Controllers\inventory\RequestsController::class, 'index']);
     Route::get('/request/lend', [App\Http\Controllers\inventory\RequestsController::class, 'external']);
     Route::post('/request/details', [App\Http\Controllers\inventory\RequestsController::class, 'create']);
@@ -126,7 +138,7 @@ use Illuminate\Support\Facades\Route;
     Route::post('/request/updateInventoryRequest', [App\Http\Controllers\inventory\RequestsController::class, 'updateInventoryRequest']);
     Route::get('/inv/requests', [App\Http\Controllers\inventory\RequestsController::class, 'InventoryRequests']);
     Route::get('/inv/requests/viewed', [App\Http\Controllers\inventory\RequestsController::class, 'InventoryRequestsViewed']);
-    Route::get('/request/inv/view/{id}', [App\Http\Controllers\inventory\RequestsController::class, 'InventorySingleRequest']);
+
 
     //----------------------------------report routes---------------------------------------------
     Route::get('/inv/reports', [App\Http\Controllers\inventory\ReportsController::class, 'index']);

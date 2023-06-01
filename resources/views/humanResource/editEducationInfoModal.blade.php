@@ -53,12 +53,11 @@
                                 <input type="file" id="award_document" class="form-control" name="award_document"
                                     accept=".pdf">
                             </div>
-                            {{-- <div class="col-md-8"></div>
+                            <div class="col-md-8"></div>
                             <div class="col-md-4 text-end pt-1">
                                 <button class="btn btn-success" type="submit">Update</button>
-                            </div> --}}
+                            </div>
                         </div>
-                        @include('layouts.inc.form-submit')
                     </form>
                 </div>
             </div> <!-- end modal content-->

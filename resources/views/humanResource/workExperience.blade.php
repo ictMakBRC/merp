@@ -58,6 +58,9 @@
             <label for="job-description" class="form-label">Key Responsibilities</label>
             <textarea type="text" id="job-description" rows="4" class="form-control" name="job_description" placeholder="List Key Responsibilities"></textarea>
         </div>
+        <div class="col-md-8"></div>
+        <div class="col-md-4 text-end pt-1">
+            <button class="btn btn-success" type="submit">Save</button>
+        </div>
     </div>
-    @include('layouts.inc.form-submit')
 </form>

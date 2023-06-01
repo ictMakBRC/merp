@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('signatory_id')->nullable()->references('id')->on('users')->onDelete('restrict')->onUpdate('cascade');
             $table->integer('signatory_level')->default(1);
             $table->string('title')->nullable();
+            $table->text('summary')->nullable();
             $table->string('signatory_status')->default('Pending');
             $table->integer('is_active')->default(0);
             $table->integer('acknowledgement')->default(0);

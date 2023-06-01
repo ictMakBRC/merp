@@ -6,6 +6,7 @@ use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Storage;
 use App\Models\DocumentManagement\DmDocument;
 use App\Models\DocumentManagement\DmDocumentRequest;
 use App\Models\DocumentManagement\DmDocumentCategory;
@@ -46,7 +47,7 @@ class NewDocumentComponent extends Component
 
     public $toggleForm = false;
     public $document_id;
-    public $active_document =[];
+    public $active_request =[];
     public $active_status;
     public $details;
     public $expiry_date;
@@ -60,9 +61,22 @@ class NewDocumentComponent extends Component
     public $addSignatory = false;
     public $addDocument = false;
     public $iteration =1;
+    public $person_exists = false;
     
-    public $signatory_id ,$signatory_level, $support_document_title, $support_file, $active_document_id;
+    public $signatory_id ,$signatory_level, $support_document_title, $support_file, $active_document_id, $summary;
 
+    public $description, $addDocements = false ,$viewForm = true, $request_id, $document_title, $my_document_id;
+
+    public function updatedMyDocumentId(){
+        
+
+        $level = DmDocumentSignatory::where('document_id', $this->my_document_id)->orderBy('id','DESC')->first();
+        if($level){
+            $this->signatory_level = $level->signatory_level +1;
+        }else{
+            $this->signatory_level = 1;
+        }
+    }
 
     public function storeRequest()
     {
@@ -103,10 +117,9 @@ class NewDocumentComponent extends Component
         return $randomString;
     }
 
-    public $description, $addDocements = false ,$viewForm = true, $request_id, $document_title;
     public function attachDocument($id)
     {
-       $this->active_document = $request = DmDocumentRequest::where('id',$id)->with(['category','documents','user'])->first();
+       $this->active_request = $request = DmDocumentRequest::where('id',$id)->with(['category','documents','user'])->first();
        $this->title =  $request->title;
        $this->priority =  $request->priority;
        $this->document_category =  $request->request_category;
@@ -139,9 +152,9 @@ class NewDocumentComponent extends Component
         $document = new DmRequestDocuments();
         $document->title = $this->document_title;
         $document->document_code =$this->getNumber(12);
-        $document->document_category_id =  $this->active_document->request_category;
-        $document->request_code =  $this->active_document->request_code;
-        $document->request_id =  $this->active_document->id;
+        $document->document_category_id =  $this->active_request->request_category;
+        $document->request_code =  $this->active_request->request_code;
+        $document->request_id =  $this->active_request->id;
         $document->original_file = $document_path;
         $document->save();
         $this->iteration = rand();
@@ -166,8 +179,8 @@ class NewDocumentComponent extends Component
         $document = new DmRequestSupportDocuments();
         $document->title = $this->support_document_title;
         $document->document_code =$this->getNumber(12);
-        $document->parent_id =  $this->active_document_id;
-        $document->request_id =  $this->active_document->id;
+        $document->parent_id =  $this->my_document_id;
+        $document->request_id =  $this->active_request->id;
         $document->original_file = $document_path;
         $document->save();
         $this->iteration = rand();
@@ -181,21 +194,60 @@ class NewDocumentComponent extends Component
     public function addSignatory()
     {
         $this->validate([
-            'signatory_level' => 'required|numeric|max:6|min:1', // 20MB Max
+            // 'signatory_level' => 'required|numeric|max:6|min:1', // 20MB Max
             'name_title' => 'required|string',
             'signatory_id' => 'required|numeric',
         ]);
+        $exists = DmDocumentSignatory::where(['signatory_id'=>$this->signatory_id, 'document_id'=>$this->my_document_id])->first();
+        // dd($exists);
+        if($exists){
+            $this->person_exists = true;
+            $this->dispatchBrowserEvent('alert', ['type' => 'error',  'message' => 'Signatory already exists on this particular document, please select another different person']);
+        }else{
         $signatory = new DmDocumentSignatory();
-        $signatory->document_id = $this->active_document_id;
-        $signatory->signatory_level = $this->signatory_level;
+        $signatory->document_id = $this->my_document_id;
+        $level = DmDocumentSignatory::where('document_id', $this->my_document_id)->orderBy('id','DESC')->first();
+        if($level){
+            $signatory->signatory_level = $level->signatory_level +1;
+        }else{
+            $signatory->signatory_level = 1;
+            // $signatory->signatory_status = 'Active';
+            // $signatory->is_active = '1';
+        }
+        // $signatory->signatory_level = $this->signatory_level;
         $signatory->title = $this->name_title;
         $signatory->signatory_id = $this->signatory_id;
         $signatory->save();
+        $this->signatory_level = $signatory->signatory_level+1;
         $this->name_title = null;
         $this->signatory_id = null;
+        $this->summary = null;
         $this->signatory_level = null;
         $this->active_document_id = null;
+        $this->person_exists = false;
+        $this->dispatchBrowserEvent('close-modal');
         $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => 'Signatory created successfully!']);
+    }
+    }
+
+    public function downloadDocument(DmRequestDocuments $document)
+    {
+        $file = storage_path('app/').$document->original_file;
+        if (file_exists($file)) {
+            return Storage::download($document->original_file, $document->title.' downloaded');
+        } else {
+            $this->dispatchBrowserEvent('alert', ['type' => 'error',  'message' => 'File not deleted! '.$error]);
+        }
+    }
+
+    public function downloadSupportDocument(DmRequestSupportDocuments $document)
+    {
+        $file = storage_path('app/').$document->original_file;
+        if (file_exists($file)) {
+            return Storage::download($document->original_file, $document->title.' downloaded');
+        } else {
+            $this->dispatchBrowserEvent('alert', ['type' => 'error',  'message' => 'File not deleted! '.$error]);
+        }
     }
 
     public function deleteSignatory($id)
@@ -204,10 +256,59 @@ class NewDocumentComponent extends Component
         $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => 'Signatory removed successfully!']);
     }
 
+    public function deleteDocument($id)
+    {
+        try {
+            $data = DmRequestDocuments::where('id', $id)->first();
+            Storage::delete($data->original_file);
+            $data->delete();
+            $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => 'Document file deleted successfully!']);
+        } catch(\Exception $error) {
+            $this->dispatchBrowserEvent('alert', ['type' => 'error',  'message' => 'File not deleted! '.$error]);
+        }
+    }
+
+    public function deleteSupportDocument($id)
+    {
+        try {
+            $data = DmRequestSupportDocuments::where('id', $id)->first();
+            Storage::delete($data->original_file);
+            $data->delete();
+            $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => 'Document file deleted successfully!']);
+        } catch(\Exception $error) {
+            $this->dispatchBrowserEvent('alert', ['type' => 'error',  'message' => 'File not deleted! '.$error]);
+        }
+    }
+
+    public function submitRequest()
+    {
+           
+
+        $myRequest = DmDocumentRequest::where('id',$this->request_id)->with(['documents'])->first();
+        if ($myRequest && count($myRequest->documents)){
+            foreach ($myRequest->documents as $document)   {
+                $signatory = DmDocumentSignatory::Where(['document_id' => $document->id, 'signatory_status'=>'Pending'])
+                ->orderBy('signatory_level', 'asc')->first();
+                $signatory->update(['signatory_status'=>'Active']);
+            }
+            DmRequestDocuments::where('request_id',$this->request_id)->update(['status'=>'Submitted']);
+            DmDocumentRequest::where('id',$this->request_id)->update(['status'=>'Submitted']);
+        }
+
+        $this->addSignatory = false;
+        $this->toggleForm = false;
+        $this->createNew = false;
+        $this->addDocements = false;
+        $this->addSignatory = false;
+        $this->addDocument = false;
+        $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => 'Document submitted successfully!']);
+        // return to_route('document.preview',$document->document_code);
+    }
+
     public function render()
     {
         if($this->request_id){
-            $data['myRequest']  =   $this->active_document;
+            $data['myRequest']  =   DmDocumentRequest::where('id',$this->request_id)->with(['category','documents','user'])->first();
         }else{
             $data['myRequest']  = null;
         }

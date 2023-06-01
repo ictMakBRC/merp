@@ -1,22 +1,22 @@
 <div class="leftside-menu">
 
-    <!-- LOGO -->
-    <a href="index.html" class="logo text-center logo-light">
+     <!-- LOGO -->
+     <a href="index.html" class="logo text-center p-3 logo-light">
         <span class="logo-lg">
-            {{-- <img src="{{asset('assets/images/logo.png')}}" alt="" height="16"> --}}
+            <img src="{{ asset('assets/images/merp-logo.png') }}" alt="" width="50%">
         </span>
         <span class="logo-sm">
-            {{-- <img src="{{asset('assets/images/logo_sm.png')}}" alt="" height="16"> --}}
+            <img src="{{ asset('assets/images/merp-logo.png') }}" alt="" width="50%">
         </span>
     </a>
 
     <!-- LOGO -->
-    <a href="index.html" class="logo text-center logo-dark">
+    <a href="index.html" class="logo text-center p-3 logo-dark">
         <span class="logo-lg">
-            <img src="{{asset('assets/images/logo-dark.png')}}" alt="" height="16">
+            <img src="{{ asset('assets/images/merp-logo.png') }}" alt="" width="50%">
         </span>
         <span class="logo-sm">
-            <img src="{{asset('assets/images/logo_sm_dark.png')}}" alt="" height="16">
+            <img src="{{ asset('assets/images/merp-logo.png') }}" alt="" width="50%">
         </span>
     </a>
 
@@ -35,28 +35,47 @@
 
           
             <li class="side-nav-item">
-                <a data-bs-toggle="collapse" href="#invreq" aria-expanded="false" aria-controls="invreq" class="side-nav-link">
+                <a data-bs-toggle="collapse" href="#documents" aria-expanded="false" aria-controls="invreq" class="side-nav-link">
                     <i class="uil-file-info-alt"></i>
-                    <span>Documents</span>
+                    <span>Document Requests</span>
                     <span class="menu-arrow"></span>
                 </a>
-                <div class="collapse" id="invreq">
+                <div class="collapse" id="documents">
                     <ul class="side-nav-second-level">
                         <li>
-                            <a href="{{route('document.request')}}">New Request</a>
+                            <a href="{{route('document.request')}}">My Requests</a>
                         </li>
-                        {{-- <li>
-                            <a href="{{url('inventory/inv/requests/viewed')}}">Signed</a>
-                        </li> --}}
+                        <li>
+                            <a href="{{route('document.incoming')}}">Incoming requests</a>
+                        </li>
+                        <li>
+                            <a href="{{route('document.documents')}}">Recent Documents</a>
+                        </li>
 
                     </ul>
-                </div>
+                </div>                
                 <li class="side-nav-item">
                     <a href="{{route('document.categories')}}" class="side-nav-link">
                     <i class="uil-home-alt"></i>
-                        <span>Categories </span>
+                        <span>Document Categories </span>
                     </a>
                 </li>
+                <a data-bs-toggle="collapse" href="#resources" aria-expanded="false" aria-controls="invreq" class="side-nav-link">
+                    <i class="uil-file-info-alt"></i>
+                    <span>Documents Resources</span>
+                    <span class="menu-arrow"></span>
+                </a>
+                <div class="collapse" id="resources">
+                    <ul class="side-nav-second-level">
+                        <li>
+                            <a href="{{route('document.resources')}}">My Documents</a>
+                        </li>
+                        <li>
+                            {{-- <a href="{{route('document.incoming')}}">Resource categories</a> --}}
+                        </li>
+
+                    </ul>
+                </div>
             </li>
 
         </ul>

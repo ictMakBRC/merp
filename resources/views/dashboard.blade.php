@@ -184,8 +184,7 @@
                                                     </li>
                                                 </ul>
                                                 <p class="font-13 text-white-50"  style="margin-top: 5px;">
-                                                    <a href="#"
-                                                    class="btn btn-sm btn-light btn-rounded not_active" >
+                                                    <a href="{{route('inventory')}}"class="btn btn-sm btn-light btn-rounded" >
                                                     <i class="mdi dripicons-enter me-1"></i> Proceed Here..</a>
                                                 </p>
                                             </div>
@@ -297,9 +296,9 @@
                                                     </li>
                                                 </ul>
                                                 <p class="font-13 text-white-50"  style="margin-top: 5px;">
-                                                    <button type="button" class="btn btn-sm btn-light btn-rounded">
+                                                    <a href="{{route('document.dashboard')}}"  type="button" class="btn btn-sm btn-light btn-rounded">
                                                         <i class="mdi dripicons-enter me-1"></i> Proceed Here..
-                                                    </button>
+                                                    </a>
                                                 </p>
                                             </div>
                                         </div>

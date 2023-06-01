@@ -1,6 +1,7 @@
 <x-hr-layout>
-    <x-quote>
-    </x-quote>
+    <x-page-title>
+        Advanced Reports
+    </x-page-title>
     <!-- end row-->
     <div class="row mx-auto">
         <div class="col">

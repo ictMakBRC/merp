@@ -1,21 +1,30 @@
 <x-hr-layout>
-    <!-- start quote -->
-    <x-quote>
-    </x-quote>
-    <!-- end quote -->
+    <!-- start page title -->
+    <x-page-title>
+        Resignations
+    </x-page-title>
+    <!-- end page title -->
 
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <x-card-header>
-                    Employee Resignations
-                    <x-slot:buttons>
-                        <a type="button" href="{{ route('resignations.create') }}"
-                        class="btn btn-success mb-2 me-1">New Resignation</a>
-                    </x-slot>
-                </x-card-header>
-
+                <div class="card-header pt-0">
+                    <div class="row mb-0">
+                        <div class="col-sm-4">
+                            <div class="text-sm-end mt-3">
+                                <h4 class="header-title mb-3  text-center">Employee Resignations</h4>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="text-sm-end mt-3">
+                                <a type="button" href="{{ route('resignations.create') }}"
+                                    class="btn btn-success mb-2 me-1">New Resignation</a>
+                            </div>
+                        </div><!-- end col-->
+                    </div>
+                </div>
                 <div class="card-body">
+
                     <div class="table-responsive" id="scroll-horizontal-preview">
                         <table id="datableButtons" class="table border-bottom border-primary mb-0 w-100">
                             <thead>
@@ -127,10 +136,9 @@
                                 </div> <!-- end col -->
                             </div>
                             <!-- end row-->
-                            {{-- <div class="d-grid mb-0 text-center">
+                            <div class="d-grid mb-0 text-center">
                                 <button class="btn btn-success" type="submit">Submit Comment</button>
-                            </div> --}}
-                            @include('layouts.inc.form-submit')
+                            </div>
                         </form>
                     </div>
                 </div> <!-- end modal content-->
@@ -165,10 +173,9 @@
                                 </div> <!-- end col -->
                             </div>
                             <!-- end row-->
-                            {{-- <div class="d-grid mb-0 text-center">
+                            <div class="d-grid mb-0 text-center">
                                 <button class="btn btn-success" type="submit">Submit Comment</button>
-                            </div> --}}
-                            @include('layouts.inc.form-submit')
+                            </div>
                         </form>
                     </div>
                 </div> <!-- end modal content-->

@@ -49,6 +49,9 @@
             <label for="award_document" class="form-label">Award Document</label>
             <input type="file" id="award_document" class="form-control" name="award_document" accept=".pdf">
         </div>
+        <div class="col-md-8"></div>
+        <div class="col-md-4 text-end pt-1">
+            <button class="btn btn-success" type="submit">Save</button>
+        </div>
     </div>
-    @include('layouts.inc.form-submit')
 </form>

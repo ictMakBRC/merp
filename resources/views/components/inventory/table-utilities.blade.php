@@ -17,8 +17,10 @@
     <div>
         <a href="javascript:;" wire:click='export' class="btn {{$display}} btn-secondary me-2"><i class="bi bi-file-earmark-fill"></i> Export</a>
     </div>
+   
+ 
     <div>
-        <form class="ms-auto position-relative">
+        <form class="ms-auto position-relative float-end">
             <div class="position-absolute top-50 translate-middle-y search-icon px-3"><i class="bi bi-search"></i></div>
             <input wire:model.debounce.300ms="search" class="form-control ps-5" type="text" placeholder="search">
           </form>

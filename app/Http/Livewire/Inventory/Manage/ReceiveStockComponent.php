@@ -33,7 +33,7 @@ class ReceiveStockComponent extends Component
     public $edit_id;
 
     public $is_active;
-
+    public $display ='d-none';
     public $invitemid;
     public $item_id;
     public $stock_qty;
@@ -86,6 +86,7 @@ class ReceiveStockComponent extends Component
             $this->defult_department = $this->stock_docement->department_id;
             $this->create_new = false;
             $this->document_id = $this->stock_docement->id;
+            $this->active ='';
         }else{
             $this->departments = Department::where('status','Active')->get();
             $this->create_new = true;
@@ -129,9 +130,11 @@ class ReceiveStockComponent extends Component
         $this->validate([
             'inv_store_id' => 'required',
             'stock_qty' => 'required|numeric',
+            'document_id' => 'required|numeric',
             'unit_cost' => 'required',
             'as_of' => 'required',
             'invitemid' => 'required',
+            'defult_department'=>'required',
         ]);
     
         $total_cost = $this->unit_cost * $this->stock_qty;
@@ -145,6 +148,7 @@ class ReceiveStockComponent extends Component
             //->increment('stock_qty',$this->stock_qty'))
             ->update([
                 'stock_qty' => DB::raw('stock_qty + '.$this->stock_qty),
+                'qyt_remaining' => DB::raw('qyt_remaining + '.$this->stock_qty),
                 'total_cost' => DB::raw('total_cost + '.$total_cost),
             ]);
             $this->resetInputs();
@@ -152,8 +156,10 @@ class ReceiveStockComponent extends Component
         } else {
             $value = new InvStockDocumentItem();
             $value->document_id = $this->document_id;
+            $value->department_id = $this->defult_department;
             $value->inv_supplier_id = $this->inv_supplier_id;
             $value->stock_qty = $this->stock_qty;
+            $value->qyt_remaining = $this->stock_qty;
             $value->batch_no = $this->batch_no;
             $value->unit_cost = $this->unit_cost;
             $value->total_cost = $total_cost;
@@ -170,7 +176,9 @@ class ReceiveStockComponent extends Component
         $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => 'Record added successfully!']);
         }
     }
-
+    //chkdsk
+    // wmic
+    // diskdrive get status
 
     public function SaveStock()
     {
@@ -230,9 +238,32 @@ class ReceiveStockComponent extends Component
         ]);
     }
 
+    public function deleteStockDoc($stock_code)
+    {
+        
+        try {
+            $doc = InvStockDocument::where(['stock_code' => $stock_code, 'is_active'=>0])->first();
+            if($doc){
+            $value = InvStockDocumentItem::where('document_id', $doc->id)->delete();
+            $doc->delete();
+            $this->delete_id = '';
+            $this->dispatchBrowserEvent('close-modal');
+            $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => 'Item deleted successfully!']);
+            }else{
+                $this->dispatchBrowserEvent('swal:modal', [
+                    'type' => 'error',
+                    'message' => 'Something went wrong!',
+                    'text' => 'Failed to submit, please refresh your browser and try again.',
+                ]);
+            }
+        } catch(Exception $error) {
+            $this->dispatchBrowserEvent('alert', ['type' => 'error',  'message' => 'Record can not be deleted!']);
+        }
+    }
+
     public function deleteItem()
     {
-        $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => 'Record added successfully!']);
+       
         try {
             $value = InvStockDocumentItem::where('id', $this->delete_id)->first();
             $value->delete();

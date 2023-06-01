@@ -1,20 +1,23 @@
 <x-hr-layout>
-    <!-- start quote -->
-    <x-quote>
-    </x-quote>
-    <!-- end quote -->
+    <!-- start page title -->
+    <x-page-title>
+        Create Warning
+    </x-page-title>
+    <!-- end page title -->
 
     <!-- end row-->
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <x-card-header>
-                    Upload Warning Letter
-                    <x-slot:buttons>
-        
-                    </x-slot>
-                </x-card-header>
-
+                <div class="card-header pt-0">
+                    <div class="row mb-2">
+                        <div class="col-sm-12">
+                            <div class="text-sm-end mt-3">
+                                <h4 class="header-title mb-3  text-center">Upload Warning Letter</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="card-body">
                     <form method="POST" enctype="multipart/form-data" id="warningForm">
                         @csrf
@@ -45,12 +48,11 @@
                                 <input name="letter" type="file" id="letter" class="form-control" required
                                     accept=".pdf,.doc,.docx">
                             </div>
-                            {{-- <div class="col-md-8"></div>
+                            <div class="col-md-8"></div>
                             <div class="col-md-4 text-end pt-1">
                                 <button class="btn btn-success" type="submit">Submit</button>
-                            </div> --}}
+                            </div>
                         </div>
-                        @include('layouts.inc.form-submit')
                     </form>
                 </div> <!-- end card body-->
             </div> <!-- end card -->

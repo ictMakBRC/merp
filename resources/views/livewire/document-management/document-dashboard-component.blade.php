@@ -17,6 +17,58 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="col-12">
+                <div class="card widget-inline">
+                    <div class="card-body p-0">
+                        <div class="row g-0">
+                            <div class="col-sm-6 col-xl-3">
+                                <div class="card shadow-none m-0">
+                                    <div class="card-body text-center">
+                                        <i class="dripicons-briefcase text-muted" style="font-size: 24px;"></i>
+                                        <h3><span>{{$submited_requets->count()}}</span></h3>
+                                        <p class="text-muted font-15 mb-0">Total Requests</p>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-sm-6 col-xl-3">
+                                <div class="card shadow-none m-0 border-start">
+                                    <div class="card-body text-center">
+                                        <i class="dripicons-checklist text-muted" style="font-size: 24px;"></i>
+                                        <h3><span>{{$submited_requets->where('status', '!=', 'Completed')->count()}}</span></h3>
+                                        <p class="text-muted font-15 mb-0">Requests Pending</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 col-xl-3">
+                                <div class="card shadow-none m-0 border-start">
+                                    <div class="card-body text-center">
+                                        <i class="dripicons-user-group text-muted" style="font-size: 24px;"></i>
+                                        <h3><span>{{$submited_documents->count()}}</span></h3>
+                                        <p class="text-muted font-15 mb-0">Documents Uploaded</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 col-xl-3">
+                                <div class="card shadow-none m-0 border-start">
+                                    <div class="card-body text-center">
+                                        <i class="dripicons-graph-line text-muted" style="font-size: 24px;"></i>
+                                        <h3><span>{{$submited_documents->where('status', '!=', 'Completed')->count()}}</span> <i class="mdi mdi-arrow-up text-success"></i></h3>
+                                        <p class="text-muted font-15 mb-0">Documents Pending</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div> <!-- end row -->
+                    </div>
+                </div> <!-- end card-box-->
+            </div> <!-- end col-->
+        </div>
+        <!-- end row-->
         <div class="card">
             <div class="card-body">
                 <h6>Active Folder: @if ($current_folder?->parent!='')
@@ -43,22 +95,7 @@
                 @endif
 
                 <h6>Recently uploaded</h6>
-                <x-inventory.table-utilities>
-                    @if ($folder_open)
-                        <div class="text-sm-end mt-1 ms-auto position-relative">
-                            <a type="button" href="javascript:void()" class="btn @if (!$createNew) btn-success
-                            @else
-                            btn-outline-danger @endif"
-                                wire:click="$set('createNew',{{ !$createNew }})">
-                                @if (!$createNew)
-                                    <i class="mdi mdi-plus"></i>New
-                                @else
-                                    <i class="mdi mdi-caret-up"></i>Close
-                                @endif
-                            
-                            </a>
-                        </div>
-                    @endif
+                <x-inventory.table-utilities>                   
                 </x-inventory.table-utilities>
                 <div class="table-responsive mt-3">
                     <table class="table table-striped table-hover table-sm mb-0">
@@ -66,34 +103,34 @@
                             <tr>
                                 <th>Name <i class='mdi mdi-up-arrow-alt ms-2'></i></th>
                                 <th>Category</th>
-                                <th>Uploaded by</th>
-                                <th>Uploaded On</th>
+                                <th>Created by</th>
+                                <th>Created On</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($documents as $document)
-                            <tr @if ($document->expiry_date <= $to_date && $document->expiry_date!=null) class="bg-light-warning" @else class="text-primary" @endif >
+                            @forelse ($incomingRequsests as $requests)
+                            <tr >
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <div><i class='mdi mdis-file me-2 font-24 text-primary'></i>
                                         </div>
-                                        <div class="font-weight-bold text-primary">{{$document->title}}</div>
+                                        <div class="font-weight-bold text-primary">{{$requests->title}}</div>
                                     </div>
                                 </td>
-                                <td>{{$document->category->name??'N/A'}}</td>
-                                <td>{{$document->user->name??'N/A'}}</td>
+                                <td>{{$requests->category->name??'N/A'}}</td>
+                                <td>{{$requests->user->name??'N/A'}}</td>
                             
-                                <th>{{$document->created_at??'N/A'}}</th>
-                                <th>{{$document->status??'N/A'}}</th>
+                                <th>{{$requests->created_at??'N/A'}}</th>
+                                <th>{{$requests->status??'N/A'}}</th>
                                 <td>
                                     
-                                <a href="{{route('document.preview',$document->document_code)}}" class="text-success" ><i class='mdi mdi-eye font-20'></i></a> 
-                                @if ($document->status == 'Pending')
-                                 <a href="javascript:void()" wire:click="updateDocument({{$document->id}})" class="text-info" ><i class='mdi mdi-pencil font-16'></i></a> 
+                                <a href="{{route('document.sign',$requests->request_code)}}" class="text-success" ><i class='mdi mdi-eye font-20'></i></a> 
+                                @if ($requests->status == 'Pending')
+                                <a href="javascript:void()" wire:click="attachDocument({{$requests->id}})" class="text-info" ><i class='mdi mdi-pencil font-16'></i></a> 
                                 @endif                                
-                                              
+                                            
                                 </td>
                             </tr>
                             @empty                                                            

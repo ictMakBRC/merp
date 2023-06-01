@@ -70,10 +70,10 @@
         height: 5px;
     }
 </style>
-<!-- start quote -->
-<x-quote>
-    {{-- {{ $pagetitle }} --}}
-</x-quote> 
+<!-- start page title -->
+<x-page-title>
+    {{ $pagetitle }}
+</x-page-title> 
 
 <div class="card">
     <div class="card-body">

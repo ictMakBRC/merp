@@ -62,8 +62,11 @@
             <label for="employer_address" class="form-label">Employer/Business Address</label>
             <input name="employer_address" type="text" id="employer_address" class="form-control">
         </div>
+        <div class="col-md-8 pt-2"></div>
+        <div class="col-md-4 text-end">
+            <button class="btn btn-success" type="submit">Save</button>
+        </div>
     </div>
-    @include('layouts.inc.form-submit')
 </form>
 
 <div class="row pt-3">
@@ -108,8 +111,11 @@
                             <label for="birth_date" class="form-label">Birth Date</label>
                             <input type="date" id="birth_date" class="form-control" name="birth_date"required>
                         </div>
+                        <div class="col-md-8 pt-1"></div>
+                        <div class="col-md-4 text-end">
+                            <button class="btn btn-success" type="submit">Save</button>
+                        </div>
                     </div>
-                    @include('layouts.inc.form-submit')
                 </form>
             </div> <!-- end card body-->
         </div> <!-- end card -->
