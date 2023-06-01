@@ -155,16 +155,15 @@ class DocumentResourcesComponent extends Component
     public function createCategory()
     {
         $category = new DmDocumentResourceCategory();
-        $category->name = 'Shared';
-        $category->name_read_only ='shared';
+        $category->name = 'SOPS';
+        $category->name_read_only ='sop';
         $category->status = 1;
-        $category->code = 'SHARED001';
+        $category->code = 'SOP002';
         $category->expires = 0;
         $category->save();
     }
     public function render()
-    {
-        
+    {       
        
         if ($this->active_status) {
             $status = 3;
