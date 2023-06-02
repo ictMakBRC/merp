@@ -23,9 +23,9 @@ class SendEmailNotification implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($referral_request)
+    public function __construct($signature_request)
     {
-        $this->details = $referral_request;
+        $this->details = $signature_request;
     }
 
     /**
@@ -40,6 +40,6 @@ class SendEmailNotification implements ShouldQueue
 
     public function failed(\Exception $exception)
     {
-        Log::error('Failed to send referral status email. Error message: '.$exception->getMessage());
+        Log::error('Failed to send signature request status email. Error message: '.$exception->getMessage());
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Facade;
+use App\Providers\CodeGeneratorService;
 
 return [
 
@@ -168,6 +169,7 @@ return [
         Jenssegers\Agent\AgentServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+        CodeGeneratorService::class,
 
         /*
          * Package Service Providers...

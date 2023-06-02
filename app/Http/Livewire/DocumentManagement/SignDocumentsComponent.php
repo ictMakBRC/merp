@@ -2,12 +2,17 @@
 
 namespace App\Http\Livewire\DocumentManagement;
 
+use Throwable;
+use Carbon\Carbon;
+use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
+use App\Providers\CodeGeneratorService;
 use Illuminate\Support\Facades\Storage;
 use App\Models\DocumentManagement\DmDocumentRequest;
 use App\Models\DocumentManagement\DmRequestDocuments;
+use App\Jobs\DocumentManagement\SendEmailNotification;
 use App\Models\DocumentManagement\DmDocumentSignatory;
 use App\Models\DocumentManagement\DmRequestSupportDocuments;
 
@@ -60,6 +65,10 @@ class SignDocumentsComponent extends Component
             // 'support_document_title' => 'required|string',
         ]);
 
+        
+        $scode = CodeGeneratorService::getNumber(8);
+        $sintials = CodeGeneratorService::generateInitials(auth()->user()->name);  
+
         $data = DmRequestDocuments::where('id', $this->active_document_id)->first();
         $file_name = date('Ymdhis').'_'.$data->document_code.'.'.$this->signed_file->extension();
         $new_file = $this->signed_file->storeAs('Merp/documents/signed/'.date("Y-m"), $file_name);
@@ -68,19 +77,82 @@ class SignDocumentsComponent extends Component
         }
         $data->signed_file = $new_file;
         $data->update();
-        $this->iteration = rand();
+        $this->iteration = rand();      
+        $signature = $sintials.'_'.$scode;
 
         $signatory = DmDocumentSignatory::Where(['document_id' => $this->active_document_id, 'signatory_status'=>'Pending'])
         ->orderBy('signatory_level', 'asc')->first();
         if($signatory){
             $signatory->update(['signatory_status'=>'Active']);
+            try {
+                $user = User::where('id',$signatory->signatory_id )->first();
+               
+                $signature_request = [
+                    'to' => $user->email,
+                    'phone' => $user->contact,
+                    'subject' => 'Document Signature request for '.$data->title.' needs your signature',
+                    'greeting' => 'Hi '.$user->title.' '.$user->name,
+                    'body' => 'You have a document request for document #'.$data->title.' on request '.$data->request_code.' to sign',
+                    'thanks' => 'Thank you, incase of any question, please reply support@makbrc.org',
+                    'actionText' => 'View Details',
+                    'actionURL' => url('/documents/request/'.$data->request_code.'/sign'),
+                    'department_id' => $data->created_by,
+                    'user_id' => $data->created_by,
+                ];
+                // WhatAppMessageService::sendReferralMessage($referral_request);
+              $mm =  SendEmailNotification::dispatch($signature_request)->delay(Carbon::now()->addSeconds(20));
+            //   dd($mm);
+            } catch(Throwable $error) {
+                // $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => 'Referral Request '.$error.'!']);
+            }
         }
         DmDocumentSignatory::Where(['document_id' => $this->active_document_id, 'signatory_id'=>auth()->user()->id])
-        ->update(['signatory_status'=>'Signed']);
+        ->update(['signatory_status'=>'Signed','signature'=>$signature]);
 
         $this->dispatchBrowserEvent('alert', ['type' => 'Success',  'message' => 'File uploaded successfully! ']);
     }
 
+    public function markDocumentComplete()
+    {
+        DmRequestDocuments::where('id', $this->active_document_id)->update(['status'=>'Signed']);
+        $this->dispatchBrowserEvent('alert', ['type' => 'Success',  'message' => 'Document has been successfully marked complete! ']);
+    }
+    
+    public function downloadProof()
+    {
+        DmRequestDocuments::where('id', $this->active_document_id)->update(['status'=>'Signed']);
+        $this->dispatchBrowserEvent('alert', ['type' => 'Success',  'message' => 'Document has been successfully marked complete! ']);
+    }
+
+    public function markRequestComplete()
+    {
+      $data =  DmDocumentRequest::where('request_code',$this->requestCode)->first();
+      $data->status ='Completedd';
+      $data->update();
+        DmRequestDocuments::where('request_code', $this->requestCode)->update(['status'=>'Signed']);
+        try {
+            $user = User::where('id',$data->created_by )->first();
+           
+            $signature_request = [
+                'to' => $user->email,
+                'phone' => $user->contact,
+                'subject' => 'Document request for '.$data->title.' Has been completed',
+                'greeting' => 'Hi '.$user->title.' '.$user->name,
+                'body' => 'Your request #'.$data->title.' on request '.$data->request_code.' has been completed',
+                'thanks' => 'Thank you, incase of any question, please reply support@makbrc.org',
+                'actionText' => 'View Details',
+                'actionURL' => url('/documents/request/'.$data->request_code.'/sign'),
+                'department_id' => $data->created_by,
+                'user_id' => $data->created_by,
+            ];
+            // WhatAppMessageService::sendReferralMessage($referral_request);
+          $mm=  SendEmailNotification::dispatch($signature_request)->delay(Carbon::now()->addSeconds(20));
+        //   dd($mms);
+        } catch(Throwable $error) {
+            // $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => 'Referral Request '.$error.'!']);
+        }
+        $this->dispatchBrowserEvent('alert', ['type' => 'Success',  'message' => 'Document request has been successfully marked complete! ']);
+    }
 
     public function rejectDocument()
     {
@@ -178,7 +250,7 @@ class SignDocumentsComponent extends Component
         $data['requestData'] = $this->active_request = DmDocumentRequest::where('request_code',$this->requestCode)->with(['category','documents','user'])->first();
         
         $data['documents'] = DmRequestDocuments::where('request_code', $this->requestCode)->with(['signatories','suportDocuments'])->get();
-
+        $data['pending_documents'] =  DmRequestDocuments::where('request_code', $this->requestCode)->where('status','!=','Signed')->count();
         $data['active_document'] = $data['documents']->only($this->active_document_id)[0];
         return view('livewire.document-management.sign-documents-component', $data)->layout('livewire.document-management.layouts.app');
     }

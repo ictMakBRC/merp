@@ -36,8 +36,14 @@
                                 <a class="list-group-item list-group-item-action @if ($document->status =='Rejected') alert-warning text-warning @endif"  id="list-home-list"
                                     data-toggle="list" href="javascript:void(0)" wire:click="$set('active_document_id',{{$document->id}})" role="tab"><strong>Doc #{{$key+1}}</strong> : {{ $document->title }}</a>
                             @empty
-                            @endforelse                                    
+                            @endforelse  
+                            @php
+                                $signed = '';
+                            @endphp                                  
                         </div>
+                        @if ($pending_documents<=0 && $requestData->status =='Submitted')
+                        <button class="btn mt-2 float-end btn-success btn-sm" wire:click='markRequestComplete'>Mark Request Complete</button>
+                        @endif
                     </div>
                 </div>
                 <div class="col-8">
@@ -103,6 +109,11 @@
                                                                     <td>{{$signatory->title}}</td>
                                                                     <td>
                                                                         {{$signatory->signatory_status}}
+                                                                        @php
+                                                                            if ($signatory->signatory_status =="Active") {
+                                                                                $signed = 'd-none';
+                                                                            }
+                                                                        @endphp
                                                                     </td>
                                                                 </tr>
                                                                     @if ($signatory->signatory_status =="Active" && auth()->user()->id == $signatory->signatory_id)
@@ -260,6 +271,15 @@
                                     </div>     
                                 </div>
                             </div>
+                                @if ($active_document->status =="Submitted")
+                                 <button class="btn {{$signed}} btn-success btn-sm" wire:click='markDocumentComplete'>Mark Document Complete</button>
+                                 @elseif($active_document->status =="Signed")
+                                 <button class="btn  btn-info btn-sm" wire:click='downloadProof'>Download Proof of Signature</button>
+                                @endif
+                                @if ($pending_documents<=0 && $requestData->status =='Submitted')
+                                <button class="btn btn-success btn-sm" wire:click='markRequestComplete'>Mark Request Complete</button>
+                                @endif
+                            
                             @endif
                         </div>
                     </div>
