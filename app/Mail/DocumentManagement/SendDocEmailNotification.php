@@ -12,15 +12,23 @@ use Illuminate\Queue\SerializesModels;
 class SendDocEmailNotification extends Mailable
 {
     use Queueable, SerializesModels;
+    public $details;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($details)
     {
-        //
+        $this->details = $details;
+    }
+
+    public function build()
+    {
+        return $this->view('livewire.partials.document_email')
+                ->subject($this->details['subject'])
+                ->with('details', $this->details);
     }
 
     /**
@@ -31,7 +39,7 @@ class SendDocEmailNotification extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Send Doc Email Notification',
+            subject: $this->details['subject'],
         );
     }
 
@@ -43,7 +51,7 @@ class SendDocEmailNotification extends Mailable
     public function content()
     {
         return new Content(
-            view: 'view.name',
+            view: 'livewire.partials.document_email',
         );
     }
 

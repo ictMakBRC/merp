@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\DocumentManagement;
 
+use Throwable;
+use Carbon\Carbon;
 use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -11,6 +13,7 @@ use App\Models\DocumentManagement\DmDocument;
 use App\Models\DocumentManagement\DmDocumentRequest;
 use App\Models\DocumentManagement\DmDocumentCategory;
 use App\Models\DocumentManagement\DmRequestDocuments;
+use App\Jobs\DocumentManagement\SendEmailNotification;
 use App\Models\DocumentManagement\DmDocumentSignatory;
 use App\Models\DocumentManagement\DmRequestSupportDocuments;
 
@@ -290,6 +293,27 @@ class NewDocumentComponent extends Component
                 $signatory = DmDocumentSignatory::Where(['document_id' => $document->id, 'signatory_status'=>'Pending'])
                 ->orderBy('signatory_level', 'asc')->first();
                 $signatory->update(['signatory_status'=>'Active']);
+                try {
+                    $user = User::where('id',$signatory->signatory_id )->first();
+                   
+                    $signature_request = [
+                        'to' => $user->email,
+                        'phone' => $user->contact,
+                        'subject' => 'Document request for'.$myRequest->title.' needs your signature',
+                        'greeting' => 'Hi '.$user->title.' '.$user->name,
+                        'body' => 'You have a document request for document #'.$myRequest->title.' on request '.$myRequest->request_code.' to sign',
+                        'thanks' => 'Thank you, incase of any question, please reply support@makbrc.org',
+                        'actionText' => 'View Details',
+                        'actionURL' => url('/documents/request/'.$myRequest->request_code.'/sign'),
+                        'department_id' => $myRequest->created_by,
+                        'user_id' => $myRequest->created_by,
+                    ];
+                    // WhatAppMessageService::sendReferralMessage($referral_request);
+                 $mm=   SendEmailNotification::dispatch($signature_request)->delay(Carbon::now()->addSeconds(20));
+                //  dd($mm);
+                } catch(Throwable $error) {
+                    // $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => 'Referral Request '.$error.'!']);
+                }
             }
             DmRequestDocuments::where('request_id',$this->request_id)->update(['status'=>'Submitted']);
             DmDocumentRequest::where('id',$this->request_id)->update(['status'=>'Submitted']);
