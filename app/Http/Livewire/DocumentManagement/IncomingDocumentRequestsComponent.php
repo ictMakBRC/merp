@@ -5,6 +5,7 @@ namespace App\Http\Livewire\DocumentManagement;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\DocumentManagement\DmDocumentRequest;
+use App\Models\DocumentManagement\DmRequestDocuments;
 
 class IncomingDocumentRequestsComponent extends Component
 {
@@ -47,6 +48,11 @@ class IncomingDocumentRequestsComponent extends Component
         ->WhereHas('documents.signatories', function ($query) {
             $query->where('signatory_id', auth()->user()->id);
         })->where('status','!=','Pending')->orderBy('id','DESC')->get();
+
+        $data['submited_requets'] = DmDocumentRequest::where('status','!=','Pending')->WhereHas('documents.signatories', function ($query) {
+            $query->where('signatory_id', auth()->user()->id);})->get();
+        $data['submited_documents'] = DmRequestDocuments::where('status','!=','Pending')->WhereHas('signatories', function ($query) {
+            $query->where('signatory_id', auth()->user()->id);})->get();
 
         return view('livewire.document-management.incoming-document-requests-component',$data)->layout('livewire.document-management.layouts.app');;
     }

@@ -25,7 +25,7 @@
                             <div class="col-sm-6 col-xl-3">
                                 <div class="card shadow-none m-0">
                                     <div class="card-body text-center">
-                                        <i class="dripicons-briefcase text-muted" style="font-size: 24px;"></i>
+                                        <i class=" uil-envelope-check text-muted" style="font-size: 24px;"></i>
                                         <h3><span>{{$submited_requets->count()}}</span></h3>
                                         <p class="text-muted font-15 mb-0">Total Requests</p>
                                     </div>
@@ -36,7 +36,7 @@
                             <div class="col-sm-6 col-xl-3">
                                 <div class="card shadow-none m-0 border-start">
                                     <div class="card-body text-center">
-                                        <i class="dripicons-checklist text-muted" style="font-size: 24px;"></i>
+                                        <i class="uil-envelope-exclamation text-muted" style="font-size: 24px;"></i>
                                         <h3><span>{{$submited_requets->where('status', '!=', 'Completed')->count()}}</span></h3>
                                         <p class="text-muted font-15 mb-0">Requests Pending</p>
                                     </div>
@@ -46,9 +46,9 @@
                             <div class="col-sm-6 col-xl-3">
                                 <div class="card shadow-none m-0 border-start">
                                     <div class="card-body text-center">
-                                        <i class="dripicons-user-group text-muted" style="font-size: 24px;"></i>
-                                        <h3><span>{{$submited_documents->count()}}</span></h3>
-                                        <p class="text-muted font-15 mb-0">Documents Uploaded</p>
+                                        <i class="uil-copy-alt text-info" style="font-size: 24px;"></i>
+                                        <h3><span>{{$received_requets->count()}}</span></h3>
+                                        <p class="text-muted font-15 mb-0">Received Requests</p>
                                     </div>
                                 </div>
                             </div>
@@ -56,9 +56,9 @@
                             <div class="col-sm-6 col-xl-3">
                                 <div class="card shadow-none m-0 border-start">
                                     <div class="card-body text-center">
-                                        <i class="dripicons-graph-line text-muted" style="font-size: 24px;"></i>
-                                        <h3><span>{{$submited_documents->where('status', '!=', 'Completed')->count()}}</span> <i class="mdi mdi-arrow-up text-success"></i></h3>
-                                        <p class="text-muted font-15 mb-0">Documents Pending</p>
+                                        <i class="uil-file-exclamation text-primary" style="font-size: 24px;"></i>
+                                        <h3><span>{{$received_requets->where('status', '!=', 'Completed')->count()}}</span> <i class="mdi mdi-arrow-up text-success"></i></h3>
+                                        <p class="text-muted font-15 mb-0">Pending Requests</p>
                                     </div>
                                 </div>
                             </div>
@@ -94,7 +94,7 @@
                     @include('livewire.document-management.new-document-form')
                 @endif
 
-                <h6>Recently uploaded</h6>
+                <h6>Recent requests</h6>
                 <x-inventory.table-utilities>                   
                 </x-inventory.table-utilities>
                 <div class="table-responsive mt-3">
@@ -110,37 +110,72 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($incomingRequsests as $requests)
-                            <tr >
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <div><i class='mdi mdis-file me-2 font-24 text-primary'></i>
+                            @if (count($incomingRequsests)>0)                            
+                                @forelse ($incomingRequsests as $requests)
+                                <tr >
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div><i class='mdi mdis-file me-2 font-24 text-primary'></i>
+                                            </div>
+                                            <div class="font-weight-bold text-primary">{{$requests->title}}</div>
                                         </div>
-                                        <div class="font-weight-bold text-primary">{{$requests->title}}</div>
-                                    </div>
-                                </td>
-                                <td>{{$requests->category->name??'N/A'}}</td>
-                                <td>{{$requests->user->name??'N/A'}}</td>
-                            
-                                <th>{{$requests->created_at??'N/A'}}</th>
-                                <th>{{$requests->status??'N/A'}}</th>
-                                <td>
-                                    
-                                <a href="{{route('document.sign',$requests->request_code)}}" class="text-success" ><i class='mdi mdi-eye font-20'></i></a> 
-                                @if ($requests->status == 'Pending')
-                                <a href="javascript:void()" wire:click="attachDocument({{$requests->id}})" class="text-info" ><i class='mdi mdi-pencil font-16'></i></a> 
-                                @endif                                
-                                            
-                                </td>
-                            </tr>
-                            @empty                                                            
+                                    </td>
+                                    <td>{{$requests->category->name??'N/A'}}</td>
+                                    <td>{{$requests->user->name??'N/A'}}</td>
                                 
-                            <tr>
+                                    <th>{{$requests->created_at??'N/A'}}</th>
+                                    <th>{{$requests->status??'N/A'}}</th>
+                                    <td>
+                                        
+                                    <a href="{{route('document.sign',$requests->request_code)}}" class="text-success" ><i class='mdi mdi-eye font-20'></i></a> 
+                                    @if ($requests->status == 'Pending')
+                                    <a href="javascript:void()" wire:click="attachDocument({{$requests->id}})" class="text-info" ><i class='mdi mdi-pencil font-16'></i></a> 
+                                    @endif                                
+                                                
+                                    </td>
+                                </tr>
+                                @empty                                                            
+                                    
+                                <tr>
+                                
+                                    <td colspan="6" class="text-center text-danger">You have no resources uploaded in the following folder</td>
+                                
+                                </tr>
+                                @endforelse
+                                @else
+                                @forelse ($recent_requets as $requests)
+                                <tr >
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div><i class='mdi mdis-file me-2 font-24 text-primary'></i>
+                                            </div>
+                                            <div class="font-weight-bold text-primary">{{$requests->title}}</div>
+                                        </div>
+                                    </td>
+                                    <td>{{$requests->category->name??'N/A'}}</td>
+                                    <td>{{$requests->user->name??'N/A'}}</td>
+                                
+                                    <th>{{$requests->created_at??'N/A'}}</th>
+                                    <th>{{$requests->status??'N/A'}}</th>
+                                    <td>
+                                        
+                                    <a href="{{route('document.sign',$requests->request_code)}}" class="text-success" ><i class='mdi mdi-eye font-20'></i></a> 
+                                    @if ($requests->status == 'Pending')
+                                    <a href="javascript:void()" wire:click="attachDocument({{$requests->id}})" class="text-info" ><i class='mdi mdi-pencil font-16'></i></a> 
+                                    @endif                                
+                                                
+                                    </td>
+                                </tr>
+                                @empty                                                            
+                                    
+                                <tr>
+                                
+                                    <td colspan="6" class="text-center text-danger">You have no requests uploaded in the following folder</td>
+                                
+                                </tr>
+                                @endforelse
+                            @endif
                             
-                                <td colspan="6" class="text-center text-danger">You have no resources uploaded in the following folder</td>
-                            
-                            </tr>
-                            @endforelse
 
                         </tbody>
                     </table>

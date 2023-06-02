@@ -12,9 +12,60 @@
                             <li class="breadcrumb-item active">New</li>
                         </ol>
                     </div>
-                    <h4 class="page-title">New Request</h4>
+                    <h4 class="page-title">My Requests</h4>
                 </div>
             </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card widget-inline">
+                    <div class="card-body p-0">
+                        <div class="row g-0">
+                            <div class="col-sm-6 col-xl-3">
+                                <div class="card shadow-none m-0">
+                                    <div class="card-body text-center">
+                                        <i class=" uil-envelope-check text-muted" style="font-size: 24px;"></i>
+                                        <h3><span>{{$submited_requets->count()}}</span></h3>
+                                        <p class="text-muted font-15 mb-0">Total Requests</p>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-sm-6 col-xl-3">
+                                <div class="card shadow-none m-0 border-start">
+                                    <div class="card-body text-center">
+                                        <i class="uil-envelope-exclamation text-muted" style="font-size: 24px;"></i>
+                                        <h3><span>{{$submited_requets->where('status', '!=', 'Completed')->count()}}</span></h3>
+                                        <p class="text-muted font-15 mb-0">Requests Pending</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 col-xl-3">
+                                <div class="card shadow-none m-0 border-start">
+                                    <div class="card-body text-center">
+                                        <i class="uil-copy-alt text-info" style="font-size: 24px;"></i>
+                                        <h3><span>{{$submited_documents->count()}}</span></h3>
+                                        <p class="text-muted font-15 mb-0">Documents Uploaded</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 col-xl-3">
+                                <div class="card shadow-none m-0 border-start">
+                                    <div class="card-body text-center">
+                                        <i class="uil-file-exclamation text-primary" style="font-size: 24px;"></i>
+                                        <h3><span>{{$submited_documents->where('status', '!=', 'Signed')->count()}}</span> <i class="mdi mdi-arrow-up text-success"></i></h3>
+                                        <p class="text-muted font-15 mb-0">Documents Pending</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div> <!-- end row -->
+                    </div>
+                </div> <!-- end card-box-->
+            </div> <!-- end col-->
         </div>
         @if ($createNew)
                 <div class="card">

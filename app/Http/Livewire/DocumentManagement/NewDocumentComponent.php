@@ -340,6 +340,9 @@ class NewDocumentComponent extends Component
         $data['myRequests'] = DmDocumentRequest::search($this->search)->where('created_by', auth()->user()->id)->orderBy('id','DESC')->get();
         $data['categories'] = DmDocumentCategory::where('parent_id', 0)->get();
         $data['users'] = User::all();
+        $data['submited_requets'] = DmDocumentRequest::where('status','!=','Pending')->where('created_by',auth()->user()->id)->get();
+        $data['submited_documents'] = DmRequestDocuments::where('status','!=','Pending')->where('created_by',auth()->user()->id)->get();
+
         return view('livewire.document-management.new-document-component',$data)->layout('livewire.document-management.layouts.app');
     }
 }

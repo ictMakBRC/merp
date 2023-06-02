@@ -44,6 +44,47 @@
                                     <div class="col-md-12">
                                         <div wire:ignore.self class="tab-content  py-3">
                                             {{-- Resource Category Form --}}
+                                            @if ($createNew)
+                                                <form
+                                                    @if (!$toggleForm) wire:submit.prevent="storeCategory"
+                                                    @else
+                                                    wire:submit.prevent="updateCategory" @endif>
+                                                    <div class="modal-content- p-2">
+                                                        <div class="row">
+                                                            <div class="mb-3 col-md-5">
+                                                                <label for="name" class="form-label">Category Name</label>
+                                                                <input type="text" id="name" class="form-control"
+                                                                    wire:model.lazy="name">
+                                                                @error('name')
+                                                                    <div class="text-danger text-small">{{ $message }}</div>
+                                                                @enderror
+                                                            </div>
+                                                            <div class="mb-3 col-md-5">
+                                                                <label for="name" class="form-label">Parent Category</label>
+                                                                <select name="parent_id" id="parent_id" wire:model="parent_id" class="form-select">
+                                                                    <option value="0">None...</option>
+                                                                    @forelse ($categories as $category)
+                                                                    <option value="{{$category->id}}">{{$category->name}}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                                @error('parent_id')
+                                                                    <div class="text-danger text-small">{{ $message }}</div>
+                                                                @enderror
+                                                            </div>
+                                                        
+                                                    
+                                                            <div class="col-md-2">
+                                                                @if (!$toggleForm)
+                                                                <x-button class="btn-success mt-3">{{ __('Save') }}</x-button>
+                                                                @else
+                                                                    <x-button class="btn-success mt-3">{{ __('Update') }}</x-button>
+                                                                @endif
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </form>                                                
+                                            @endif
                                             <div class="">
                                                 <x-inventory.table-utilities>
                                                     <div class="text-sm-end mt-1 ms-auto position-relative">
@@ -60,47 +101,7 @@
                                                         Close </a>
                                                     </div>
                                                 </x-inventory.table-utilities>
-                                                @if ($createNew)
-                                                    <form
-                                                        @if (!$toggleForm) wire:submit.prevent="storeCategory"
-                                                        @else
-                                                        wire:submit.prevent="updateCategory" @endif>
-                                                        <div class="modal-content- p-2">
-                                                            <div class="row">
-                                                                <div class="mb-3 col-md-5">
-                                                                    <label for="name" class="form-label">Category Name</label>
-                                                                    <input type="text" id="name" class="form-control"
-                                                                        wire:model.lazy="name">
-                                                                    @error('name')
-                                                                        <div class="text-danger text-small">{{ $message }}</div>
-                                                                    @enderror
-                                                                </div>
-                                                                <div class="mb-3 col-md-5">
-                                                                    <label for="name" class="form-label">Category type</label>
-                                                                    <select name="parent_id" id="parent_id" wire:model="parent_id" class="form-select">
-                                                                        <option value="0">None...</option>
-                                                                        @forelse ($categories as $category)
-                                                                        <option value="{{$category->id}}">{{$category->name}}</option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                    @error('parent_id')
-                                                                        <div class="text-danger text-small">{{ $message }}</div>
-                                                                    @enderror
-                                                                </div>
-                                                            
-                                                        
-                                                                <div class="col-md-2">
-                                                                    @if (!$toggleForm)
-                                                                    <x-button class="btn-success mt-3">{{ __('Save') }}</x-button>
-                                                                    @else
-                                                                        <x-button class="btn-success mt-3">{{ __('Update') }}</x-button>
-                                                                    @endif
-                                                                </div>
-
-                                                            </div>
-                                                        </div>
-                                                    </form>                                                
-                                                @endif
+                                              
                                                     <div class="table-responsive">
                                                         <table class="table table-striped table-bordered table-hover table-sm mb-0">
                                                             <thead>
