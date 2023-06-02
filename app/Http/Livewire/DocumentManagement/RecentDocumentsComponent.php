@@ -15,7 +15,7 @@ class RecentDocumentsComponent extends Component
 
     public $search = '';
 
-    public $orderBy = 'name';
+    public $orderBy = 'id';
 
     public $show = 'categories';
 
@@ -82,7 +82,7 @@ class RecentDocumentsComponent extends Component
     }
     public function render()
     {
-        $data['documents']= DmRequestDocuments::search($this->search)->where('created_by',auth()->user()->id)->with(['category','signatories'])->get();
+        $data['documents']= DmRequestDocuments::search($this->search)->where('created_by',auth()->user()->id)->with(['category','signatories'])->orderBy('id','DESC')->get();
         return view('livewire.document-management.recent-documents-component',$data)->layout('livewire.document-management.layouts.app');
     }
 }

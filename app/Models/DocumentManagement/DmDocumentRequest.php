@@ -35,4 +35,14 @@ class DmDocumentRequest extends Model
             });
         }
     }
+    public static function search($search)
+    {
+        return empty($search) ? static::query()
+            : static::query()
+               ->where('title', 'like', '%'.$search.'%')
+               ->orWhere('request_code', 'like', '%'.$search.'%')
+               ->orWhereHas('category', function ($query) use ($search) {
+                $query->where('name', 'like', '%'.$search.'%');
+            });
+    }
 }

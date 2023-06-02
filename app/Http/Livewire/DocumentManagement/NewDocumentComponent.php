@@ -149,7 +149,7 @@ class NewDocumentComponent extends Component
         ]);
 
         
-        $path = 'Merp/documents/originals/'.date("Y-m");
+        $path = 'Merp/documents/originals/'.date("Y").'/'.date("m");
         $permit_name = date('Ymdhis').'_'.time().'.'.$this->file->extension();
         $document_path = $this->file->storeAs($path, $permit_name);
         $document = new DmRequestDocuments();
@@ -176,7 +176,7 @@ class NewDocumentComponent extends Component
         ]);
 
         
-        $path = 'Merp/documents/support/'.date("Y-m");
+        $path = 'Merp/documents/support/'.date("Y").'/'.date("m");
         $permit_name = date('Ymdhis').'_'.time().'.'.$this->support_file->extension();
         $document_path = $this->support_file->storeAs($path, $permit_name);
         $document = new DmRequestSupportDocuments();
@@ -299,7 +299,7 @@ class NewDocumentComponent extends Component
                     $signature_request = [
                         'to' => $user->email,
                         'phone' => $user->contact,
-                        'subject' => 'Document request for'.$myRequest->title.' needs your signature',
+                        'subject' => 'Document request for '.$myRequest->title.' needs your signature',
                         'greeting' => 'Hi '.$user->title.' '.$user->name,
                         'body' => 'You have a document request for document #'.$myRequest->title.' on request '.$myRequest->request_code.' to sign',
                         'thanks' => 'Thank you, incase of any question, please reply support@makbrc.org',
@@ -337,7 +337,7 @@ class NewDocumentComponent extends Component
             $data['myRequest']  = null;
         }
 
-        $data['myRequests'] = DmDocumentRequest::where('created_by', auth()->user()->id)->get();
+        $data['myRequests'] = DmDocumentRequest::search($this->search)->where('created_by', auth()->user()->id)->orderBy('id','DESC')->get();
         $data['categories'] = DmDocumentCategory::where('parent_id', 0)->get();
         $data['users'] = User::all();
         return view('livewire.document-management.new-document-component',$data)->layout('livewire.document-management.layouts.app');
