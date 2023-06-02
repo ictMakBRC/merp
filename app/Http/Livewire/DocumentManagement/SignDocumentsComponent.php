@@ -71,7 +71,7 @@ class SignDocumentsComponent extends Component
 
         $data = DmRequestDocuments::where('id', $this->active_document_id)->first();
         $file_name = date('Ymdhis').'_'.$data->document_code.'.'.$this->signed_file->extension();
-        $new_file = $this->signed_file->storeAs('Merp/documents/signed/'.date("Y-m"), $file_name);
+        $new_file = $this->signed_file->storeAs('Merp/documents/signed/'.date("Y").'/'.date("m"), $file_name);
         if ($data->signed_file != null) {
             Storage::delete($data->signed_file);
         }
@@ -167,6 +167,7 @@ class SignDocumentsComponent extends Component
 
         DmDocumentSignatory::Where(['document_id' => $this->active_document_id, 'signatory_id'=>auth()->user()->id])
         ->update(['signatory_status'=>'Rejected','comments'=>$this->comments]);
+        
 
         $this->dispatchBrowserEvent('alert', ['type' => 'Success',  'message' => 'Decument successfully rejected! ']);
     }

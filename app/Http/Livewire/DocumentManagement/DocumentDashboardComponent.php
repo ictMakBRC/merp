@@ -249,10 +249,12 @@ class DocumentDashboardComponent extends Component
             })->with(['category','signatories','user'])->limit(10)->get();
             $data['categories'] = DmDocumentCategory::where('parent_id', $this->parent_id)->get();
             $data['users'] = User::all();
-            $data['submited_requets'] = DmDocumentRequest::where('status','!=','Pending')->get();
-            $data['submited_documents'] = DmRequestDocuments::where('status','!=','Pending')->get();
-
-            $data['incomingRequsests'] = DmDocumentRequest::with(['category','documents','user'])
+            $data['submited_requets'] = DmDocumentRequest::where('status','!=','Pending')->where('created_by',auth()->user()->id)->get();
+            $data['recent_requets'] = DmDocumentRequest::where('status','!=','Pending')->where('status', 'Completed')
+            ->when($this->document_category, function ($query) {$query->where('request_category', $this->document_category);})->where('created_by',auth()->user()->id)->get();
+            $data['received_requets'] = DmDocumentRequest::where('status','!=','Pending')->WhereHas('documents.signatories', function ($query) {
+                $query->where('signatory_id', auth()->user()->id);})->get();
+            $data['incomingRequsests'] = DmDocumentRequest::with(['category','documents','user'])->where('status', '!=', 'Completed')
             ->WhereHas('documents.signatories', function ($query) {$query->where('signatory_id', auth()->user()->id);})
             ->when($this->document_category, function ($query) {$query->where('request_category', $this->document_category);})
             ->when($this->active_status, function ($query) { $query->where('status',  $this->active_status);})->where('status','!=','Pending')

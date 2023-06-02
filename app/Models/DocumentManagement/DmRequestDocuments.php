@@ -40,7 +40,7 @@ class DmRequestDocuments extends Model
         return empty($search) ? static::query()
             : static::query()
                 ->where('title', 'like', '%'.$search.'%')
-                ->where('request_code', 'like', '%'.$search.'%')
+                ->orWhere('request_code', 'like', '%'.$search.'%')
                 ->orWhereHas('category', function ($query) use ($search) {
                     $query->where('name', 'like', '%'.$search.'%');
                 });
