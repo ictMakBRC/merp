@@ -127,7 +127,7 @@ class SignDocumentsComponent extends Component
     public function markRequestComplete()
     {
       $data =  DmDocumentRequest::where('request_code',$this->requestCode)->first();
-      $data->status ='Completedd';
+      $data->status ='Completed';
       $data->update();
         DmRequestDocuments::where('request_code', $this->requestCode)->update(['status'=>'Signed']);
         try {
