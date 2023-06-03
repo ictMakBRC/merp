@@ -217,7 +217,7 @@ class NewDocumentComponent extends Component
             // $signatory->signatory_status = 'Active';
             // $signatory->is_active = '1';
         }
-        // $signatory->signatory_level = $this->signatory_level;
+        $signatory->summary = $this->summary;
         $signatory->title = $this->name_title;
         $signatory->signatory_id = $this->signatory_id;
         $signatory->save();

@@ -87,7 +87,18 @@
                                     </tr>                             
                                 @endif
                                 </div>                              
-                                
+                                <style>
+                                    .hideContent {
+                                        overflow: hidden;
+                                        line-height: 1em;
+                                        height: 1em;
+                                    }
+
+                                    .showContent {
+                                        line-height: 2em;
+                                        height: auto;
+                                    }
+                                </style>
                                 <div class="col-md-12">                                                   
                                     <div class="row">
                                         <h5>Document Signatories</h5>                                                   
@@ -106,7 +117,15 @@
                                                             @foreach ($active_document->signatories as $signatory)                                        
                                                                 <tr  @if ($signatory->signatory_status =="Active" && auth()->user()->id == $signatory->signatory_id) class="alert alert-success" @endif>
                                                                     <td>{{$signatory->user->name}}</td>
-                                                                    <td>{{$signatory->title}}</td>
+                                                                    <td>{{$signatory->title}}
+                                                                        @if ($signatory->summary != null && $signatory->signatory_status =="Active" && auth()->user()->id == $signatory->signatory_id)
+                                                                            <br>
+                                                                            <strong>Summary</strong>
+                                                                            <textarea readonly class="form-control">{{$signatory->summary}}</textarea>
+                                                                           
+                                                                        @endif
+                                                                       
+                                                                    </td>
                                                                     <td>
                                                                         {{$signatory->signatory_status}}
                                                                         @php
