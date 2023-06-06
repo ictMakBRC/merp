@@ -60,14 +60,14 @@
                                 <div class="col-12">
                                     <a href="javascript:void(0)" wire:click="$set('action',0)" class="text-center h4"><b>Doc: </b>{{$active_document->title}}</a>
                                 </div>
-                                <div class="col">
-                                @if ($active_document->status =="Submitted" && auth()->user()->id == $active_document->created_by)
+                                <div class="col m-1" >
+                                @if ($active_document->status !="Pending" && auth()->user()->id == $active_document->created_by)
                                     <tr class="alert alert-success" >
                                         <td colspan="3">
                                             <div class="row">
                                                 <div class="col">
                                                     <h6>Original Version</h6>
-                                                    <a href="javascript:void()" wire:click='downloadDocument({{$active_document->id}})'> 
+                                                    <a class ="btn btn-info btn-sm" href="javascript:void()" wire:click='downloadDocument({{$active_document->id}})'> 
                                                     <i class="mdi mdi-file font-20"></i>
                                                         Download Original
                                                     </a>
@@ -75,7 +75,7 @@
                                                 @if ($active_document->signed_file != null)
                                                     <div class="col text-success">
                                                         <h6>Recent Version</h6>
-                                                        <a href="javascript:void()" class="text-success" wire:click='downloadSignedDocument({{$active_document->id}})'> 
+                                                        <a href="javascript:void()" class=" btn btn-success btn-sm" wire:click='downloadSignedDocument({{$active_document->id}})'> 
                                                             <i class="mdi mdi-file font-20"></i>
                                                             Download Signed Version
                                                         </a>
@@ -101,6 +101,7 @@
                                 </style>
                                 <div class="col-md-12">                                                   
                                     <div class="row">
+                                        <h5>Document Status: {{$active_document->status}}</h5>                                                   
                                         <h5>Document Signatories</h5>                                                   
                                         <div class="row">
                                             @if (count($active_document->signatories)>0)                            
