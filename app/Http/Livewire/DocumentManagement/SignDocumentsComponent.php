@@ -108,13 +108,47 @@ class SignDocumentsComponent extends Component
         }
         DmDocumentSignatory::Where(['document_id' => $this->active_document_id, 'signatory_id'=>auth()->user()->id])
         ->update(['signatory_status'=>'Signed','signature'=>$signature]);
+        // ->whereIn('status', ['Submitted','Rejected','Active'])
+
+        $pendinSignatory =  DmDocumentSignatory::where(['document_id' => $this->active_document_id])->where('signatory_status','!=','Signed')->first();
+        // dd($pendinSignatory);
+        if($pendinSignatory == null){
+            // dd('done');
+            $this->markDocumentComplete();
+            $pendinRequest =  DmRequestDocuments::where(['request_code' => $this->requestCode, 'signed_file'=>null])->where('status','!=','Signed')->first();
+            if($pendinRequest == null){
+                // dd('done');
+            $this->markRequestComplete();
+            }
+        }
 
         $this->dispatchBrowserEvent('alert', ['type' => 'Success',  'message' => 'File uploaded successfully! ']);
     }
 
     public function markDocumentComplete()
     {
-        DmRequestDocuments::where('id', $this->active_document_id)->update(['status'=>'Signed']);
+       $data = DmRequestDocuments::where('id', $this->active_document_id)->update(['status'=>'Signed']);
+        try {
+            $user = User::where('id',$data->created_by )->first();
+           
+            $signature_request = [
+                'to' => $user->email,
+                'phone' => $user->contact,
+                'subject' => 'Document request for '.$data->title.' Has been fully signed',
+                'greeting' => 'Hi '.$user->title.' '.$user->name,
+                'body' => 'Your request #'.$data->title.' on request '.$data->request_code.' has been completed',
+                'thanks' => 'Thank you, incase of any question, please reply to support@makbrc.org',
+                'actionText' => 'View Details',
+                'actionURL' => url('/documents/request/'.$data->request_code.'/sign'),
+                'department_id' => $data->created_by,
+                'user_id' => $data->created_by,
+            ];
+            // WhatAppMessageService::sendReferralMessage($referral_request);
+          $mm=  SendEmailNotification::dispatch($signature_request)->delay(Carbon::now()->addSeconds(20));
+        //   dd($mms);
+        } catch(Throwable $error) {
+            // $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => 'Referral Request '.$error.'!']);
+        }
         $this->dispatchBrowserEvent('alert', ['type' => 'Success',  'message' => 'Document has been successfully marked complete! ']);
     }
     
