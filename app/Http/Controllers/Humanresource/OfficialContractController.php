@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Humanresource\DesignationHistory;
 use App\Models\Humanresource\Employee;
 use App\Models\Humanresource\OfficialContract;
+use App\Models\Settings\GeneralSetting;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -74,6 +75,7 @@ class OfficialContractController extends Controller
             'employee_id' => 'required|integer',
             'contract_name' => 'required|string',
             'gross_salary' => 'required|numeric',
+            'currency' => 'required|string',
         ]);
 
         $runningContract = OfficialContract::where(['employee_id' => $request->employee_id, 'status' => 'Running'])->first();
@@ -90,11 +92,15 @@ class OfficialContractController extends Controller
         $officialContract->start_date = $request->start_date;
         $officialContract->end_date = $request->end_date;
         $officialContract->gross_salary = $request->gross_salary;
+        $officialContract->currency = $request->currency;
 
         $designationHistory->employee_id = $request->employee_id;
         $designationHistory->emp_id = $employee->emp_id;
         $designationHistory->department_id = $employee->department_id;
         $designationHistory->station_id = $employee->station_id;
+
+
+
         if ($currentHistory) {//check for presence of designation history
             $designationHistory->from = $currentHistory->to;
         } else {
@@ -112,6 +118,7 @@ class OfficialContractController extends Controller
 
         $officialContract->contract_file = $contractPath;
 
+
         //Check for any running contract
         if ($runningContract) {
             $previousContract = OfficialContract::findOrFail($runningContract->id);
@@ -123,21 +130,56 @@ class OfficialContractController extends Controller
             // $designationHistory->save();
 
             if ($designationHistory->save()) {
+                $computed_salary=0;
+                $global = GeneralSetting::latest()->first();
+                if($global){                
+                $computed_salary =$request->gross_salary/$global->usd_rate;
+                }else{
+                    $computed_salary =$request->gross_salary/3650;
+                }
+                $employee->salary_ugx=$request->gross_salary;
+                $employee->salary_usd=$computed_salary;
+                $employee->update();
                 return response()->json(['status' => 'success', 'message' => 'Contract Succesfully saved but a Previously Running Contract has been Terminated!']);
             } else {
                 return response()->json(['status' => 'error', 'message' => 'Oops! something went wrong, record could not be saved']);
             }
         } else {
             $officialContract->save();
+
             $designationHistory->official_contract_id = $officialContract->id;
             $designationHistory->save();
 
             if ($designationHistory->save()) {
+                $computed_salary=0;
+                    $global = GeneralSetting::latest()->first();
+                    if($global){                
+                    $computed_salary =$request->gross_salary/$global->usd_rate;
+                    }else{
+                        $computed_salary =$request->gross_salary/3650;
+                    }
+             
+            $employee->salary_ugx=$request->gross_salary;
+            $employee->salary_usd=$computed_salary;
+            $employee->update();
                 return response()->json(['status' => 'success', 'message' => 'Contract Succesfully saved!']);
             } else {
                 return response()->json(['status' => 'error', 'message' => 'Oops! something went wrong, record could not be saved']);
             }
         }
+    }
+
+    public function updateSalary($gross_salary, $employee_id)
+    {
+        $computed_salary=0;
+        $global = GeneralSetting::latest()->first();
+        if($global){                
+        $computed_salary =$gross_salary/$global->usd_rate;
+        }else{
+            $computed_salary =$gross_salary/3650;
+        }
+       $update = Employee::where('id',$employee_id)->update(['salary_ugx'=>$gross_salary,'salary_usd'=>$computed_salary]);
+       return $update ;
     }
 
     /**

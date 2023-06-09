@@ -27,7 +27,12 @@
                                 <input name="account_name" type="text" id="account_name" class="form-control"
                                     value="{{ $bankinginfo->account_name }}" required>
                             </div>
-                            <div class="mb-3 col-md-4">
+                            <div class="col-md-4">
+                                <label for="account_number" class="form-label">Account Number</label>
+                                <input name="account_number" type="text" id="account_number" class="form-control"
+                                    value="{{ $bankinginfo->account_number }}" required>
+                            </div>
+                            <div class="mb-3 col-md-2">
                                 <label for="currency" class="form-label">Currency</label>
                                 <select class="form-select" id="currency" name="currency" required>
                                     <option selected value="{{ $bankinginfo->currency }}">{{ $bankinginfo->currency }}
@@ -38,10 +43,19 @@
                                     <option value="EUR">EUR</option>
                                 </select>
                             </div>
-                            <div class="col-md-4">
-                                <label for="account_number" class="form-label">Account Number</label>
-                                <input name="account_number" type="text" id="account_number" class="form-control"
-                                    value="{{ $bankinginfo->account_number }}" required>
+                            <div class="mb-3 col-md-2">
+                                <label for="is_default" class="form-label">Default Account</label>
+                                <select class="form-select" id="is_default" name="is_default" required>
+                                    <option selected value="{{ $bankinginfo->is_default }}">
+                                        @if ($bankinginfo->is_default ==1)
+                                           Yes
+                                        @else
+                                            No
+                                        @endif
+                                    </option>
+                                    <option value="1">Yes</option>
+                                    <option value="2">No</option>
+                                </select>
                             </div>
                             <div class="col-md-8"></div>
                             <div class="col-md-4 text-end pt-1">

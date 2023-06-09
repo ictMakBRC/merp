@@ -452,6 +452,24 @@
                 </ul>
             </div>
         </li>
+        <li class="side-nav-item">
+            <a data-bs-toggle="collapse" href="#payroll" aria-expanded="false" aria-controls="sidebarReports"
+                class="side-nav-link">
+                <i class="uil-file-alt"></i>
+                <span>Payroll</span>
+                <span class="menu-arrow"></span>
+            </a>
+            <div class="collapse" id="payroll">
+                <ul class="side-nav-second-level">
+                    <li>
+                        <a href="{{ route('hr.viewPayroll') }}">Generate Payroll</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('hr.viewPayroll') }}">Generate Payslip</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
     @endif
     </ul>
     <!-- End Sidebar -->

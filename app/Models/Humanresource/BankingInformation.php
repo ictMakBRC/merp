@@ -11,5 +11,5 @@ class BankingInformation extends Model
 
     public $table = 'banking_information';
 
-    protected $fillable = ['employee_id', 'bank_name', 'branch', 'account_name', 'currency', 'account_number'];
+    protected $fillable = ['employee_id', 'bank_name', 'branch', 'account_name', 'currency', 'account_number','is_default'];
 }
