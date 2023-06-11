@@ -20,11 +20,21 @@ class Employee extends Model
         'height', 'weight', 'blood_type', 'civil_status', 'address',
         'email', 'alt_email', 'contact', 'alt_contact', 'designation_id', 'station_id', 'department_id', 'department_unit_id',
         'reporting_to', 'work_type', 'join_date', 'status', 'tin_number', 'nssf_number',
-        'photo', 'signature', 'created_by', ];
+        'photo', 'signature', 'created_by', 'salary_ugx','salary_usd'];
 
     public function designation()
     {
         return $this->belongsTo(Designation::class, 'designation_id', 'id');
+    }
+
+    public function activeBankAcct()
+    {
+        return $this->belongsTo(BankingInformation::class, 'active_bank_account', 'id');
+    }
+
+    public function bankAccts()
+    {
+        return $this->hasMany(BankingInformation::class, 'employee_id', 'id');
     }
 
     public function department()
@@ -42,6 +52,15 @@ class Employee extends Model
         return $this->belongsTo(Department::class, 'department_unit_id', 'id');
     }
 
+    public function officialContracts()
+    {
+        return $this->hasMany(OfficialContract::class, 'employee_id', 'id');
+    }
+    public function officialContract()
+    {
+        return $this->hasOne(OfficialContract::class, 'employee_id', 'id')->where('status','Running');
+    }
+
     protected function fullName(): Attribute
     {
         return Attribute::make(
@@ -56,6 +75,7 @@ class Employee extends Model
 
         );
     }
+    
 
     public static function boot()
     {
