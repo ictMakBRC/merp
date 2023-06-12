@@ -2,31 +2,34 @@
 
 namespace App\Http\Controllers\Humanresource;
 
-use App\Http\Controllers\Controller;
-use App\Models\Department;
-use App\Models\Humanresource\BankingInformation;
-use App\Models\Humanresource\Child;
-use App\Models\Humanresource\Designation;
-use App\Models\Humanresource\DesignationHistory;
-use App\Models\Humanresource\EducationBackground;
-use App\Models\Humanresource\EmergencyContact;
-use App\Models\Humanresource\Employee;
-use App\Models\Humanresource\EmployeeAppraisal;
-use App\Models\Humanresource\ExitInterview;
-use App\Models\Humanresource\FamilyBackground;
-use App\Models\Humanresource\Grievance;
-use App\Models\Humanresource\LeaveRequest;
-use App\Models\Humanresource\OfficialContract;
-use App\Models\Humanresource\ProjectContract;
-use App\Models\Humanresource\Resignation;
-use App\Models\Humanresource\TrainingProgram;
-use App\Models\Humanresource\WorkExperience;
-use App\Models\Station;
+use PDF;
 use Carbon\Carbon;
+// use Barryvdh\DomPDF\PDF;
+use App\Models\Station;
+use App\Models\Department;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use App\Models\Humanresource\Child;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Humanresource\Employee;
+use App\Models\Humanresource\Grievance;
+use App\Models\Settings\GeneralSetting;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Humanresource\Designation;
+use App\Models\Humanresource\Resignation;
+use App\Models\Humanresource\LeaveRequest;
+use App\Models\Humanresource\ExitInterview;
+use App\Models\Humanresource\WorkExperience;
+use App\Models\Humanresource\ProjectContract;
+use App\Models\Humanresource\TrainingProgram;
+use App\Models\Humanresource\EmergencyContact;
+use App\Models\Humanresource\FamilyBackground;
+use App\Models\Humanresource\OfficialContract;
+use App\Models\Humanresource\EmployeeAppraisal;
+use App\Models\Humanresource\BankingInformation;
+use App\Models\Humanresource\DesignationHistory;
+use App\Models\Humanresource\EducationBackground;
 
 class EmployeeController extends Controller
 {
@@ -457,6 +460,26 @@ class EmployeeController extends Controller
         $employee->update();
 
         return redirect()->back()->with('success', 'Employee Updated Successfully!!');
+    }
+
+    public function downloadPayslip($emp_id)
+    {
+        $month = Carbon::today()->format('Y-m-d');
+        $global = GeneralSetting::latest()->first();
+        $employee = Employee::with(['designation','department','departmentunit','officialContract'])->where('id', $emp_id)->first();
+        $bank_account = BankingInformation::where(['employee_id'=> $emp_id, 'is_default'=>1])->latest()->first();
+        if(!$bank_account){            
+            $bank_account = BankingInformation::where('employee_id', $emp_id)->latest()->first();
+        }
+        // return View('downloads.view-pay-slip-component', compact('employee','bank_account','month','global'));
+        $pdf = PDF::loadView('downloads.view-pay-slip-component', compact('employee','bank_account','month','global'));
+        $pdf->setPaper('a4', 'portrait');   //horizontal
+        $pdf->getDOMPdf()->set_option('isPhpEnabled', true);
+
+        return  $pdf->stream($employee->surname.'.pdf');
+
+
+        // return $pdf->download($testResult->sample->participant->identity.rand().'.pdf');
     }
 
     /**

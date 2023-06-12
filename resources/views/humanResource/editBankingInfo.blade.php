@@ -30,6 +30,8 @@
                     </td>
                     <td>
                         {{ $bankinginfo->account_number }}
+                       
+                    @if ($bankinginfo->is_default == '1')<div class="badge bg-success"> Default</div>@endif
                     </td>
                     <td class="table-action text-center d-flex">
                         <a type="button" href="#" class="btn btn-xs btn-outline-success mb-2 me-1"
