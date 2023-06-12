@@ -51,8 +51,7 @@
                                 <option selected value="12">Dec</option>
                             </select>
                         </div>
-                        <div class="col-2">
-                            <br>
+                        <div class="modal-footer">
                             <button class="btn btn-success m-9" wire:click='generatePayroll'>Submit</button>
                         </div>
                     </div>
@@ -60,8 +59,12 @@
 
             </div>
             <div class="card">
+                <div class="modal-footer">
+                    @if (count($selectedEmployeeIds)>0)
+                    <button class="btn btn-info" wire:click='sendPayslip'>Send Payslip</button>
+                    @endif
+                </div>
                 <div class="card-body">
-
                     <div class="table-responsive">
                         <table id="datableButtonS" class="table table-striped table-bordered mb-0 w-100 sortable">
                             <thead>
@@ -101,7 +104,10 @@
                                             }
                                             
                                         @endphp
-                                        <td>{{ $key + 1 }}</td>
+                                        <td>{{ $key + 1 }}
+                                            <input class="form-check-input" type="checkbox"
+                                            value="{{ $employee->id }}" class="ms-2 float-end" wire:model.lazy="selectedEmployeeIds">
+                                        </td>
                                         <td>{{ $employee->fullName }}</td>
                                         <td> @moneyFormat($salaryUsd)</td>
                                         <td>@moneyFormat($usd_rate)</td>

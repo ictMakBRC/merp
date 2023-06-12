@@ -1,6 +1,6 @@
 <div>
     <x-page-title>
-        Employee PAyslip
+        Employee Payslip
     </x-page-title>
     <style type="text/css">
         * {
