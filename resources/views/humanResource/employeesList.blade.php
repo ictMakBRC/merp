@@ -65,6 +65,10 @@
                                             <td class="table-action">
                                                 <a href="{{ route('employees.show', $employee->id) }}"
                                                     class="action-icon"> <i class="mdi mdi-eye"></i></a>
+                                                    <a href="{{ URL::signedRoute('hr.viewPaySlip', $employee->id) }}"
+                                                        class="action-icon"> <i class="mdi mdi-eye"></i></a>
+                                                        <a href="{{ route('humanresource.downloadPayslip', $employee->id) }}"
+                                                            class="action-icon"> <i class="mdi mdi-download"></i></a>
                                                 @if (Auth::user()->isAbleTo('employee-create'))
                                                     <a href="{{ route('employees.edit', [$employee->id]) }}"
                                                         class="action-icon"> <i class="mdi mdi-pencil"></i></a>

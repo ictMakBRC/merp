@@ -93,6 +93,13 @@
     {{-- <script src="{{ asset('assets/js/pages/demo.datatable-init.js') }}"></script> --}}
 
     <script>
+         window.addEventListener('swal:modal', event => { 
+                swal({
+                  title: event.detail.message,
+                  text: event.detail.text,
+                  icon: event.detail.type,
+                });
+            });
         $(function() {
             $("#datableButtons").DataTable({
                 "responsive": false,

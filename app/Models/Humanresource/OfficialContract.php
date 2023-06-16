@@ -13,7 +13,7 @@ class OfficialContract extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['employee_id', 'department_id', 'contract_name', 'start_date', 'end_date', 'gross_salary', 'contract_file', 'status', 'created_by'];
+    protected $fillable = ['employee_id', 'department_id', 'contract_name', 'start_date', 'end_date', 'gross_salary', 'contract_file', 'status', 'created_by','currency'];
 
     public function employee()
     {

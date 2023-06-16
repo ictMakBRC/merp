@@ -1,4 +1,4 @@
-<form  method="POST" id="bankingForm">
+<form  method="POST" action="{{route('bankingInformation.store')}}" id="bankingFormb">
     @csrf
     <div class="row">
         <div class="mb-3 col-md-4">
@@ -27,6 +27,10 @@
             <input name="account_name" type="text" id="account_name" class="form-control" required>
         </div>
         <div class="mb-3 col-md-4">
+            <label for="account_number" class="form-label">Account Number</label>
+            <input name="account_number" type="text" id="account_number" class="form-control" required>
+        </div>        
+        <div class="mb-3 col-md-2">
             <label for="currency" class="form-label">Currency</label>
             <select class="form-select select2" data-toggle="select2" id="currency" name="currency" required>
                 <option selected value="">Select</option>
@@ -36,9 +40,12 @@
                 <option value="EUR">EUR</option>
             </select>
         </div>
-        <div class="mb-3 col-md-4">
-            <label for="account_number" class="form-label">Account Number</label>
-            <input name="account_number" type="text" id="account_number" class="form-control" required>
+        <div class="mb-3 col-md-2">
+            <label for="is_default" class="form-label">Default Account</label>
+            <select class="form-select" id="is_default" name="is_default" required>              
+                <option value="1">Yes</option>
+                <option value="2">No</option>
+            </select>
         </div>
         <div class="col-md-8"></div>
         <div class="col-md-4 text-end pt-1">

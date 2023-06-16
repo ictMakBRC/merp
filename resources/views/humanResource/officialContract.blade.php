@@ -10,15 +10,25 @@
                 @endforeach
             </select>
         </div>
-        <div class="mb-3 col-md-5">
+        <div class="mb-3 col-md-4">
             <label for="contract_name" class="form-label">Contract Name</label>
             <input type="text" id="contract_name" class="form-control" name="contract_name" required
                 value="{{ old('contract_name', '') }}">
         </div>
-        <div class="mb-3 col-md-3">
+        <div class="mb-3 col-md-2">
             <label for="gsalary" class="form-label">Gross Salary(UGX)</label>
             <input type="number" id="gsalary" class="form-control" name="gross_salary" required
                 value="{{ old('gross_salary', '') }}">
+        </div>              
+        <div class="mb-3 col-md-2">
+            <label for="currency" class="form-label">Currency</label>
+            <select class="form-select select2" data-toggle="select2" id="currency" name="currency" required>
+                <option selected value="">Select</option>
+                <option value="UGX">UGX</option>
+                <option value="USD">USD</option>
+                <option value="GBP">GBP</option>
+                <option value="EUR">EUR</option>
+            </select>
         </div>
         <div class="mb-3 col-md-3">
             <label for="date7" class="form-label">From</label>
@@ -32,7 +42,7 @@
         </div>
         <div class="mb-3 col-md-6">
             <label for="contract_file1" class="form-label">Contract</label>
-            <input type="file" id="contract_file1" class="form-control" name="contract_file" accept=".pdf" required>
+            <input type="file" id="contract_file1" class="form-control" name="contract_file" accept=".pdf" >
         </div>
         <div class="col-md-8"></div>
         <div class="col-md-4 text-end pt-1">
