@@ -61,7 +61,8 @@
             <div class="card">
                 <div class="modal-footer">
                     @if (!$emp_payroll->isEmpty())
-                    <button class="btn btn-outline-success" wire:click='sendPayslip'>Export Payroll</button>
+                    <button  id="btnExport" class="btn btn-primary float-right no-print d-none"onclick="exportTableToExcel('datableButtonS', 'export-data')" style="margin-right: 5px;">Eport</button>
+                    <button class="btn btn-outline-success" onclick="fnExcelReport();" >Export Payroll</button>
                     @endif
                     
                     @if (count($selectedEmployeeIds)>0)
@@ -179,4 +180,48 @@
         </div>
     </div>
 </div>
+
+@push('scripts')
+   
+
+    <script type="text/javascript">
+                    
+
+            function fnExcelReport()
+            {
+            var tab_text="<table border='2px'>MAKBRC PAYMENT PAYROLL<tr bgcolor='#33C481'>";
+            var textRange; var j=0;
+            tab = document.getElementById('datableButtonS'); // id of table
+
+            for(j = 0 ; j < tab.rows.length ; j++) 
+            {     
+            tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
+            //tab_text=tab_text+"</tr>";
+            }
+            
+            tab_text=tab_text+"</table>";
+            tab_text= tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
+            tab_text= tab_text.replace(/<img[^>]*>/gi,""); // remove if u want images in your table
+            tab_text= tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
+
+            var ua = window.navigator.userAgent;
+            var msie = ua.indexOf("MSIE "); 
+
+            if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))      // If Internet Explorer
+            {
+            txtArea1.document.open("txt/html","replace");
+            txtArea1.document.write(tab_text);
+            txtArea1.document.close();
+            txtArea1.focus(); 
+            sa=txtArea1.document.execCommand("SaveAs",true,"Say Thanks to Sumit.xlsx");
+            }  
+            else                 //other browser not tested on IE 11
+            sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));  
+
+            return (sa);
+            }
+    </script>
+<!-- ./wrapper -->
+@endpush
+
 </div>
