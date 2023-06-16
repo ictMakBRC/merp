@@ -464,9 +464,9 @@
                     <li>
                         <a href="{{ route('hr.viewPayroll') }}">Generate Payroll</a>
                     </li>
-                    <li>
+                    {{-- <li>
                         <a href="{{ route('hr.viewPayroll') }}">Generate Payslip</a>
-                    </li>
+                    </li> --}}
                 </ul>
             </div>
         </li>
