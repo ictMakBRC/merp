@@ -14,7 +14,7 @@ class GeneratePayRollComponent extends Component
     public $showList = false, $allEmployees = false;
     public $from_date, $to_date, $department_id, $employee_id;
     public $usd_rate, $show_month, $global=null;
-    public $emp_payroll = [];
+    public $emp_payroll;
     public $employeeIds = [];
     public $selectedEmployeeIds=[];
 
@@ -27,6 +27,8 @@ class GeneratePayRollComponent extends Component
         $this->global = GeneralSetting::latest()->first();
         $this->usd_rate = $this->global?->usd_rate;
         }
+
+        $this->emp_payroll=collect([]);
     }
 
     public function generatePayroll()
@@ -34,7 +36,7 @@ class GeneratePayRollComponent extends Component
         $this->emp_payroll = Employee::with(['department','departmentunit','officialContract'])
         ->when($this->employee_id, function ($query) {$query->where('id', $this->employee_id);})
         ->when($this->department_id, function ($query) {$query->where('department_id', $this->department_id);})
-        ->get();
+        ->get()??collect([]);
 
         $this->employeeIds=$this->emp_payroll->pluck('id')->toArray();
     }

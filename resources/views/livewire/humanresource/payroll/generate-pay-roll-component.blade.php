@@ -60,6 +60,10 @@
             </div>
             <div class="card">
                 <div class="modal-footer">
+                    @if (!$emp_payroll->isEmpty())
+                    <button class="btn btn-outline-success" wire:click='sendPayslip'>Export Payroll</button>
+                    @endif
+                    
                     @if (count($selectedEmployeeIds)>0)
                     <button class="btn btn-info" wire:click='sendPayslip'>Send Payslip</button>
                     @endif

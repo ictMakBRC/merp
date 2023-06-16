@@ -77,7 +77,7 @@ class SendPaySlip implements ShouldQueue
     
             // Send the PDF via email
             $greeting = 'Hello'.' '.$employee->fullName;
-            $body = 'Please find attached you Payslip for your verification';
+            $body = 'Please find attached your Payslip for your verification';
             $actiontext = 'Click to Login';
 
             $details = [
