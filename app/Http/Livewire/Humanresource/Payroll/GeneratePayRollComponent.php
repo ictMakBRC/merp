@@ -80,6 +80,6 @@ class GeneratePayRollComponent extends Component
         $data['departments'] = Department::where('type', 'Department')->orWhere('type', 'Unit')->orWhere('type', 'Laboratory')->orderBy('department_name', 'asc')->get();
        
         
-        return view('livewire.humanresource.payroll.generate-pay-roll-component',$data)->layout('humanResource\layouts\app');
+        return view('livewire.humanresource.payroll.generate-pay-roll-component',$data)->layout('humanresource\layouts\app');
     }
 }
