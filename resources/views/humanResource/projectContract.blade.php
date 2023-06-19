@@ -38,12 +38,22 @@
             <input type="number" step="0.02" id="g-salary" class="form-control" name="gross_salary" required
                 value="{{ old('gross_salary', '') }}">
         </div>
-        <div class="mb-3 col-md-3">
+        <div class="mb-3 col-md-2">
+            <label for="currency" class="form-label">Currency</label>
+            <select class="form-select select2" data-toggle="select2" id="currency" name="currency" required>
+                <option selected value="">Select</option>
+                <option value="UGX">UGX</option>
+                <option value="USD">USD</option>
+                <option value="GBP">GBP</option>
+                <option value="EUR">EUR</option>
+            </select>
+        </div>
+        <div class="mb-3 col-md-2">
             <label for="date5" class="form-label">From</label>
             <input type="date" id="date1" class="form-control" name="start_date" required
                 value="{{ old('start_date', '') }}">
         </div>
-        <div class="mb-3 col-md-3">
+        <div class="mb-3 col-md-2">
             <label for="date6" class="form-label">To</label>
             <input type="date" id="date2" class="form-control" name="end_date" required
                 value="{{ old('end_date', '') }}">
@@ -55,7 +65,7 @@
         </div>
         <div class="mb-3 col-md-3">
             <label for="contract_file" class="form-label">Contract</label>
-            <input type="file" id="contract_file" class="form-control" name="contract_file" accept=".pdf" required>
+            <input type="file" id="contract_file" class="form-control" name="contract_file" accept=".pdf" >
         </div>
         <div class="col-md-8"></div>
         <div class="col-md-4 text-end pt-1">

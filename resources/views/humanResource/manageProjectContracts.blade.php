@@ -30,7 +30,7 @@
                                         <th>Project</th>
                                         <th>Position</th>
                                         <th>FTE</th>
-                                        <th>GP(UGX)</th>
+                                        <th>GP</th>
                                         <th>Start</th>
                                         <th>End</th>
                                         <th>Status</th>
@@ -49,7 +49,7 @@
                                             <td>
                                                 @if (Auth::user()->employee_id === $contract->employee_id ||
                                                     (Auth::user()->hasRole(['HrAdmin']) && Auth::user()->isAbleTo('employee-manage')))
-                                                    {{ number_format($contract->gross_salary, 2) }}
+                                                    {{ number_format($contract->gross_salary, 2) }}({{$contract->currency}})
                                                 @else
                                                     <i class="uil-padlock"></i>
                                                 @endif

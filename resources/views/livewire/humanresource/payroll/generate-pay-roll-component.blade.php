@@ -182,45 +182,50 @@
 </div>
 
 @push('scripts')
+
+<script type="text/javascript">
+    function fnExcelReport() {
+        var table = document.getElementById('datableButtonS'); // Get the table element
+        var tab_text = "<table border='2px'>MAKBRC PAYMENT PAYROLL<tr bgcolor='#33C481'>";
+
+        for (var j = 0; j < table.rows.length; j++) {
+            tab_text += table.rows[j].innerHTML + "</tr>";
+        }
+
+        tab_text += "</table>";
+        tab_text = tab_text.replace(/<a[^>]*>|<\/a>/g, ""); // Remove links
+        tab_text = tab_text.replace(/<img[^>]*>/gi, ""); // Remove images
+        tab_text = tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // Remove input elements
+
+        var ua = window.navigator.userAgent;
+        var msie = ua.indexOf("MSIE ");
+
+        if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) { // If Internet Explorer
+            var txtArea1 = document.createElement("textarea");
+            txtArea1.innerHTML = tab_text;
+            txtArea1.style.display = 'none';
+            document.body.appendChild(txtArea1);
+            txtArea1.focus();
+            txtArea1.select();
+            var sa = txtArea1.document.execCommand("SaveAs", true, "Mak BRC Payroll.xls");
+            document.body.removeChild(txtArea1);
+        } else {
+            var downloadLink = document.createElement("a");
+            downloadLink.href = 'data:application/vnd.ms-excel,' + encodeURIComponent(tab_text);
+            downloadLink.download = 'Mak BRC Payroll.xls';
+            downloadLink.style.display = 'none';
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+        }
+    }
+</script>
+
    
 
-    <script type="text/javascript">
-                    
 
-            function fnExcelReport()
-            {
-            var tab_text="<table border='2px'>MAKBRC PAYMENT PAYROLL<tr bgcolor='#33C481'>";
-            var textRange; var j=0;
-            tab = document.getElementById('datableButtonS'); // id of table
 
-            for(j = 0 ; j < tab.rows.length ; j++) 
-            {     
-            tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
-            //tab_text=tab_text+"</tr>";
-            }
-            
-            tab_text=tab_text+"</table>";
-            tab_text= tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
-            tab_text= tab_text.replace(/<img[^>]*>/gi,""); // remove if u want images in your table
-            tab_text= tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
 
-            var ua = window.navigator.userAgent;
-            var msie = ua.indexOf("MSIE "); 
-
-            if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))      // If Internet Explorer
-            {
-            txtArea1.document.open("txt/html","replace");
-            txtArea1.document.write(tab_text);
-            txtArea1.document.close();
-            txtArea1.focus(); 
-            sa=txtArea1.document.execCommand("SaveAs",true,"Say Thanks to Sumit.xlsx");
-            }  
-            else                 //other browser not tested on IE 11
-            sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));  
-
-            return (sa);
-            }
-    </script>
 <!-- ./wrapper -->
 @endpush
 

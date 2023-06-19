@@ -347,11 +347,13 @@ class EmployeeController extends Controller
             $emergencycontacts = EmergencyContact::where('employee_id', $employee->id)->latest()->get();
             $employees = Employee::latest()->where('status', 'Active')->get();
             $designations = Designation::latest()->where('status', 'Active')->get();
+            $other_designations = Designation::where('status', 'Active')->get();
             $stations = Station::latest()->where('status', 'Active')->get();
             $projects = Department::where('type', 'Project')->latest()->where('status', 'Active')->get();
             $departments = Department::where('type', 'Department')->orWhere('type', 'Unit')->orWhere('type', 'Laboratory')->latest()->get();
+            $other_departments = Department::where('type', 'Department')->orWhere('type', 'Unit')->orWhere('type', 'Laboratory')->get();
 
-            return view('humanResource.editEmployee', compact('employee', 'reportingTo', 'awards', 'experiences', 'trainings', 'projectcontracts', 'officialcontracts', 'bankinginformation', 'familybackgrounds', 'emergencycontacts', 'designations', 'stations', 'departments', 'employees', 'projects', 'read_only'));
+            return view('humanResource.editEmployee', compact('designations','other_designations','employee', 'reportingTo', 'awards', 'experiences', 'trainings', 'projectcontracts', 'officialcontracts', 'bankinginformation', 'familybackgrounds', 'emergencycontacts', 'designations', 'stations', 'departments', 'employees', 'projects', 'read_only'));
         } else {
             abort(Response::HTTP_FORBIDDEN, '403 Forbidden');
         }
@@ -473,6 +475,30 @@ class EmployeeController extends Controller
         }
         // return View('downloads.view-pay-slip-component', compact('employee','bank_account','month','global'));
         $pdf = PDF::loadView('downloads.view-pay-slip-component', compact('employee','bank_account','month','global'));
+        $pdf->setPaper('a4', 'portrait');   //horizontal
+        $pdf->getDOMPdf()->set_option('isPhpEnabled', true);
+
+        return  $pdf->stream($employee->surname.'.pdf');
+
+
+        // return $pdf->download($testResult->sample->participant->identity.rand().'.pdf');
+    }
+
+    public function downloadProjectPayslip($contract_id,$currency)
+    {
+        $emp_id = null;
+        $month = Carbon::today()->format('Y-m-d');
+        $global = GeneralSetting::latest()->first();
+        $employee = ProjectContract::with('employee','project','position')->where('id', $contract_id)->first();
+        if($employee){
+            $emp_id=$employee->employee_id;
+        }
+        $bank_account = BankingInformation::where(['employee_id'=> $emp_id, 'is_default'=>1])->latest()->first();
+        if(!$bank_account){            
+            $bank_account = BankingInformation::where('employee_id', $emp_id)->latest()->first();
+        }
+        // return View('downloads.project-pay-slip', compact('employee','bank_account','month','global','currency'));
+        $pdf = PDF::loadView('downloads.project-pay-slip', compact('employee','bank_account','month','global','currency'));
         $pdf->setPaper('a4', 'portrait');   //horizontal
         $pdf->getDOMPdf()->set_option('isPhpEnabled', true);
 

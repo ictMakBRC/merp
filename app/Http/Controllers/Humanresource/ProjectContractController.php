@@ -60,6 +60,7 @@ class ProjectContractController extends Controller
             'position_id' => 'required|integer',
             'contract_name' => 'required|string',
             'gross_salary' => 'required|numeric',
+            'currency' => 'required|string',
         ]);
         $runningContract = ProjectContract::where(['employee_id' => $request->employee_id, 'project_id' => $request->project_id, 'status' => 'Running'])->first();
         $projectContract = new ProjectContract();
@@ -73,6 +74,7 @@ class ProjectContractController extends Controller
         $projectContract->end_date = $request->end_date;
         $projectContract->fte = $request->fte;
         $projectContract->gross_salary = $request->gross_salary;
+        $projectContract->currency = $request->currency;
 
         if ($request->hasFile('contract_file')) {
             $contractName = date('YmdHis').'.'.$request->file('contract_file')->extension();
