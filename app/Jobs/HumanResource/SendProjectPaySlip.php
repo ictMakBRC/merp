@@ -59,7 +59,7 @@ class SendProjectPaySlip implements ShouldQueue
             if(!$bank_account){            
                 $bank_account = BankingInformation::where('employee_id', $employee->employee_id)->latest()->first();
             }
-          
+            $user = Employee::where('id', $employee->employee_id)->first();
             // Generate the PDF content from payslip.blade.php
             $data = [
                 'employee' => $employee,
@@ -96,7 +96,7 @@ class SendProjectPaySlip implements ShouldQueue
             ];
             // dd($details);
             // $email = $employee->email;
-            $employee->notify(new PayslipEmail($details));
+            $user->notify(new PayslipEmail($details));
  
             // Clean up the generated PDF file
             unlink($pdfPath);
