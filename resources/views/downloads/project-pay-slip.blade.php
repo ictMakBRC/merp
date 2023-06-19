@@ -68,7 +68,7 @@
                     <p class="s2" style="text-indent: 0pt;text-align: left;">Name:</p>
                     </td>
                     <td class="btop ">
-                        <p class="s3" style="padding-left: 1pt;text-indent: 0pt;text-align: left;">{{ $employee->fullName }}</p>
+                        <p class="s3" style="padding-left: 1pt;text-indent: 0pt;text-align: left;">{{ $employee->employee?->fullName }}</p>
                     </td>
                 </tr>
                 <tr class="btop">
@@ -76,7 +76,7 @@
                         <p class="s2" style="text-indent: 0pt;text-align: left;">Position:</p>
                     </td>
                     <td class="btop">
-                        <p class="s3" style="padding-left: 1pt;text-indent: 0pt;text-align: left;">{{ $employee->designation?->name??'N/A' }}</p>
+                        <p class="s3" style="padding-left: 1pt;text-indent: 0pt;text-align: left;">{{ $employee->position?->name??'N/A' }}</p>
                     </td>
                 </tr>
                 <tr class="btop">                                            
@@ -85,7 +85,7 @@
                     </td>
                     <td class="btop">
                         <p class="s3" style="padding-top: 1pt;padding-left: 1pt;text-indent: 0pt;text-align: left;">
-                            {{ $employee->department?->department_name??'N/A' }}</p>
+                            {{ $employee->project?->department_name??'N/A' }}</p>
                     </td>
                 </tr>
             </table>
@@ -96,7 +96,7 @@
             Deatils
         </td>
         <td  class="btop t-right">
-            UGX
+            {{$currency}}
         </td>
     </tr>
     <tr>
@@ -118,7 +118,26 @@
                 }
                 
             @endphp
-            UGX @moneyFormat($salary)
+               @php
+               $salary = 0;
+            if ($currency=='USD')  {
+               if ($employee?->currency =='USD') {
+                   $salary = $employee?->gross_salary??'0';
+               }
+               if ($employee?->currency =='UGX') {
+                   $salary = $employee->gross_salary/$usd_rate;
+               }
+           }
+           if ($currency=='UGX')  {
+               if ($employee?->currency =='USD') {
+                   $salary =  $employee->gross_salary * $usd_rate;
+                   }
+               if ($employee?->currency =='UGX') {
+                   $salary = $employee->gross_salary??'0';
+               }
+           }
+           @endphp
+            {{$currency}} @moneyFormat($salary)
         </td>
     </tr>
     <tr>
@@ -129,7 +148,7 @@
             $paye =  $global->paye/100;
             $paye_deduct = $salary * $paye;
           @endphp
-            -UGX @moneyFormat($paye_deduct)
+            -{{$currency}} @moneyFormat($paye_deduct)
         </td>
     </tr>
     <tr>
@@ -141,7 +160,7 @@
                 $nssf =  $global->employee_nssf/100;
                 $nssf_deduct = $salary * $nssf;
             @endphp
-            -UGX @moneyFormat($nssf_deduct)
+            -{{$currency}} @moneyFormat($nssf_deduct)
         </td>
     </tr>
     <tr class="brow t-bold">
@@ -153,7 +172,7 @@
                 $net_deduct = $nssf_deduct+$paye_deduct;
                 $net_pay = $salary-$net_deduct;
             @endphp
-            UGX @moneyFormat($net_pay)
+            {{$currency}} @moneyFormat($net_pay)
         </td>
     </tr>
     <tr>
@@ -215,7 +234,7 @@
             Received by:
         </td>
         <td  class="btop">
-            {{ $employee->fullName }}
+            {{ $employee->employee?->fullName }}
         </td>
         <td  class="btop t-bold">
             Date

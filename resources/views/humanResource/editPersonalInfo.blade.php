@@ -163,6 +163,10 @@
                     @foreach ($designations as $designation)
                         <option value='{{ $designation->id }}'>{{ $designation->name }}</option>
                     @endforeach
+                    @foreach ($other_designations as $designation)
+                    <option value='{{ $designation->id }}'>{{ $designation->name }}</option>
+                @endforeach
+
                 @endif
             </select>
         </div>
@@ -186,6 +190,9 @@
                 @if ($read_only===false && $employee->id!= Auth::user()->employee->id)
                     @foreach ($departments as $department)
                         <option value='{{ $department->id }}'>{{ $department->department_name }}</option>
+                    @endforeach
+                    @foreach ($departments as $department)
+                    <option value='{{ $department->id }}'>{{ $department->department_name }}</option>
                     @endforeach
                 @endif
             </select>

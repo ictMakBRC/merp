@@ -462,11 +462,11 @@
             <div class="collapse" id="payroll">
                 <ul class="side-nav-second-level">
                     <li>
-                        <a href="{{ route('hr.viewPayroll') }}">Generate Payroll</a>
+                        <a href="{{ route('hr.viewPayroll') }}">Generate Official Payrolls</a>
                     </li>
-                    {{-- <li>
-                        <a href="{{ route('hr.viewPayroll') }}">Generate Payslip</a>
-                    </li> --}}
+                    <li>
+                        <a href="{{ route('hr.viewOfficialPayroll') }}">Generate Project Payroll</a>
+                    </li>
                 </ul>
             </div>
         </li>

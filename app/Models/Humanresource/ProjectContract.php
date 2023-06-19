@@ -12,7 +12,7 @@ class ProjectContract extends Model
     use HasFactory;
 
     protected $fillable = ['employee_id', 'project_id',
-        'position_id', 'contract_name', 'gross_salary', 'contract_file', 'start_date', 'end_date', 'fte', 'status', 'created_by', ];
+        'position_id', 'contract_name', 'gross_salary', 'contract_file', 'start_date', 'end_date', 'fte', 'status', 'created_by','currency', ];
 
     public function employee()
     {
