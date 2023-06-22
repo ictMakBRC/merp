@@ -99,9 +99,7 @@ class SendProjectPaySlip implements ShouldQueue
             ];
             // dd($details);
             // $email = $employee->email;
-            $attachmentPath = storage_path('app/public/payslips/BRC10076M.pdf');
-            Mail::to('kedkayz@gmail.com')->send(new SendEmailWithAttachment($attachmentPath));
-            // $employee->employee->notify(new PayslipEmail($details));
+            $user->notify(new PayslipEmail($details));
  
             // Clean up the generated PDF file
             // unlink($pdfPath);
