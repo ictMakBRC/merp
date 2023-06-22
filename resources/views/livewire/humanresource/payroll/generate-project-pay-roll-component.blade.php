@@ -16,7 +16,7 @@
                         </div>
                         <div class="mb-3 col-md-2">
                             <label for="currency" class="form-label">Currency</label>
-                            <select class="form-select select2" data-toggle="select2" wire:model.defer="currency" id="currency" name="currency" required>
+                            <select class="form-select" data-toggle="select2" wire:model.defer="currency" id="currency" name="currency" required>
                                 <option selected value="">Select</option>
                                 <option value="UGX">UGX</option>
                                 <option value="USD">USD</option>
