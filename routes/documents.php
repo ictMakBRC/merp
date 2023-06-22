@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Management\GeneralController;
 use App\Http\Livewire\DocumentManagement\DocumentCategoryComponent;
 use App\Http\Livewire\DocumentManagement\DocumentDashboardComponent;
 use App\Http\Livewire\DocumentManagement\DocumentResourcesComponent;
@@ -28,7 +29,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/requests/incoming', IncomingDocumentRequestsComponent::class)->name('document.incoming');
         Route::get('/requests/documents', RecentDocumentsComponent::class)->name('document.documents');
 
-
+        Route::get('/preview-document/{id}', [GeneralController::class, 'viewDocument'])->name('document.preview');
         Route::get('/document/resources', DocumentResourcesComponent::class)->name('document.resources');
     });
 });

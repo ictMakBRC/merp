@@ -49,7 +49,7 @@
                                 <th>{{$requests->created_at??'N/A'}}</th>
                                 <th>{{$requests->status??'N/A'}}</th>
                                 <td>
-                                    
+                                    <a type="button" class="btn btn-primary"  wire:click="previewDocument({{ $requests->id }})"  data-bs-toggle="modal" data-bs-target="#full-width-modal">Preview Document</a>
                                 <a href="{{route('document.sign',$requests->request_code)}}" class="text-success" ><i class='mdi mdi-eye font-20'></i></a> 
                                                              
                                             
@@ -70,4 +70,5 @@
             </div>
         </div>
     </div>
+    @include('livewire.document-management.inc.preview-document')
 </div>

@@ -4,8 +4,11 @@ namespace App\Jobs\HumanResource;
 
 use Carbon\Carbon;
 use Dompdf\Dompdf;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendEmailWithAttachment;
 use App\Models\Humanresource\Employee;
 use Illuminate\Queue\SerializesModels;
 use App\Models\Settings\GeneralSetting;
@@ -16,7 +19,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use App\Models\Humanresource\ProjectContract;
 use App\Models\Humanresource\BankingInformation;
-use App\Models\User;
 
 class SendProjectPaySlip implements ShouldQueue
 {
@@ -82,7 +84,7 @@ class SendProjectPaySlip implements ShouldQueue
             Storage::disk('local')->put('payslips/project/' . $filename, $pdfOutput);
             // Get the path to the saved PDF file
             $pdfPath = Storage::disk('local')->path('payslips/project/' . $filename);
-    
+            $attachmentPath=$pdfPath;
             // Send the PDF via email
             $greeting = 'Hello'.' '.$employee->employee->fullName;
             $body = 'Please find attached your Payslip for your verification';
@@ -97,10 +99,12 @@ class SendProjectPaySlip implements ShouldQueue
             ];
             // dd($details);
             // $email = $employee->email;
-            $employee->employee->notify(new PayslipEmail($details));
+            $attachmentPath = storage_path('app/public/payslips/BRC10076M.pdf');
+            Mail::to('kedkayz@gmail.com')->send(new SendEmailWithAttachment($attachmentPath));
+            // $employee->employee->notify(new PayslipEmail($details));
  
             // Clean up the generated PDF file
-            unlink($pdfPath);
+            // unlink($pdfPath);
         }
         
     }

@@ -50,7 +50,7 @@ class GenerateProjectPayRollComponent extends Component
     public function sendPayslip()
     {
         if(count($this->selectedEmployeeIds)>0){
-// dd($this->selectedEmployeeIds);
+            // dd($this->selectedEmployeeIds);
             try {
               $pp =  SendProjectPaySlip::dispatch($this->selectedEmployeeIds);
             //   dd($pp);
@@ -80,11 +80,10 @@ class GenerateProjectPayRollComponent extends Component
 
     public function render()
     {
-              // $from = Carbon::parse($this->from_date)->toDateTimeString();
-            // $to = Carbon::parse($this->to_date)->addHour(23)->addMinutes(59)->toDateTimeString();
+             
         $data['employees'] = ProjectContract::with('employee')->where('project_id', $this->department_id)
         ->when($this->currency, function ($query) {$query->where('currency', $this->currency);})->get();
-        $data['projectContracts'] = ProjectContract::with('project')->distinct()->get();
+        $data['projectContracts'] = ProjectContract::with('project')->distinct()->get('project_id');
        
         return view('livewire.humanresource.payroll.generate-project-pay-roll-component',$data)->layout('humanResource.layouts.app');
     }
