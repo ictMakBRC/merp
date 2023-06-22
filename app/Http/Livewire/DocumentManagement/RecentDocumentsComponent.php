@@ -11,6 +11,7 @@ class RecentDocumentsComponent extends Component
 {
     use  WithPagination;
 
+    public $document_id;
     public $perPage = 10;
 
     public $search = '';
@@ -79,6 +80,10 @@ class RecentDocumentsComponent extends Component
 
     public function mount()
     {
+    }
+    public function previewDocument($id)
+    {
+        $this->document_id = $id;
     }
     public function render()
     {

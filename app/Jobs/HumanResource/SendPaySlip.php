@@ -92,7 +92,7 @@ class SendPaySlip implements ShouldQueue
             $employee->notify(new PayslipEmail($details));
  
             // Clean up the generated PDF file
-            unlink($pdfPath);
+            // unlink($pdfPath);
         }
         
     }
