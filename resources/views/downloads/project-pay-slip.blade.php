@@ -22,7 +22,7 @@
     <tbody>
         <tr>
             <td style="width: 10%">
-                <img src="{{ asset('images/logos/brc.png') }}" type="image/svg+xml" width="120px" alt="SVG Image">
+                <img src="{{ asset('images/logos/brc.png') }}" alt="MAk log" type="image/svg+xml" width="120px" alt="SVG Image">
             </td>
             <td class="text-center">
                 <div class="w-100 overflow-hidde">
@@ -49,11 +49,8 @@
                     </p>
                 </div>
             </td>
-            <td style="width: 10%">
-                
-                <img src="{{ asset('images/logos/mak.png') }}" type="image/svg+xml" width="120px" alt="SVG Image">
-
-
+            <td style="width: 10%">                
+                <img src="{{ asset('images/logos/mak.png') }}" alt="BRC logo" type="image/svg+xml" width="120px" alt="SVG Image">
             </td>
         </tr>
     </tbody>
