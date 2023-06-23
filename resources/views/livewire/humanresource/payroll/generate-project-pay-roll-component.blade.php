@@ -108,19 +108,35 @@
                                                         $salary = 0;
                                                         $salaryUgx = 0;
                                                         if ($currency=='USD')  {
-                                                        if ($employeeContract?->currency =='USD') {
-                                                            $salary = $employeeContract?->gross_salary??'0';
+                                                            if ($employeeContract?->currency =='USD') {
+                                                                $salary = $employeeContract?->gross_salary??'0';
+                                                            }
+                                                           
                                                         }
-                                                        if ($employeeContract?->currency =='UGX') {
-                                                            $salary = $employeeContract->gross_salary/$usd_rate;
+                                                        if ($currency=='EUR')  {
+                                                            if ($employeeContract?->currency =='EUR') {
+                                                                $salary = $employeeContract?->gross_salary??'0';
+                                                            }
+                                                          
                                                         }
-                                                    }
+                                                        if ($currency=='GBP')  {
+                                                            if ($employeeContract?->currency =='GBP') {
+                                                                $salary = $employeeContract?->gross_salary??'0';
+                                                            }
+                                                          
+                                                        }
                                                     if ($currency=='UGX')  {
                                                         if ($employeeContract?->currency =='USD') {
                                                             $salary =  $employeeContract->gross_salary * $usd_rate;
                                                             }
                                                         if ($employeeContract?->currency =='UGX') {
                                                             $salary = $employeeContract->gross_salary??'0';
+                                                        }
+                                                        if ($employeeContract?->currency =='EUR') {
+                                                            $salary = $employeeContract->gross_salary*$usd_rate;
+                                                        }
+                                                        if ($employeeContract?->currency =='GBP') {
+                                                            $salary = $employeeContract->gross_salary*$usd_rate;
                                                         }
                                                     }
                                                     @endphp
