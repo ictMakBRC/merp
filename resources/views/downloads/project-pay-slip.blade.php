@@ -22,8 +22,7 @@
     <tbody>
         <tr>
             <td style="width: 10%">
-                <img class="d-flex align-self-end rounded me-0"
-                    src="{{ asset('storage/' . $facilityInfo->logo) }}" alt="logo"  width="120px">
+                <img src="{{ asset('images/logos/brc.png') }}" type="image/svg+xml" width="120px" alt="SVG Image">
             </td>
             <td class="text-center">
                 <div class="w-100 overflow-hidde">
@@ -51,8 +50,10 @@
                 </div>
             </td>
             <td style="width: 10%">
-                <img class="d-flex align-self-end rounded me-0"
-                    src="{{ asset('storage/' . $facilityInfo->logo2) }}" alt="logo"  width="100px">
+                
+                <img src="{{ asset('images/logos/mak.png') }}" type="image/svg+xml" width="120px" alt="SVG Image">
+
+
             </td>
         </tr>
     </tbody>
