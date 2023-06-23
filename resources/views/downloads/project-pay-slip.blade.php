@@ -104,37 +104,19 @@
             Basic Monthly Salary - Administration <br>
         </td>
         <td  class="bleft t-right">
-            @php
-                $salary = 0;
-                $usd_rate = $global->usd_rate;
-                if($employee->officialContract){
-                    if ($employee?->officialContract?->currency =='USD') {
-                    $salary = $employee?->officialContract?->gross_salary * $usd_rate;}
-                    if ($employee?->officialContract?->currency =='UGX') {
-                        $salary = $employee?->officialContract?->gross_salary;
-                    }
-                }else{
-                    $salary =  $employee->salary_ugx;
-                }
-                
-            @endphp
-               @php
+       
+        @php
                $salary = 0;
-            if ($currency=='USD')  {
-               if ($employee?->currency =='USD') {
-                   $salary = $employee?->gross_salary??'0';
-               }
-               if ($employee?->currency =='UGX') {
-                   $salary = $employee->gross_salary/$usd_rate;
-               }
-           }
+               $usd_rate = $global->usd_rate;
            if ($currency=='UGX')  {
                if ($employee?->currency =='USD') {
                    $salary =  $employee->gross_salary * $usd_rate;
                    }
-               if ($employee?->currency =='UGX') {
+               else {
                    $salary = $employee->gross_salary??'0';
                }
+           }else{
+                $salary = $employee?->gross_salary??'0';
            }
            @endphp
             {{$currency}} @moneyFormat($salary)
