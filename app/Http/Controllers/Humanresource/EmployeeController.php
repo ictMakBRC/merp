@@ -30,6 +30,7 @@ use App\Models\Humanresource\EmployeeAppraisal;
 use App\Models\Humanresource\BankingInformation;
 use App\Models\Humanresource\DesignationHistory;
 use App\Models\Humanresource\EducationBackground;
+use App\Models\Humanresource\Payroll\ApprovalChain;
 
 class EmployeeController extends Controller
 {
@@ -484,21 +485,25 @@ class EmployeeController extends Controller
         // return $pdf->download($testResult->sample->participant->identity.rand().'.pdf');
     }
 
-    public function downloadProjectPayslip($contract_id,$currency)
+    public function downloadProjectPayslip($contract_id,$currency,$month,$approver_id,$prepper_id)
     {
         $emp_id = null;
-        $month = Carbon::today()->format('Y-m-d');
-        $global = GeneralSetting::latest()->first();
-        $employee = ProjectContract::with('employee','project','position')->where('id', $contract_id)->first();
+        $data['month_value'] = $month;
+        $data['month'] = Carbon::today()->format('Y-m-d');
+        $data['currency'] =$currency;
+        $data['global'] = GeneralSetting::latest()->first();        
+        $data['approvaler']=Employee::where('id', $approver_id)->first();
+        $data['prepper']=Employee::where('id', $prepper_id)->first();
+        $data['employee'] =$employee= ProjectContract::with('employee','project','position')->where('id', $contract_id)->first();
         if($employee){
-            $emp_id=$employee->employee_id;
+            $data['emp_id']=$employee->employee_id;
         }
-        $bank_account = BankingInformation::where(['employee_id'=> $emp_id, 'is_default'=>1])->latest()->first();
+        $data['bank_account']= $bank_account = BankingInformation::where(['employee_id'=> $emp_id, 'is_default'=>1])->latest()->first();
         if(!$bank_account){            
-            $bank_account = BankingInformation::where('employee_id', $emp_id)->latest()->first();
+            $data['bank_account'] = BankingInformation::where('employee_id', $emp_id)->latest()->first();
         }
-        // return View('downloads.project-pay-slip', compact('employee','bank_account','month','global','currency'));
-        $pdf = PDF::loadView('downloads.project-pay-slip', compact('employee','bank_account','month','global','currency'));
+        // return View('downloads.project-pay-slip', $data);
+        $pdf = PDF::loadView('downloads.project-pay-slip',$data);
         $pdf->setPaper('a4', 'portrait');   //horizontal
         $pdf->getDOMPdf()->set_option('isPhpEnabled', true);
 

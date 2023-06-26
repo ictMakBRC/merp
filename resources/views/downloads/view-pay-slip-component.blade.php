@@ -92,7 +92,7 @@
     </tr>
     <tr class="brow t-bold">
         <td  class="btop" colspan="3">
-            Deatils
+            Details
         </td>
         <td  class="btop t-right">
             UGX

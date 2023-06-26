@@ -29,16 +29,18 @@ use App\Http\Controllers\Humanresource\WorkExperienceController;
 use App\Http\Livewire\Humanresource\Employee\ViewPaySlipComponent;
 use App\Http\Livewire\Humanresource\Payroll\GeneratePayRollComponent;
 use App\Http\Livewire\Humanresource\Payroll\GenerateProjectPayRollComponent;
+use App\Http\Livewire\Humanresource\Payroll\PayRollSettingsComponent;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'humanresource', 'middleware' => ['auth']], function () {
     Route::get('/', [EmployeeController::class, 'dashboard'])->name('humanresource.dashboard');
     Route::get('payslip/download/{emp_id}/pdf', [EmployeeController::class, 'downloadPayslip'])->name('humanresource.downloadPayslip');
-    Route::get('proect/payslip/download/{contract_id}/{currency}/pdf', [EmployeeController::class, 'downloadProjectPayslip'])->name('humanresource.downloadProjectPayslip');
+    Route::get('proect/payslip/download/{contract_id}/{currency}/{month}/{approver_id}/{prepper_id}/pdf', [EmployeeController::class, 'downloadProjectPayslip'])->name('humanresource.downloadProjectPayslip');
     
     Route::get('employee/payslip/{id}/preview', ViewPaySlipComponent::class)->name('hr.viewPaySlip')->middleware('signed');
     Route::get('employee/officil/payroll', GeneratePayRollComponent::class)->name('hr.viewPayroll');
     Route::get('employee/project/payroll', GenerateProjectPayRollComponent::class)->name('hr.viewOfficialPayroll');
+    Route::get('employee/settings/payroll', PayRollSettingsComponent::class)->name('hr.payrollSettings');
 
     //-------------------------------STATIONS MANAGEMENT ROUTES------------------------
     Route::resource('hrstations', HrStationController::class);

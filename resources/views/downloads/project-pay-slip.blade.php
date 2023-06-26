@@ -58,7 +58,7 @@
 <table width="99%" style="border:solid 2px;border-collapse:collapse;margin-left:5.5566pt;border:solid;" cellspacing="0">
     <tr>
         <td class="btop t-bold">Payslip For</td>
-        <td class="btop">{{ \Carbon\Carbon::parse($month)->format('M-y') }}</td>
+        <td class="btop">{{ \Carbon\Carbon::parse($month_value)->format('M-y') }}</td>
         <td  class="btop" colspan="2">
             <table width="100%" style="border-collapse:collapse; border:solid 0px;">
                 <tr class="btop">
@@ -91,7 +91,7 @@
     </tr>
     <tr class="brow t-bold">
         <td  class="btop" colspan="3">
-            Deatils
+            Detials
         </td>
         <td  class="btop t-right">
             {{$currency}}
@@ -143,13 +143,25 @@
             -{{$currency}} @moneyFormat($nssf_deduct)
         </td>
     </tr>
+    <tr>
+        <td  class="btobp" colspan="3">
+            Employer NSSF ({{$global->employer_nssf}}%)
+        </td>
+        <td  class="bleft t-right">
+            @php
+                $enssf =  $global->employer_nssf/100;
+                $enssf_deduct = $salary * $enssf;
+            @endphp
+            -{{$currency}} @moneyFormat($enssf_deduct)
+        </td>
+    </tr>
     <tr class="brow t-bold">
         <td  class="btop" colspan="3">
             Net Payable
         </td>
         <td  class="btop t-right">
             @php
-                $net_deduct = $nssf_deduct+$paye_deduct;
+                $net_deduct = $nssf_deduct+$paye_deduct+$enssf_deduct;
                 $net_pay = $salary-$net_deduct;
             @endphp
             {{$currency}} @moneyFormat($net_pay)
@@ -180,7 +192,7 @@
             Prepared by:
         </td>
         <td  class="btop">
-            Nalwadda Geraldine
+            {{$prepper->fullname??'Nalwadda Geraldine'}}
         </td>
         <td  class="btop t-bold">
             Date
@@ -197,7 +209,7 @@
             Approved by:
         </td>
         <td  class="btop">
-            Joloba Moses
+            {{$approvaler->fullname??'Joloba Moses'}}
         </td>
         <td  class="btop t-bold">
             Date
