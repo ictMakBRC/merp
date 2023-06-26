@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('approval_chains', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('Employee_id')->constrained()->onDelete('Restrict')->onUpdate('Cascade');
+            $table->foreignId('employee_id')->constrained()->onDelete('Restrict')->onUpdate('Cascade');
             $table->string('type');
             $table->string('status')->default('Active');
             $table->timestamps();
