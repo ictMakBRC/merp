@@ -3,68 +3,74 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-3 mb-2">
-                            <label for="department_id" class="form-label">Project</label>
-                            <select class="form-select select2" id="department_id" wire:model="department_id">
-                                <option selected value="0">All</option>
-                                @forelse ($projectContracts as $projectContract)
-                                    <option value="{{ $projectContract->project_id }}">{{ $projectContract->project?->department_name??'N/A' }}</option>
-                                @empty
-                                @endforelse
-                            </select>
+                    <form wire:submit.prevent='generatePayroll'>
+                        <div class="row">
+                            <div class="col-2 mb-2">
+                                <label for="department_id" class="form-label">Project</label>
+                                <select class="form-select select2" id="department_id" wire:model="department_id">
+                                    <option selected value=" ">Select</option>
+                                    @forelse ($projectContracts as $projectContract)
+                                        <option value="{{ $projectContract->project_id }}">{{ $projectContract->project?->department_name??'N/A' }}</option>
+                                    @empty
+                                    @endforelse
+                                </select>
+                            </div>
+                            <div class="mb-3 col-md-2">
+                                <label for="currency" class="form-label">Currency</label>
+                                <select class="form-select" wire:model.defer="currency" id="currency" name="currency" required>
+                                    <option selected value="">Select</option>
+                                    <option value="UGX">UGX</option>
+                                    <option value="USD">USD</option>
+                                    <option value="GBP">GBP</option>
+                                    <option value="EUR">EUR</option>
+                                </select>
+                            </div>
+                            <div class="mb-2 col-3">
+                                <label for="employee_id" class="form-label">Employee<small
+                                        class="text-danger">*</small></label>
+                                <select class="form-select select2" name="employee_id" id="employee_id"
+                                    wire:model="employee_id">
+                                    <option selected value="0">All</option>
+                                    @forelse ($employees as $projectEmployee)
+                                        <option value="{{ $projectEmployee->employee_id }}">
+                                            {{ $projectEmployee->employee?->surname . ' ' . $projectEmployee->employee?->first_name . ' ' . $projectEmployee->employee?->other_name }}
+                                        </option>
+                                    @empty
+                                    @endforelse
+                                </select>
+                            </div>
+                            <div class="mb-2 col-1">
+                                <label for="usd_rate"class="form-label">Months<small class="text-danger">*</small></label>
+                                <input type="month"  class="form-control" name="show_month" id="show_month" wire:model="show_month">
+                            </div>
+                            
+                            <div class="mb-2 col-2">
+                                <label for="prepper_id" class="form-label">Prepper<small class="text-danger">*</small></label>
+                                <select class="form-select select2" required name="prepper_id" id="prepper_id"
+                                    wire:model="prepper_id">
+                                    <option selected value=" ">Select</option>
+                                    @forelse ($approvalers->where('type', 'Prepper') as $prepper)
+                                        <option value="{{ $prepper->employee_id  }}"> {{ $prepper->employee?->fullname }}</option>
+                                    @empty
+                                    @endforelse
+                                </select>
+                            </div>
+                            <div class="mb-2 col-2">
+                                <label for="approver_id" class="form-label">Approver<small class="text-danger">*</small></label>
+                                <select class="form-select select2" required name="approver_id" id="approver_id"
+                                    wire:model="approver_id">
+                                    <option selected value=" ">Select</option>
+                                    @forelse ($approvalers->where('type', 'Approver') as $approvaler)
+                                        <option value="{{ $approvaler->employee_id  }}"> {{ $approvaler->employee?->fullname }}</option>
+                                    @empty
+                                    @endforelse
+                                </select>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-success m-9">Submit</button>
+                            </div>
                         </div>
-                        <div class="mb-3 col-md-2">
-                            <label for="currency" class="form-label">Currency</label>
-                            <select class="form-select" wire:model.defer="currency" id="currency" name="currency" required>
-                                <option selected value="">Select</option>
-                                <option value="UGX">UGX</option>
-                                <option value="USD">USD</option>
-                                <option value="GBP">GBP</option>
-                                <option value="EUR">EUR</option>
-                            </select>
-                        </div>
-                        <div class="mb-2 col-3">
-                            <label for="employee_id" class="form-label">Employee<small
-                                    class="text-danger">*</small></label>
-                            <select class="form-select select2" name="employee_id" id="employee_id"
-                                wire:model="employee_id">
-                                <option selected value="0">All</option>
-                                @forelse ($employees as $projectEmployee)
-                                    <option value="{{ $projectEmployee->employee_id }}">
-                                        {{ $projectEmployee->employee?->surname . ' ' . $projectEmployee->employee?->first_name . ' ' . $projectEmployee->employee?->other_name }}
-                                    </option>
-                                @empty
-                                @endforelse
-                            </select>
-                        </div>
-                        {{-- <div class="mb-2 col-2">
-                            <label for="usd_rate"class="form-label">USD Rate<small class="text-danger">*</small></label>
-                            <input type="number" step="any" class="form-control" name="usd_rate" id="usd_rate"
-                                wire:model='usd_rate'>
-                        </div> --}}
-                        <div class="mb-2 col-2">
-                            <label for="show_month" class="form-label">Months<small class="text-danger">*</small></label>
-                            <select class="form-select select2" name="show_month" id="show_month" wire:model="show_month">
-                                <option selected value="0">Current</option>
-                                <option selected value="01">Jan</option>
-                                <option selected value="02">Feb</option>
-                                <option selected value="03">March</option>
-                                <option selected value="04">April</option>
-                                <option selected value="05">May</option>
-                                <option selected value="06">June</option>
-                                <option selected value="07">July</option>
-                                <option selected value="08">Aug</option>
-                                <option selected value="09">Sept</option>
-                                <option selected value="10">Oct</option>
-                                <option selected value="11">Nov</option>
-                                <option selected value="12">Dec</option>
-                            </select>
-                        </div>
-                        <div class="modal-footer">
-                            <button class="btn btn-success m-9" wire:click='generatePayroll'>Submit</button>
-                        </div>
-                    </div>
+                    </form>
                 </div>
 
             </div>
@@ -92,8 +98,8 @@
                                             <th>Employee 5% NSSF ({{$currency}})</th>
                                             <th>Employer 10% NSSF ({{$currency}})</th>
                                             <th>Employee 15% NSSF ({{$currency}})</th>
+                                            <th>Taxable Gross ({{$currency}})</th>
                                             <th>PAYE ({{$currency}})</th>
-                                            <th>Net Pay ({{$currency}})</th>
                                             <th>Net Pay ({{$currency}})</th>
                                             <th>Action</th>
                                         </tr>
@@ -179,7 +185,7 @@
                                                     <td class="table-action">
                                                         {{-- <a target="_blank" href="{{ URL::signedRoute('hr.viewPaySlip', $employeeContract->employee_id) }}"
                                                             class="action-icon"> <i class="mdi mdi-eye"></i></a> --}}
-                                                        <a href="{{ route('humanresource.downloadProjectPayslip',[$employeeContract->id,$currency]) }}"
+                                                        <a href="{{ route('humanresource.downloadProjectPayslip',[$employeeContract->id,$currency,$show_month,$approver_id,$prepper_id]) }}"
                                                             class="action-icon"> <i class="mdi mdi-download"></i></a>
                                                 
                                                     </td>

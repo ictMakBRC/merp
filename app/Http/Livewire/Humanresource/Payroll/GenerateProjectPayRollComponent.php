@@ -10,6 +10,7 @@ use App\Jobs\HumanResource\SendPaySlip;
 use App\Models\Settings\GeneralSetting;
 use App\Models\Humanresource\ProjectContract;
 use App\Jobs\HumanResource\SendProjectPaySlip;
+use App\Models\Humanresource\Payroll\ApprovalChain;
 
 class GenerateProjectPayRollComponent extends Component
 {
@@ -18,12 +19,14 @@ class GenerateProjectPayRollComponent extends Component
     public $usd_rate, $show_month, $global=null, $currency;
     public $emp_payroll;
     public $employeeIds = [];
+    public $approver_id=0;
+    public $prepper_id=0;
     public $selectedEmployeeIds=[];
 
     public function mount()
     {
         if($this->show_month == null){
-            $this->show_month = date('m');
+            $this->show_month = date('Y-m');
         }
         if($this->usd_rate == ''){
         $this->global = GeneralSetting::latest()->first();
@@ -39,6 +42,9 @@ class GenerateProjectPayRollComponent extends Component
         $this->validate([
             'department_id' => 'required|numeric',
             'currency' => 'required|string',
+            'approver_id' => 'required|integer',
+            'prepper_id' => 'required|integer',
+            'show_month' => 'required',
         ]);
         $this->emp_payroll = ProjectContract::with('employee','project')->where('project_id', $this->department_id)
         ->when($this->employee_id, function ($query) {$query->where('id', $this->employee_id);})
@@ -80,7 +86,7 @@ class GenerateProjectPayRollComponent extends Component
 
     public function render()
     {
-             
+        $data['approvalers']=ApprovalChain::with('employee')->where('status', 'Active')->get();
         $data['employees'] = ProjectContract::with('employee')->where('project_id', $this->department_id)
         ->when($this->currency, function ($query) {$query->where('currency', $this->currency);})->get();
         $data['projectContracts'] = ProjectContract::with('project')->distinct()->get('project_id');

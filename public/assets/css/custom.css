@@ -1,0 +1,32 @@
+﻿/* EXTRA CSS */
+.scrollabe-content {
+	height: 350px;
+	margin: 5px auto;
+}
+
+.scrollable {
+	overflow-y: auto;
+	max-height: 340px;
+}
+
+::-webkit-scrollbar {
+width: 6px;
+height: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+box-shadow: inset 0 0 5px grey;
+border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+background: #45BB63;
+border-radius: 13px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+background: #45BB63;
+}

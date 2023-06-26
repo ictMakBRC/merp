@@ -467,6 +467,9 @@
                     <li>
                         <a href="{{ route('hr.viewOfficialPayroll') }}">Generate Project Payroll</a>
                     </li>
+                    <li>
+                        <a href="{{ route('hr.payrollSettings') }}">Payroll Settings</a>
+                    </li>
                 </ul>
             </div>
         </li>
