@@ -185,7 +185,7 @@
                                                     <td class="table-action">
                                                         {{-- <a target="_blank" href="{{ URL::signedRoute('hr.viewPaySlip', $employeeContract->employee_id) }}"
                                                             class="action-icon"> <i class="mdi mdi-eye"></i></a> --}}
-                                                        <a href="{{ route('humanresource.downloadProjectPayslip',[$employeeContract->id,$currency,$show_month,$approver_id,$prepper_id]) }}"
+                                                        <a target="_blank" href="{{ route('humanresource.downloadProjectPayslip',[$employeeContract->id,$currency,$show_month,$approver_id,$prepper_id]) }}"
                                                             class="action-icon"> <i class="mdi mdi-download"></i></a>
                                                 
                                                     </td>
