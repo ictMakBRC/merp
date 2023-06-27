@@ -178,7 +178,7 @@
                                                     </td>
                                                     <td>
                                                         @php
-                                                        $usdDeduct = $usdPaye+$usd_nssf+$ugxEmp_nssf
+                                                        $usdDeduct = $usdPaye+$usd_nssf
                                                         @endphp
                                                         -@moneyFormat($salary-$usdDeduct)
                                                     </td>
