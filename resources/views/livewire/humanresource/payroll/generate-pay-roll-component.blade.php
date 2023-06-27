@@ -28,7 +28,7 @@
                                 @endforelse
                             </select>
                         </div>
-                        <div class="mb-2 col-2">
+                        <div class="mb-2 col-2 d-none">
                             <label for="usd_rate"class="form-label">USD Rate<small class="text-danger">*</small></label>
                             <input type="number" step="any" class="form-control" name="usd_rate" id="usd_rate"
                                 wire:model='usd_rate'>
