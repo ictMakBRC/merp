@@ -69,6 +69,8 @@
                                                     <a href="{{ route('projectcontract.download', ['emp_id' => $contract->employee->emp_id . $contract->project->department_name, 'id' => $contract->id]) }}"
                                                         class="btn btn-outline-success"><i
                                                             class=" uil-download-alt"></i></a>
+                                                    <a onclick="return confirm('Are you sure you want to delete?');" href="{{ route('projectcontract.delete',$contract->id) }}"  data-toggle="tooltip" title="Delete!" class="action-icon"> <i class="mdi mdi-delete"></i></a>
+                                               
                                                 @else
                                                     <i class="uil-padlock"></i>
                                                 @endif

@@ -120,6 +120,7 @@ Route::group(['prefix' => 'humanresource', 'middleware' => ['auth']], function (
     Route::get('/officialContracts/{emp_id}/officialContracts/download/{id}', [OfficialContractController::class, 'download'])->name('officialcontract.download');
     Route::resource('officialContracts', OfficialContractController::class);
 
+    Route::get('/projectContracts/delete/{id}', [ProjectContractController::class, 'destroy'])->name('projectcontract.delete');
     Route::get('/projectContracts/{emp_id}/projectContracts/download/{id}', [ProjectContractController::class, 'download'])->name('projectcontract.download');
     Route::resource('projectContracts', ProjectContractController::class);
 
