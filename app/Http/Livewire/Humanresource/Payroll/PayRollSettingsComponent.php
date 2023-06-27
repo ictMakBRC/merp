@@ -19,6 +19,7 @@ class PayRollSettingsComponent extends Component
     public $gbp_rate;
     public $status;
     public $type='Prepper';
+    public $search='';
 
     public function addPrepperEmployee($id)
     {
@@ -86,7 +87,7 @@ class PayRollSettingsComponent extends Component
     }
     public function render()
     {
-        $data['employees']=Employee::all();
+        $data['employees']=Employee::search($this->search)->get();
         $data['approvalers']=ApprovalChain::with('employee')->where('status', 'Active')->get();
         
         $general_setting=$this->settings()->where('status',1)->latest()->first();

@@ -86,4 +86,13 @@ class Employee extends Model
             });
         }
     }
+
+    public static function search($search)
+    {
+        return empty($search) ? static::query()
+        : static::query()
+            ->where('surname', 'like', '%'.$search.'%')
+            ->orWhere('first_name', 'like', '%'.$search.'%')
+            ->orWhere('other_name', 'like', '%'.$search.'%');
+    }
 }
