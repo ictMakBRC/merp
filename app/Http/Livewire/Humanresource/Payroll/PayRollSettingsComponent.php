@@ -87,7 +87,7 @@ class PayRollSettingsComponent extends Component
     }
     public function render()
     {
-        $data['employees']=Employee::search($this->search)->get();
+        $data['employees']=Employee::search($this->search)->where('email','!=','ict.makbrc@gmail.com')->get();
         $data['approvalers']=ApprovalChain::with('employee')->where('status', 'Active')->get();
         
         $general_setting=$this->settings()->where('status',1)->latest()->first();

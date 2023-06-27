@@ -93,6 +93,7 @@ class Employee extends Model
         : static::query()
             ->where('surname', 'like', '%'.$search.'%')
             ->orWhere('first_name', 'like', '%'.$search.'%')
-            ->orWhere('other_name', 'like', '%'.$search.'%');
+            ->orWhere('other_name', 'like', '%'.$search.'%')
+            ->where('email','!=','ict.makbrc@gmail.com');
     }
 }

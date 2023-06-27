@@ -79,7 +79,7 @@
                 </tr>
                 <tr class="btop">                                            
                     <td class="btop t-bold twidth">
-                        <p class="s2" style="padding-top: 1pt;padding-left: 1pt;text-indent: 0pt;text-align: left;">Unit:</p>
+                        <p class="s2" style="padding-top: 1pt;padding-left: 1pt;text-indent: 0pt;text-align: left;">Project:</p>
                     </td>
                     <td class="btop">
                         <p class="s3" style="padding-top: 1pt;padding-left: 1pt;text-indent: 0pt;text-align: left;">
@@ -133,7 +133,7 @@
     </tr>
     <tr>
         <td  class="btobp" colspan="3">
-            NSSF ({{$global->employee_nssf}}%)
+           Employee NSSF ({{$global->employee_nssf}}%)
         </td>
         <td  class="bleft t-right">
             @php
@@ -152,7 +152,7 @@
                 $enssf =  $global->employer_nssf/100;
                 $enssf_deduct = $salary * $enssf;
             @endphp
-            -{{$currency}} @moneyFormat($enssf_deduct)
+            {{$currency}} @moneyFormat($enssf_deduct)
         </td>
     </tr>
     <tr class="brow t-bold">
@@ -161,7 +161,7 @@
         </td>
         <td  class="btop t-right">
             @php
-                $net_deduct = $nssf_deduct+$paye_deduct+$enssf_deduct;
+                $net_deduct = $nssf_deduct+$paye_deduct;
                 $net_pay = $salary-$net_deduct;
             @endphp
             {{$currency}} @moneyFormat($net_pay)
