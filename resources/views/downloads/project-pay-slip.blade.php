@@ -161,13 +161,13 @@
         </td>
         <td  class="btop t-right">
             @php
-                $net_deduct = $nssf_deduct+$paye_deduct;
+                $net_deduct = $nssf_deduct+$paye_deduct+$enssf_deduct;
                 $net_pay = $salary-$net_deduct;
             @endphp
             {{$currency}} @moneyFormat($net_pay)
         </td>
     </tr>
-    <tr>
+    {{-- <tr>
         <td colspan="2">Remittance Method:</td>
         <td colspan="2">Electonic Funds Transfer</td>
     </tr>
@@ -186,7 +186,7 @@
     <tr>
         <td  colspan="2">Account No:</td>
         <td  colspan="2">{{$bank_account->account_number??'No bank data'}}</td>
-    </tr>
+    </tr> --}}
     <tr class="brow">
         <td  class="btop t-bold">
             Prepared by:
@@ -236,3 +236,30 @@
         </td>
     </tr>
 </table>
+
+<footer>   
+   <table width="100%" style=" position: fixed; bottom: 0; text-align:center; font-size:10px; color:#4CAF50">
+   
+       
+       <tr>
+           <td>
+               <p>
+               
+                 <strong>NOTE;</strong>The National Social Security Fund is the government agency of Tanzania responsible for the collection, safekeeping, responsible investments 
+             </p>
+           </td>
+       </tr>
+       <tr>
+           <td>
+               <p style="text-align:center; font-style: italic; font-size:8px; color:#4CAF50 ; bottom: 0;  right: 0;        
+               position: fixed;">Printed By: <font>
+                       {{ Auth::user()->name }} </font> |
+               Print Date:
+                   {{ date('l d-M-Y H:i:s') }}</font> 
+                  
+               </p>
+           </td>
+       </tr>
+   </table>
+    
+</footer>

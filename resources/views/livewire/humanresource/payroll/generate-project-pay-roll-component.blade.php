@@ -178,9 +178,9 @@
                                                     </td>
                                                     <td>
                                                         @php
-                                                        $usdDeduct = $usdPaye+$usd_nssf
+                                                        $usdDeduct = $usdPaye+$usd_nssf+$ugxEmp_nssf
                                                         @endphp
-                                                        @moneyFormat($salary-$usdDeduct)
+                                                        -@moneyFormat($salary-$usdDeduct)
                                                     </td>
                                                     <td class="table-action">
                                                         {{-- <a target="_blank" href="{{ URL::signedRoute('hr.viewPaySlip', $employeeContract->employee_id) }}"
