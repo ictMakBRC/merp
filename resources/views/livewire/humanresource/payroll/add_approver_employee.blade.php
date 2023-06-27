@@ -2,7 +2,7 @@
     <div class="card-body">
         <form class="mt-2 position-relative mb-1">
             <div class="input-group">
-                <input type="text" wire:model.debounce.300ms="searchSample" class="form-control" placeholder="Search">
+                <input type="text" wire:model.debounce.300ms="search" class="form-control" placeholder="Search">
             </div>
         </form>
         <div class="scrollable list-group list-group-flush">
