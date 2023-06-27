@@ -154,6 +154,9 @@ class ProjectContractController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $contract = ProjectContract::where('id',$id)->first();
+        $contract->delete();        
+        return redirect()->back()->with('success', 'Contract Successfully Deleted !!');
     }
+
 }
