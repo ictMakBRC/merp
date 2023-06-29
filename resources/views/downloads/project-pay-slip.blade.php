@@ -25,7 +25,7 @@
     .table-container {
     background-image: url("images/logos/makbrcbg.png");
     background-repeat: no-repeat;
-    background-size: 50%;
+    background-size: 70%;
     background-position: center;
 }
 </style>
