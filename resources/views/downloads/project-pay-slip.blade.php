@@ -17,6 +17,17 @@
     .twidth{
         width: 30%;
     }
+    .txt-center{
+        text-align: center;
+        font-size: 22px;
+        color: #f8f8f897;
+    }
+    .table-container {
+    background-image: url("images/logos/makbrcbg.png");
+    background-repeat: no-repeat;
+    background-size: 50%;
+    background-position: center;
+}
 </style>
 <table style="border-collapse:collapse;margin-left:5.5566pt" width="100%"  cellspacing="0">
     <tbody>
@@ -55,13 +66,13 @@
         </tr>
     </tbody>
 </table>
-<table width="99%" style="border:solid 2px;border-collapse:collapse;margin-left:5.5566pt;border:solid;" cellspacing="0">
+<table width="99%" class="table-container" style="border:solid 2px;border-collapse:collapse;margin-left:5.5566pt;border:solid;" cellspacing="0">
     <tr>
         <td class="btop t-bold">Payslip For</td>
-        <td class="btop">{{ \Carbon\Carbon::parse($month_value)->format('M-y') }}</td>
+        <td class="btop">{{ \Carbon\Carbon::parse($month_value)->format('F-Y') }}</td>
         <td  class="btop" colspan="2">
             <table width="100%" style="border-collapse:collapse; border:solid 0px;">
-                <tr class="btop">
+                <tr >
                     <td class="btop t-bold twidth">
                     <p class="s2" style="text-indent: 0pt;text-align: left;">Name:</p>
                     </td>
@@ -69,7 +80,7 @@
                         <p class="s3" style="padding-left: 1pt;text-indent: 0pt;text-align: left;">{{ $employee->employee?->fullName }}</p>
                     </td>
                 </tr>
-                <tr class="btop">
+                <tr >
                     <td class="btop t-bold twidth">
                         <p class="s2" style="text-indent: 0pt;text-align: left;">Position:</p>
                     </td>
@@ -133,7 +144,7 @@
     </tr>
     <tr>
         <td  class="btobp" colspan="3">
-           Employee NSSF ({{$global->employee_nssf}}%)
+           NSSF ({{$global->employee_nssf}}%)
         </td>
         <td  class="bleft t-right">
             @php
@@ -145,14 +156,14 @@
     </tr>
     <tr>
         <td  class="btobp" colspan="3">
-            Employer NSSF ({{$global->employer_nssf}}%)
+            NSSF ({{$global->employer_nssf}}%)
         </td>
         <td  class="bleft t-right">
             @php
                 $enssf =  $global->employer_nssf/100;
                 $enssf_deduct = $salary * $enssf;
             @endphp
-            {{$currency}} @moneyFormat($enssf_deduct)
+            -{{$currency}} @moneyFormat($enssf_deduct)
         </td>
     </tr>
     <tr class="brow t-bold">
@@ -167,10 +178,10 @@
             {{$currency}} @moneyFormat($net_pay)
         </td>
     </tr>
-    {{-- <tr>
+     {{-- <tr>
         <td colspan="2">Remittance Method:</td>
         <td colspan="2">Electonic Funds Transfer</td>
-    </tr>
+    </tr> --}}
     <tr>
         <td colspan="2">Account Name:</td>
         <td colspan="2">{{$bank_account->account_name??'No bank data'}}</td>
@@ -179,15 +190,15 @@
         <td colspan="2">Bank Name:</td>
         <td colspan="2">{{$bank_account->bank_name??'No bank data'}}</td>
     </tr>
-    <tr>
+    {{-- <tr>
         <td  colspan="2">Branch Name:</td>
         <td  colspan="2">{{$bank_account->branch??'No bank data'}} </td>
-    </tr>
+    </tr> --}}
     <tr>
         <td  colspan="2">Account No:</td>
         <td  colspan="2">{{$bank_account->account_number??'No bank data'}}</td>
-    </tr> --}}
-    <tr class="brow">
+    </tr> 
+    {{-- <tr class="brow">
         <td  class="btop t-bold">
             Prepared by:
         </td>
@@ -200,66 +211,48 @@
         <td  class="btop">
             {{ \Carbon\Carbon::parse($month)->format('d-M-Y') }}
         </td>
+    </tr> --}}
+    
+    <tr class="brow">
+        <td colspan="2" class="btop">
+            <strong> Received by:</strong> {{ $employee->employee?->fullName }}
+        </td>
+        <td colspan="2"  class="btop">
+           <strong>Date:</strong> {{ \Carbon\Carbon::parse($month)->format('d-F-Y') }}
+        </td>
     </tr>
+   
     <tr>
-        <td colspan="4"><br></td>
+        <td colspan="2" class="btop">
+            <br>
+            <br>
+            <h1 class="txt-center">STAMP</h1>
+            <br>
+            <br>
+        </td>
+        <td colspan="2">
+            <P><strong>Signature:</strong>................................................</P>
+            <P><strong>Date:</strong> &nbsp;&nbsp; {{ \Carbon\Carbon::parse($month)->format('d-F-Y') }}</P>
+        </td>
     </tr>
     <tr class="brow">
-        <td  class="btop t-bold">
-            Approved by:
+        <td colspan="4" class="btop">
+            <strong>Issued by: </strong>
+            @if ($prepper==0)
+             Head Human Resources
+            @else
+             {{$prepper}}
+            @endif
         </td>
-        <td  class="btop">
-            {{$approvaler->fullname??'Joloba Moses'}}
-        </td>
-        <td  class="btop t-bold">
+        {{-- <td  class="btop">
+            
+        </td> --}}
+        {{-- <td  class="btop t-bold">
             Date
         </td>
         <td  class="btop">
-            {{ \Carbon\Carbon::parse($month)->format('d-M-Y') }}
-        </td>
-    </tr>
-    <tr>
-        <td colspan="4"><br></td>
-    </tr>
-    <tr class="brow">
-        <td  class="btop t-bold">
-            Received by:
-        </td>
-        <td  class="btop">
-            {{ $employee->employee?->fullName }}
-        </td>
-        <td  class="btop t-bold">
-            Date
-        </td>
-        <td  class="btop">
-            {{ \Carbon\Carbon::parse($month)->format('d-M-Y') }}
-        </td>
+            {{ \Carbon\Carbon::parse($month)->format('d-F-Y') }}
+        </td> --}}
     </tr>
 </table>
 
-<footer>   
-   <table width="100%" style=" position: fixed; bottom: 0; text-align:center; font-size:10px; color:#4CAF50">
-   
-       
-       <tr>
-           <td>
-               <p>
-               
-                 <strong>NOTE;</strong>The National Social Security Fund is the government agency of Tanzania responsible for the collection, safekeeping, responsible investments 
-             </p>
-           </td>
-       </tr>
-       <tr>
-           <td>
-               <p style="text-align:center; font-style: italic; font-size:8px; color:#4CAF50 ; bottom: 0;  right: 0;        
-               position: fixed;">Printed By: <font>
-                       {{ Auth::user()->name }} </font> |
-               Print Date:
-                   {{ date('l d-M-Y H:i:s') }}</font> 
-                  
-               </p>
-           </td>
-       </tr>
-   </table>
-    
-</footer>

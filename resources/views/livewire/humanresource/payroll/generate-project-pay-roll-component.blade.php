@@ -14,6 +14,9 @@
                                     @empty
                                     @endforelse
                                 </select>
+                                @error('department_id')
+                                    <div class="text-danger text-small">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="mb-3 col-md-2">
                                 <label for="currency" class="form-label">Currency</label>
@@ -24,6 +27,9 @@
                                     <option value="GBP">GBP</option>
                                     <option value="EUR">EUR</option>
                                 </select>
+                                @error('currency')
+                                    <div class="text-danger text-small">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="mb-2 col-3">
                                 <label for="employee_id" class="form-label">Employee<small
@@ -38,10 +44,16 @@
                                     @empty
                                     @endforelse
                                 </select>
+                                @error('employee_id')
+                                    <div class="text-danger text-small">{{ $message }}</div>
+                                @enderror
                             </div>
-                            <div class="mb-2 col-1">
+                            <div class="mb-2 col-2">
                                 <label for="usd_rate"class="form-label">Months<small class="text-danger">*</small></label>
                                 <input type="month"  class="form-control" name="show_month" id="show_month" wire:model="show_month">
+                                @error('show_month')
+                                    <div class="text-danger text-small">{{ $message }}</div>
+                                @enderror
                             </div>
                             
                             <div class="mb-2 col-2">
@@ -49,13 +61,16 @@
                                 <select class="form-select select2" required name="prepper_id" id="prepper_id"
                                     wire:model="prepper_id">
                                     <option selected value=" ">Select</option>
-                                    @forelse ($approvalers->where('type', 'Prepper') as $prepper)
-                                        <option value="{{ $prepper->employee_id  }}"> {{ $prepper->employee?->fullname }}</option>
+                                    @forelse ($issuers as $prepper)
+                                        <option value="{{ $prepper->name  }}"> {{ $prepper->name }}</option>
                                     @empty
                                     @endforelse
                                 </select>
+                                @error('prepper_id')
+                                    <div class="text-danger text-small">{{ $message }}</div>
+                                @enderror
                             </div>
-                            <div class="mb-2 col-2">
+                            {{-- <div class="mb-2 col-2">
                                 <label for="approver_id" class="form-label">Approver<small class="text-danger">*</small></label>
                                 <select class="form-select select2" required name="approver_id" id="approver_id"
                                     wire:model="approver_id">
@@ -65,7 +80,7 @@
                                     @empty
                                     @endforelse
                                 </select>
-                            </div>
+                            </div> --}}
                             <div class="modal-footer">
                                 <button class="btn btn-success m-9">Submit</button>
                             </div>
@@ -185,7 +200,7 @@
                                                     <td class="table-action">
                                                         {{-- <a target="_blank" href="{{ URL::signedRoute('hr.viewPaySlip', $employeeContract->employee_id) }}"
                                                             class="action-icon"> <i class="mdi mdi-eye"></i></a> --}}
-                                                        <a target="_blank" href="{{ route('humanresource.downloadProjectPayslip',[$employeeContract->id,$currency,$show_month,$approver_id,$prepper_id]) }}"
+                                                        <a target="_blank" href="{{ route('humanresource.downloadProjectPayslip',[$employeeContract->id,$currency,$show_month,$prepper_id]) }}"
                                                             class="action-icon"> <i class="mdi mdi-download"></i></a>
                                                 
                                                     </td>

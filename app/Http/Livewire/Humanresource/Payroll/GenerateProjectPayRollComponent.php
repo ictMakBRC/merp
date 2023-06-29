@@ -10,6 +10,7 @@ use App\Jobs\HumanResource\SendPaySlip;
 use App\Models\Settings\GeneralSetting;
 use App\Models\Humanresource\ProjectContract;
 use App\Jobs\HumanResource\SendProjectPaySlip;
+use App\Models\Humanresource\Designation;
 use App\Models\Humanresource\Payroll\ApprovalChain;
 
 class GenerateProjectPayRollComponent extends Component
@@ -42,8 +43,8 @@ class GenerateProjectPayRollComponent extends Component
         $this->validate([
             'department_id' => 'required|numeric',
             'currency' => 'required|string',
-            'approver_id' => 'required|integer',
-            'prepper_id' => 'required|integer',
+            // 'approver_id' => 'required|integer',
+            'prepper_id' => 'required',
             'show_month' => 'required',
         ]);
         $this->emp_payroll = ProjectContract::with('employee','project')->where('project_id', $this->department_id)
@@ -86,6 +87,7 @@ class GenerateProjectPayRollComponent extends Component
 
     public function render()
     {
+        $data['issuers']=Designation::where('status', 'Active')->get();
         $data['approvalers']=ApprovalChain::with('employee')->where('status', 'Active')->get();
         $data['employees'] = ProjectContract::with('employee')->where('project_id', $this->department_id)
         ->when($this->currency, function ($query) {$query->where('currency', $this->currency);})->get();

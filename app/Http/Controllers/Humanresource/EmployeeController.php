@@ -485,18 +485,18 @@ class EmployeeController extends Controller
         // return $pdf->download($testResult->sample->participant->identity.rand().'.pdf');
     }
 
-    public function downloadProjectPayslip($contract_id,$currency,$month,$approver_id,$prepper_id)
+    public function downloadProjectPayslip($contract_id,$currency,$month,$prepared_by)
     {
         $emp_id = null;
         $data['month_value'] = $month;
         $data['month'] = Carbon::today()->format('Y-m-d');
         $data['currency'] =$currency;
         $data['global'] = GeneralSetting::latest()->first();        
-        $data['approvaler']=Employee::where('id', $approver_id)->first();
-        $data['prepper']=Employee::where('id', $prepper_id)->first();
+        // $data['approvaler']=Employee::where('id', $approver_id)->first();
+        $data['prepper']=$prepared_by;
         $data['employee'] =$employee= ProjectContract::with('employee','project','position')->where('id', $contract_id)->first();
         if($employee){
-            $data['emp_id']=$employee->employee_id;
+            $emp_id=$employee->employee_id;
         }
         $data['bank_account']= $bank_account = BankingInformation::where(['employee_id'=> $emp_id, 'is_default'=>1])->latest()->first();
         if(!$bank_account){            
