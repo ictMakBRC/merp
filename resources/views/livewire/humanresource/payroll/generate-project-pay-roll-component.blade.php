@@ -57,7 +57,7 @@
                             </div>
                             
                             <div class="mb-2 col-2">
-                                <label for="prepper_id" class="form-label">Prepper<small class="text-danger">*</small></label>
+                                <label for="prepper_id" class="form-label">Issued By<small class="text-danger">*</small></label>
                                 <select class="form-select select2" required name="prepper_id" id="prepper_id"
                                     wire:model="prepper_id">
                                     <option selected value=" ">Select</option>

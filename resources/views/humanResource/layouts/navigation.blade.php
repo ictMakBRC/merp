@@ -398,6 +398,9 @@
                                 <li>
                                     <a href="{{ route('hrdepartments.index') }}">Departments</a>
                                 </li>
+                                <li>
+                                    <a href="{{ route('hr.adminOffices') }}">Offices</a>
+                                </li>
                                 {{-- <li>
                                     <a href="{{ route('hrunits.index') }}">Units</a>
                                 </li> --}}

@@ -27,6 +27,7 @@ use App\Http\Controllers\Humanresource\TrainingProgramController;
 use App\Http\Controllers\Humanresource\WarningsController;
 use App\Http\Controllers\Humanresource\WorkExperienceController;
 use App\Http\Livewire\Humanresource\Employee\ViewPaySlipComponent;
+use App\Http\Livewire\Humanresource\OfficesComponent;
 use App\Http\Livewire\Humanresource\Payroll\GeneratePayRollComponent;
 use App\Http\Livewire\Humanresource\Payroll\GenerateProjectPayRollComponent;
 use App\Http\Livewire\Humanresource\Payroll\PayRollSettingsComponent;
@@ -41,6 +42,7 @@ Route::group(['prefix' => 'humanresource', 'middleware' => ['auth']], function (
     Route::get('employee/officil/payroll', GeneratePayRollComponent::class)->name('hr.viewPayroll');
     Route::get('employee/project/payroll', GenerateProjectPayRollComponent::class)->name('hr.viewOfficialPayroll');
     Route::get('employee/settings/payroll', PayRollSettingsComponent::class)->name('hr.payrollSettings');
+    Route::get('manage/offices', OfficesComponent::class)->name('hr.adminOffices');
 
     //-------------------------------STATIONS MANAGEMENT ROUTES------------------------
     Route::resource('hrstations', HrStationController::class);
