@@ -180,6 +180,28 @@
                   icon: event.detail.type,
                 });
             });
+
+            window.addEventListener('swal:modal', event => { 
+                swal({
+                  title: event.detail.message,
+                  text: event.detail.text,
+                  icon: event.detail.type,                  
+                  timer: 1500
+                  showConfirmButton: false,
+                });
+            });
+
+            window.addEventListener('swal:alertInfo', event => { 
+                swal({
+                //   title: event.detail.message,
+                  text: event.detail.text,
+                  icon: event.detail.type,
+                  showConfirmButton: false,
+                  timer: 1500
+                  position: 'top-end',
+               
+                });
+            });
               
             window.addEventListener('swal:confirm', event => { 
                 swal({

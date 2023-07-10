@@ -73,7 +73,8 @@ class OfficesComponent extends Component
 
         $this->resetInputs();
         $this->dispatchBrowserEvent('close-modal');
-        $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => 'referral name created successfully!']);
+        $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => 'Record created successfully!']);
+        $this->dispatchBrowserEvent('swal:alertInfo', ['type' => 'success', 'message' => 'Done','text' => 'Record Saved successfully!',]);
     }
 
     public function editData(HrOffice $office)
@@ -104,6 +105,7 @@ class OfficesComponent extends Component
 
         $this->resetInputs();
         $this->dispatchBrowserEvent('close-modal');
+        $this->dispatchBrowserEvent('swal:modal', ['type' => 'success', 'message' => 'Done','text' => 'Record updated successfully!',]);
         $this->dispatchBrowserEvent('alert', ['type' => 'success',  'message' => 'office updated successfully!']);
     }
 
