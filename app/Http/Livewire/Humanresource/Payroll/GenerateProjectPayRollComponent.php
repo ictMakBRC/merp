@@ -48,7 +48,7 @@ class GenerateProjectPayRollComponent extends Component
             'show_month' => 'required',
         ]);
         $this->emp_payroll = ProjectContract::with('employee','project')->where('project_id', $this->department_id)
-        ->when($this->employee_id, function ($query) {$query->where('id', $this->employee_id);})
+        ->when($this->employee_id, function ($query) {$query->where('employee_id', $this->employee_id);})
         ->when($this->currency, function ($query) {$query->where('currency', $this->currency);})->get();
 
         $this->employeeIds=$this->emp_payroll->pluck('id')->toArray();
