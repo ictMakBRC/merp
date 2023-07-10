@@ -507,7 +507,7 @@ class EmployeeController extends Controller
         $pdf->setPaper('a4', 'portrait');   //horizontal
         $pdf->getDOMPdf()->set_option('isPhpEnabled', true);
 
-        return  $pdf->stream($employee->employee?->fullname.'_'.date('ymdh:i:s').'Payslip.pdf');
+        return  $pdf->stream($employee->employee?->fullname.'_'.$month.' Payslip.pdf');
 
 
         // return $pdf->download($testResult->sample->participant->identity.rand().'.pdf');
