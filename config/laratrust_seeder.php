@@ -4,7 +4,7 @@ return [
     /**
      * Control if the seeder should create a user per role while seeding the data.
      */
-    'create_users' => true,
+    'create_users' => false,
 
     /**
      * Control if all the laratrust tables should be truncated before running the seeder.
@@ -13,26 +13,50 @@ return [
 
     'roles_structure' => [
         'SuperAdmin' => [
-            'users' => 'c,r,u,d',
-            'payments' => 'c,r,u,d',
-            'profile' => 'r,u',
+            'employee' => 'm,c,r,u,d',
+            'inventory'=>'m,c,r,u,d',
+            'assets' => 'm,c,r,u,d'
         ],
-        'administrator' => [
-            'users' => 'c,r,u,d',
-            'profile' => 'r,u',
+        'HrAdmin' => [
+            'employee' => 'm,c,r,u,d,x',
+        ] ,
+        'HrSupervisor' => [
+            
+            'employee' => 'm,c,r,u,a',
         ],
-        'user' => [
-            'profile' => 'r,u',
+
+        'HrUser' => [
+            
+            'employee' =>'c,r,u' ,
         ],
-        'role_name' => [
-            'module_1_name' => 'c,r,u,d',
+        'AssetsAdmin' => [
+            'assets'=>'m,c,r,u,d' , 
         ],
+        'AssetsUser' => [
+            'assets' => 'c,r,u',
+        ]
+        ,
+        'InvAdmin' => [
+            'inventory' =>'m,c,r,u,d,a',
+        ],
+        'InvSupervisor' => [
+            'inventory'=>'a,c,r,u,d',
+            
+        ],
+        'InvUser' => [
+            'inventory'=>'c,r,u,d' ,
+            
+        ]
+       
     ],
 
     'permissions_map' => [
+        'm' => 'manage',
+        'a' => 'approve',
         'c' => 'create',
         'r' => 'read',
         'u' => 'update',
         'd' => 'delete',
-    ],
+        'x' => 'accept'
+    ]
 ];
