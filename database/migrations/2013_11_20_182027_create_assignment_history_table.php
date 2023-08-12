@@ -13,6 +13,7 @@ class CreateAssignmentHistoryTable extends Migration
      */
     public function up()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::create('assignment_history', function (Blueprint $table) {
             $table->id();
             $table->foreignId('asset_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
@@ -20,6 +21,7 @@ class CreateAssignmentHistoryTable extends Migration
             $table->foreignId('to')->nullable()->references('id')->on('users')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
+        Schema::enableForeignKeyConstraints();
     }
 
     /**

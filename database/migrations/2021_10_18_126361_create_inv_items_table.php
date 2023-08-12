@@ -25,7 +25,7 @@ class CreateInvItemsTable extends Migration
             $table->foreignId('inv_store_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('restrict');
             $table->string('description')->nullable();
             $table->date('date_added')->nullable();
-            $table->integer('is_active')->default(1);
+            $table->boolean('is_active')->default(1);
             $table->string('expires')->default('No');
             $table->string('item_code')->nullable()->unique();
             $table->foreignId('user_id')->default('1');

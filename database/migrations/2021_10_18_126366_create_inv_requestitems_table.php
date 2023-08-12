@@ -21,7 +21,7 @@ class CreateInvRequestitemsTable extends Migration
             $table->float('request_qty')->default('0');
             $table->float('qty_given')->default('0');
             $table->string('request_code')->nullable();
-            $table->integer('is_active')->default('0');
+            $table->boolean('is_active')->default('0');
             $table->string('item_state')->default('open');
             $table->foreignId('users_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('restrict');
             $table->timestamps();

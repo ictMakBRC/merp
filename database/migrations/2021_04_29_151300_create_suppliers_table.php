@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('contact_person')->nullable();
             $table->text('goods_supplied')->nullable();
-            $table->integer('is_active')->nullable();
+            $table->boolean('is_active')->nullable();
             $table->foreignId('created_by')->constrained()->references('id')->on('users')->onDelete('Restrict')->onUpdate('Cascade');
             $table->timestamps();
         });

@@ -24,7 +24,7 @@
                                                 {{ $notice->notice }}
                                             </div>
                                             <div class="text-end no-print">
-                                                @if ($notice->created_by == auth()->user()->employee->id)
+                                                @if ($notice->created_by == auth()->user()?->employee?->id)
                                                     <form action="{{ route('notices.destroy', $notice->id) }}"
                                                         method="POST"
                                                         onsubmit="return confirm('{{ trans('Are you sure you want to delete this notice?') }}');">

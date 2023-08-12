@@ -24,7 +24,7 @@ class CreateInvRequestsTable extends Migration
             $table->foreignId('inventoryclerk_id')->nullable();
             $table->string('request_state')->default('open');
             $table->string('borrow_state')->default('na');
-            $table->integer('is_active')->default(0);
+            $table->boolean('is_active')->default(0);
             $table->date('date_added')->nullable();
             $table->string('reqcomment')->nullable()->default('na');
             $table->date('date_approved')->nullable();

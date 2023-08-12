@@ -17,7 +17,7 @@ class CreateInvSubunitsTable extends Migration
             $table->id();
             $table->string('subunit_name')->nullable();
             $table->foreignId('user_id')->default(1);
-            $table->integer('is_active')->default(1);
+            $table->boolean('is_active')->default(1);
             $table->timestamps();
         });
     }

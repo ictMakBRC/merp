@@ -33,36 +33,36 @@
             <tr>
                 <td style="width: 10%">
                     <img class="d-flex align-self-end rounded me-0"
-                        src="{{ asset('storage/' . $facilityInfo->logo) }}" alt="logo"  width="120px">
+                        src="{{ asset('storage/' . $facilityInfo?->logo) }}" alt="logo"  width="120px">
                 </td>
                 <td class="text-center">
                     <div class="w-100 overflow-hidde">
                         <p style="text-indent: 0pt;text-align: center;" class="t-bold"><a name="bookmark0">
-                            {{ $facilityInfo->facility_name }}</a></p>
-                        <p style="text-align: center;">{{ $facilityInfo->address2 }}
-                            <span> || {{ $facilityInfo->physical_address}}</span> <br>
-                            <span><strong>Tel:</strong> {{ $facilityInfo->contact }}
-                                @if ($facilityInfo->contact2)
-                                /{{ $facilityInfo->contact2 }}
+                            {{ $facilityInfo?->facility_name }}</a></p>
+                        <p style="text-align: center;">{{ $facilityInfo?->address2 }}
+                            <span> || {{ $facilityInfo?->physical_address}}</span> <br>
+                            <span><strong>Tel:</strong> {{ $facilityInfo?->contact }}
+                                @if ($facilityInfo?->contact2)
+                                /{{ $facilityInfo?->contact2 }}
                                 @endif
                             </span>
                             ||
-                            @if ($facilityInfo->fax)
-                                <span><strong>Fax:</strong> {{ $facilityInfo->fax }}</span> <br>
+                            @if ($facilityInfo?->fax)
+                                <span><strong>Fax:</strong> {{ $facilityInfo?->fax }}</span> <br>
                             @endif
-                            @if ($facilityInfo->email)
-                                <span><strong>Email:</strong> {{ $facilityInfo->email }}</span>
+                            @if ($facilityInfo?->email)
+                                <span><strong>Email:</strong> {{ $facilityInfo?->email }}</span>
                             @endif
                             ||
-                            @if ($facilityInfo->website)
-                            <span><strong>Web:</strong> {{ $facilityInfo->website }}</span>
+                            @if ($facilityInfo?->website)
+                            <span><strong>Web:</strong> {{ $facilityInfo?->website }}</span>
                             @endif
                         </p>
                     </div>
                 </td>
                 <td style="width: 10%">
                     <img class="d-flex align-self-end rounded me-0"
-                        src="{{ asset('storage/' . $facilityInfo->logo2) }}" alt="logo"  width="100px">
+                        src="{{ asset('storage/' . $facilityInfo?->logo2) }}" alt="logo"  width="100px">
                 </td>
             </tr>
         </tbody>

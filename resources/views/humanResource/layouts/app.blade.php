@@ -10,7 +10,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'MERP') }}</title>
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ asset('storage/' . $facilityInfo->logo) }}">
+    <link rel="shortcut icon" href="{{ asset('storage/' . $facilityInfo?->logo) }}">
     <!-- third party css -->
     <link href="{{ asset('assets/css/vendor/dataTables.bootstrap5.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets/css/vendor/responsive.bootstrap5.css') }}" rel="stylesheet" type="text/css">

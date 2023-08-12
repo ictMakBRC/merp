@@ -8,7 +8,7 @@
     <meta content="An enterprise resource planning application For MakBRC" name="description">
     <meta content="MERP" name="MAKBRC">
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ asset('storage/'.$facilityInfo->logo) }}">
+    <link rel="shortcut icon" href="{{ asset('storage/'.$facilityInfo?->logo) }}">
 
     <!-- App css -->
     <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
@@ -496,14 +496,14 @@
                             <h4 class="mt-2">Declaration!</h4>
                             <hr>
                             <p class="mt-3">I <strong
-                                    class="text-danger">{{ auth()->user()->employee->fullName }}</strong> hereby state
+                                    class="text-danger">{{ auth()->user()?->employee?->fullName }}</strong> hereby state
                                 that the information i will be providing to <strong class="text-success">Makerere
                                     University Biomedical Research Center</strong> using this System is truthful and
                                 that <strong class="text-success">Makerere University Biomedical Research
                                     Center</strong> reserves the right to check the authenticity of the information
                                 provided. <strong class="text-success">Makerere University Biomedical Research
                                     Center</strong> shall not be held liable for any wrong information provided by
-                                <strong class="text-danger">{{ auth()->user()->employee->fullName }}</strong> and
+                                <strong class="text-danger">{{ auth()->user()?->employee?->fullName }}</strong> and
                                 which is used as such.</p>
                             <form method="POST" action="{{ route('users.update', Auth::id()) }}">
                                 @method('PUT')

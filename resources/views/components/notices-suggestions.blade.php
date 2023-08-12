@@ -25,7 +25,7 @@
                     $mySuggestionsCount = 0;
                     $deptSuggestionsCount = 0;
                     foreach ($suggestions as $suggestion) {
-                        if ($suggestion->source_dept === Auth::user()->employee->department_id) {
+                        if ($suggestion->source_dept === Auth::user()?->employee?->department_id) {
                             $deptSuggestionsCount++;
                         }
                         if ($suggestion->created_by === auth()->user()->id) {

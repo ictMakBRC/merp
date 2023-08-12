@@ -17,7 +17,7 @@ class CreateInvUomsTable extends Migration
             $table->id();
             $table->string('uom_name')->nullable();
             $table->foreignId('user_id')->nullable();
-            $table->integer('is_active')->default(1);
+            $table->boolean('is_active')->default(1);
             $table->timestamps();
         });
     }

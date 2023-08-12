@@ -274,7 +274,7 @@
                     <hr>
                     <script>
                         document.write(new Date().getFullYear())
-                    </script> © {{ $facilityInfo->facility_name }}
+                    </script> © {{ $facilityInfo?->facility_name }}
                 </div>
 
             </div>

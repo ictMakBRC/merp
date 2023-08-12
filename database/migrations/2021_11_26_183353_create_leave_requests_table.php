@@ -13,6 +13,7 @@ class CreateLeaveRequestsTable extends Migration
      */
     public function up()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::create('leave_requests', function (Blueprint $table) {
             $table->id();
             $table->foreignId('employee_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
@@ -35,6 +36,7 @@ class CreateLeaveRequestsTable extends Migration
             $table->unsignedbiginteger('created_by')->nullable();
             $table->timestamps();
         });
+        Schema::enableForeignKeyConstraints();
     }
 
     /**

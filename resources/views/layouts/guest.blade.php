@@ -9,7 +9,7 @@
     <meta content="MERP" name="MakBRC">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ asset('storage/'.$facilityInfo->logo) }}">
+    <link rel="shortcut icon" href="{{ asset('storage/'.$facilityInfo?->logo) }}">
     <!-- App css -->
     <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/app.min.css') }}" rel="stylesheet" type="text/css" id="light-style" />
@@ -50,7 +50,7 @@
                 <div class="col-md-12 text-center">
                     <script>
                         document.write(new Date().getFullYear())
-                    </script> © {{ $facilityInfo->facility_name }}
+                    </script> © {{ $facilityInfo?->facility_name }}
                 </div>
 
             </div>

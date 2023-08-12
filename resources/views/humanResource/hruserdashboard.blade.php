@@ -10,7 +10,7 @@
                     <div class="ribbon ribbon-danger float-end"><i class="mdi mdi-account me-1"></i>About Me</div>
                     <h5 class="text-primary float-start mt-0">Hello!</h5>
                     <div class="ribbon-content text-center ">
-                        <img src="{{ asset('storage/' . Auth::user()->employee->photo) }}" alt="user-image"
+                        <img src="{{ asset('storage/' . Auth::user()?->employee?->photo) }}" alt="user-image"
                             class="rounded-circle avatar-lg img-thumbnail">
                         <h4 class="mb-0 mt-2">{{ $employee->fullName }}</h4>
                         <p class="text-muted font-14">

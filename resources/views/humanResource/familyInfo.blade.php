@@ -5,7 +5,7 @@
             <label for="employeeId" class="form-label">Employee</label>
             <select class="form-select select2" data-toggle="select2" id="employeeId" name="employee_id" required>
                 @if (Auth::user()->hasRole(['HrSupervisor', 'SuperAdmin', 'HrUser']))
-                    <option value='{{ Auth::user()->employee->status==='Active'?Auth::user()->employee_id:'' }}'>{{ Auth::user()->employee->status==='Active'?Auth::user()->employee->fullName:'Select' }}</option>
+                    <option value='{{ Auth::user()?->employee?->status==='Active'?Auth::user()->employee_id:'' }}'>{{ Auth::user()?->employee?->status==='Active'?Auth::user()?->employee?->fullName:'Select' }}</option>
                 @else
                     <option selected value="">Select</option>
                     @foreach ($employees as $employee)
@@ -91,7 +91,7 @@
                                 name="employee_id" required>
                                 @if (Auth::user()->hasRole(['HrSupervisor', 'SuperAdmin', 'HrUser']))
                                     <option value='{{ Auth::user()->employee_id }}'>
-                                        {{ Auth::user()->employee->fullName }}
+                                        {{ Auth::user()?->employee?->fullName }}
                                     </option>
                                 @else
                                     <option selected value="">Select</option>

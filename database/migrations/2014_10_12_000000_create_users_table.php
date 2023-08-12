@@ -13,6 +13,7 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->foreignId('employee_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
@@ -28,11 +29,12 @@ class CreateUsersTable extends Migration
             $table->string('left_sidebar_theme')->nullable();
             $table->string('left_sidebar_compact')->nullable();
             $table->unsignedBigInteger('created_by')->nullable();
-            $table->integer('is_active', 2)->default(1);
-            $table->integer('declaration', 2)->default(0);
+            $table->boolean('is_active')->default(1);
+            $table->boolean('declaration')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });
+        Schema::enableForeignKeyConstraints();
     }
 
     /**

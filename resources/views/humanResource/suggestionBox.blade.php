@@ -11,7 +11,7 @@
                     @forelse ($suggestions as $suggestion)
                         @if (Auth::user()->hasRole(['HrAdmin|SuperAdmin']) ||
                             ((Auth::user()->hasRole(['HrSupervisor']) &&
-                                $suggestion->source_dept === auth()->user()->employee->department_id) ||
+                                $suggestion->source_dept === auth()->user()?->employee?->department_id) ||
                                 $suggestion->created_by === auth()->user()->id) ||
                             (Auth::user()->hasRole(['HrUser']) && $suggestion->created_by === auth()->user()->id))
                             <div class="card ribbon-box">

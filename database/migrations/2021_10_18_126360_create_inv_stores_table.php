@@ -19,7 +19,7 @@ class CreateInvStoresTable extends Migration
             $table->string('store_location')->nullable();
             $table->longText('store_description')->nullable();
             $table->foreignId('user_id')->nullable();
-            $table->integer('is_active')->default(1);
+            $table->boolean('is_active')->default(1);
             $table->timestamps();
         });
     }

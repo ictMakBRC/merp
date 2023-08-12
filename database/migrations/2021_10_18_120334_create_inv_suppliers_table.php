@@ -21,7 +21,7 @@ class CreateInvSuppliersTable extends Migration
             $table->string('email')->nullable();
             $table->longText('description')->nullable();
             $table->foreignId('user_id')->nullable();
-            $table->integer('is_active')->default(1);
+            $table->boolean('is_active')->default(1);
             $table->timestamps();
         });
     }

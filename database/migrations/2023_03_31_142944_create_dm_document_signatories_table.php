@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('title')->nullable();
             $table->text('summary')->nullable();
             $table->string('signatory_status')->default('Pending');
-            $table->integer('is_active')->default(0);
+            $table->boolean('is_active')->default(0);
             $table->integer('acknowledgement')->default(0);
             $table->string('signature')->unique()->nullable();
             $table->text('comments')->nullable();

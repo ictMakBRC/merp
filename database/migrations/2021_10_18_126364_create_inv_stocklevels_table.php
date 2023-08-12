@@ -29,7 +29,7 @@ class CreateInvStocklevelsTable extends Migration
             $table->string('delivery_no')->nullable();
             $table->string('lpo')->nullable();
             $table->foreignId('user_id')->nullable()->constrained()->onUpdate('restrict')->onDelete('restrict');
-            $table->integer('is_active')->default(0);
+            $table->boolean('is_active')->default(0);
             $table->date('date_added')->nullable();
             $table->string('stock_year')->nullable();
             $table->string('stock_month')->nullable();

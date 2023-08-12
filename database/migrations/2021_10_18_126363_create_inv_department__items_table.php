@@ -18,7 +18,7 @@ class CreateInvDepartmentItemsTable extends Migration
             $table->foreignId('department_id')->nullable()->references('id')->on('departments')->onUpdate('restrict')->onDelete('restrict');
             $table->foreignId('inv_item_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('restrict');
             $table->integer('brand')->nullable();
-            $table->integer('is_active')->default(1);
+            $table->boolean('is_active')->default(1);
             $table->float('qty_left')->default('0');
             $table->float('qty_held')->default('0');
             $table->timestamps();

@@ -6,7 +6,7 @@
                 <script>
                     document.write(new Date().getFullYear())
                 </script> ©
-                {{ $facilityInfo->facility_name }}
+                {{ $facilityInfo?->facility_name }}
             </div>
 
         </div>

@@ -5,7 +5,7 @@
             <div class="col-md-12 text-center">
                 <script>
                     document.write(new Date().getFullYear())
-                </script> © {{ $facilityInfo->facility_name }}
+                </script> © {{ $facilityInfo?->facility_name }}
             </div>
 
         </div>

@@ -18,7 +18,7 @@
             <label for="status1" class="form-label">Status</label>
             <select class="form-select select2" data-toggle="select2" id="status1" name="status" required>
                 <option value="{{ $employee->status }}" selected>{{ $employee->status }}</option>
-                @if ($read_only===false && Auth::user()->employee->id != $employee->id)
+                @if ($read_only===false && Auth::user()?->employee?->id != $employee->id)
                     <option value='Active'>Active</option>
                     <option value='Suspended'>Suspended</option>
                     <option value='Terminated'>Terminated</option>
@@ -159,7 +159,7 @@
             <label for="designation" class="form-label">Designation / Position</label>
             <select class="form-select select2" data-toggle="select2" id="designation" name="designation_id">
                 <option selected value="{{ $employee->designation?$employee->designation->id:'' }}">{{ $employee->designation ? $employee->designation->name : 'Select' }}</option>
-                @if ($read_only===false && $employee->id!= Auth::user()->employee->id)
+                @if ($read_only===false && $employee->id!= Auth::user()?->employee?->id)
                     @foreach ($designations as $designation)
                         <option value='{{ $designation->id }}'>{{ $designation->name }}</option>
                     @endforeach
@@ -176,7 +176,7 @@
             <select class="form-select select2" data-toggle="select2" id="duty_station" name="station_id">
                 <option selected value="{{ $employee->station?$employee->station->id:'' }}">{{ $employee->station ? $employee->station->station_name : 'Select' }}</option>
                 
-                @if ($read_only===false && $employee->id!= Auth::user()->employee->id)
+                @if ($read_only===false && $employee->id!= Auth::user()?->employee?->id)
                     @foreach ($stations as $station)
                         <option value='{{ $station->id }}'>{{ $station->station_name }}</option>
                     @endforeach
@@ -187,7 +187,7 @@
             <label for="user_department" class="form-label">Department</label>
             <select class="form-select select2" data-toggle="select2" id="user_department" name="department_id">
                 <option selected value="{{ $employee->department?$employee->department->id:'' }}">{{ $employee->department ? $employee->department->department_name : 'Select' }}</option>
-                @if ($read_only===false && $employee->id!= Auth::user()->employee->id)
+                @if ($read_only===false && $employee->id!= Auth::user()?->employee?->id)
                     @foreach ($departments as $department)
                         <option value='{{ $department->id }}'>{{ $department->department_name }}</option>
                     @endforeach
@@ -220,7 +220,7 @@
                         <option selected value="{{ $reportsto->id }}">{{ $reportsto->fullName }}</option>
                     @endforeach
                 @endif
-                @if ($read_only===false && $employee->id!= Auth::user()->employee->id)
+                @if ($read_only===false && $employee->id!= Auth::user()?->employee?->id)
                     @foreach ($employees as $employee)
                         <option value='{{ $employee->id }}'>{{ $employee->fullName }}</option>
                     @endforeach
@@ -231,8 +231,8 @@
             <label for="work_type" class="form-label">Work Type</label>
             <select class="form-select select2" data-toggle="select2" id="work_type" name="work_type">
                 <option selected value="{{ $employee->work_type }}">{{ $employee->work_type }}</option>
-                @if ($read_only===false && $employee->id!= Auth::user()->employee->id)
-                    {{-- @if (Auth::user()->employee->id != $employee->id) --}}
+                @if ($read_only===false && $employee->id!= Auth::user()?->employee?->id)
+                    {{-- @if (Auth::user()?->employee?->id != $employee->id) --}}
                     <option value='Part Time'>Part Time</option>
                     <option value='Full Time'>Full Time</option>
                     <option value='Probation'>Probation</option>
