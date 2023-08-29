@@ -28,28 +28,27 @@
                                 @endforelse
                             </select>
                         </div>
-                        <div class="mb-2 col-2 d-none">
-                            <label for="usd_rate"class="form-label">USD Rate<small class="text-danger">*</small></label>
-                            <input type="number" step="any" class="form-control" name="usd_rate" id="usd_rate"
-                                wire:model='usd_rate'>
-                        </div>
                         <div class="mb-2 col-2">
-                            <label for="show_month" class="form-label">Months<small class="text-danger">*</small></label>
-                            <select class="form-select select2" name="show_month" id="show_month" wire:model="show_month">
-                                <option selected value="0">Current</option>
-                                <option selected value="01">Jan</option>
-                                <option selected value="02">Feb</option>
-                                <option selected value="03">March</option>
-                                <option selected value="04">April</option>
-                                <option selected value="05">May</option>
-                                <option selected value="06">June</option>
-                                <option selected value="07">July</option>
-                                <option selected value="08">Aug</option>
-                                <option selected value="09">Sept</option>
-                                <option selected value="10">Oct</option>
-                                <option selected value="11">Nov</option>
-                                <option selected value="12">Dec</option>
+                            <label for="usd_rate"class="form-label">Months<small class="text-danger">*</small></label>
+                            <input type="month"  class="form-control" name="show_month" id="show_month" wire:model="show_month">
+                            @error('show_month')
+                                <div class="text-danger text-small">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        
+                        <div class="mb-2 col-2">
+                            <label for="prepper_id" class="form-label">Issued By<small class="text-danger">*</small></label>
+                            <select class="form-select select2" required name="prepper_id" id="prepper_id"
+                                wire:model="prepper_id">
+                                <option selected value=" ">Select</option>
+                                @forelse ($issuers as $prepper)
+                                    <option value="{{ $prepper->name  }}"> {{ $prepper->name }}</option>
+                                @empty
+                                @endforelse
                             </select>
+                            @error('prepper_id')
+                                <div class="text-danger text-small">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="modal-footer">
                             <button class="btn btn-success m-9" wire:click='generatePayroll'>Submit</button>
@@ -164,10 +163,13 @@
                                             @moneyFormat($salaryUsd-$usdDeduct)
                                         </td>
                                         <td class="table-action">
-                                            <a target="_blank" href="{{ URL::signedRoute('hr.viewPaySlip', $employee->id) }}"
-                                                class="action-icon"> <i class="mdi mdi-eye"></i></a>
-                                            <a href="{{ route('humanresource.downloadPayslip', $employee->id) }}"
-                                                class="action-icon"> <i class="mdi mdi-download"></i></a>
+                                            {{-- <a target="_blank" href="{{ URL::signedRoute('hr.viewPaySlip', $employee->id) }}"
+                                                class="action-icon"> <i class="mdi mdi-eye"></i></a> --}}
+                                            {{-- <a href="{{ route('humanresource.downloadPayslip', $employee->id) }}"
+                                                class="action-icon"> <i class="mdi mdi-download"></i></a> --}}
+
+                                                <a target="_blank" href="{{ route('humanresource.downloadPayslip',[$employee->id,$show_month,$prepper_id]) }}"
+                                                    class="action-icon"> <i class="mdi mdi-download"></i></a>
                                     
                                         </td>
                                     </tr>

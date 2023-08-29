@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Livewire\Component;
 use App\Models\Department;
 use App\Models\Humanresource\Employee;
+use App\Models\Humanresource\HrOffice;
 use App\Jobs\HumanResource\SendPaySlip;
 use App\Models\Settings\GeneralSetting;
 
@@ -16,12 +17,14 @@ class GeneratePayRollComponent extends Component
     public $usd_rate, $show_month, $global=null;
     public $emp_payroll;
     public $employeeIds = [];
-    public $selectedEmployeeIds=[];
+    public $selectedEmployeeIds=[];    
+    public $approver_id=0;
+    public $prepper_id=0;
 
     public function mount()
     {
         if($this->show_month == null){
-            $this->show_month = date('m');
+            $this->show_month = date('Y-m');
         }
         if($this->usd_rate == ''){
         $this->global = GeneralSetting::latest()->first();
@@ -73,6 +76,7 @@ class GeneratePayRollComponent extends Component
 
     public function render()
     {
+        $data['issuers']=HrOffice::all();
               // $from = Carbon::parse($this->from_date)->toDateTimeString();
             // $to = Carbon::parse($this->to_date)->addHour(23)->addMinutes(59)->toDateTimeString();
         $data['employees'] = Employee::where('status', 'Active')->when($this->department_id, function ($query) {$query->where('department_id', $this->department_id);})

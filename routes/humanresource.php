@@ -35,7 +35,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'humanresource', 'middleware' => ['auth']], function () {
     Route::get('/', [EmployeeController::class, 'dashboard'])->name('humanresource.dashboard');
-    Route::get('payslip/download/{emp_id}/pdf', [EmployeeController::class, 'downloadPayslip'])->name('humanresource.downloadPayslip');
+    Route::get('payslip/download/{emp_id}/{month}/{prepared_by}/pdf', [EmployeeController::class, 'downloadPayslip'])->name('humanresource.downloadPayslip');
     Route::get('proect/payslip/download/{contract_id}/{currency}/{month}/{prepared_by}/pdf', [EmployeeController::class, 'downloadProjectPayslip'])->name('humanresource.downloadProjectPayslip');
     
     Route::get('employee/payslip/{id}/preview', ViewPaySlipComponent::class)->name('hr.viewPaySlip')->middleware('signed');

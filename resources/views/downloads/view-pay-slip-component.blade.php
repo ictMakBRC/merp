@@ -59,7 +59,7 @@
 <table width="99%" style="border:solid 2px;border-collapse:collapse;margin-left:5.5566pt;border:solid;" cellspacing="0">
     <tr>
         <td class="btop t-bold">Payslip For</td>
-        <td class="btop">{{ \Carbon\Carbon::parse($month)->format('M-y') }}</td>
+        <td class="btop">{{ \Carbon\Carbon::parse($month_value)->format('M-y') }}</td>
         <td  class="btop" colspan="2">
             <table width="100%" style="border-collapse:collapse; border:solid 0px;">
                 <tr class="btop">
@@ -95,7 +95,7 @@
             Details
         </td>
         <td  class="btop t-right">
-            UGX
+            {{$currency}}
         </td>
     </tr>
     <tr>
@@ -107,17 +107,22 @@
                 $salary = 0;
                 $usd_rate = $global->usd_rate;
                 if($employee->officialContract){
-                    if ($employee?->officialContract?->currency =='USD') {
-                    $salary = $employee?->officialContract?->gross_salary * $usd_rate;}
-                    if ($employee?->officialContract?->currency =='UGX') {
-                        $salary = $employee?->officialContract?->gross_salary;
-                    }
+                    // if ($employee?->officialContract?->currency =='USD') {
+                    // $salary = $employee?->officialContract?->gross_salary * $usd_rate;}
+                    // if ($employee?->officialContract?->currency =='USD') {
+                    // $salary = $employee?->officialContract?->gross_salary * $usd_rate;}
+                    // if ($employee?->officialContract?->currency =='USD') {
+                    // $salary = $employee?->officialContract?->gross_salary * $usd_rate;}
+                    // if ($employee?->officialContract?->currency =='UGX') {
+                    //     $salary = $employee?->officialContract?->gross_salary;
+                    // }
+                    $salary = $employee?->officialContract?->gross_salary;
                 }else{
                     $salary =  $employee->salary_ugx;
                 }
                 
             @endphp
-            UGX @moneyFormat($salary)
+            {{$currency}} @moneyFormat($salary)
         </td>
     </tr>
     <tr>
@@ -128,7 +133,7 @@
             $paye =  $global->paye/100;
             $paye_deduct = $salary * $paye;
           @endphp
-            -UGX @moneyFormat($paye_deduct)
+            -{{$currency}} @moneyFormat($paye_deduct)
         </td>
     </tr>
     <tr>
@@ -140,7 +145,7 @@
                 $nssf =  $global->employee_nssf/100;
                 $nssf_deduct = $salary * $nssf;
             @endphp
-            -UGX @moneyFormat($nssf_deduct)
+            -{{$currency}} @moneyFormat($nssf_deduct)
         </td>
     </tr>
     <tr class="brow t-bold">
@@ -152,21 +157,21 @@
                 $net_deduct = $nssf_deduct+$paye_deduct;
                 $net_pay = $salary-$net_deduct;
             @endphp
-            UGX @moneyFormat($net_pay)
+            {{$currency}} @moneyFormat($net_pay)
         </td>
     </tr>
     <tr>
         <td colspan="2">Remittance Method:</td>
         <td colspan="2">Electonic Funds Transfer</td>
     </tr>
-    <tr>
+    {{-- <tr>
         <td colspan="2">Account Name:</td>
         <td colspan="2">{{$bank_account->account_name??'No bank data'}}</td>
     </tr>
     <tr>
         <td colspan="2">Bank Name:</td>
         <td colspan="2">{{$bank_account->bank_name??'No bank data'}}</td>
-    </tr>
+    </tr> --}}
     <tr>
         <td  colspan="2">Branch Name:</td>
         <td  colspan="2">{{$bank_account->branch??'No bank data'}} </td>
@@ -176,51 +181,44 @@
         <td  colspan="2">{{$bank_account->account_number??'No bank data'}}</td>
     </tr>
     <tr class="brow">
-        <td  class="btop t-bold">
-            Prepared by:
+        <td colspan="2" class="btop">
+            <strong> Received by:</strong> {{ $employee?->fullName }}
         </td>
-        <td  class="btop">
-            Nalwadda Geraldine
-        </td>
-        <td  class="btop t-bold">
-            Date
-        </td>
-        <td  class="btop">
-            {{ \Carbon\Carbon::parse($month)->format('d-M-Y') }}
+        <td colspan="2"  class="btop">
+           <strong>Date:</strong> {{ \Carbon\Carbon::parse($month)->format('d-F-Y') }}
         </td>
     </tr>
+   
     <tr>
-        <td colspan="4"><br></td>
+        <td colspan="2" class="btop">
+            <br>
+            <br>
+            <h1 class="txt-center">STAMP</h1>
+            <br>
+            <br>
+        </td>
+        <td colspan="2">
+            <P><strong>Signature:</strong>................................................</P>
+            <P><strong>Date:</strong> &nbsp;&nbsp; {{ \Carbon\Carbon::parse($month)->format('d-F-Y') }}</P>
+        </td>
     </tr>
     <tr class="brow">
-        <td  class="btop t-bold">
-            Approved by:
+        <td colspan="4" class="btop">
+            <strong>Issued by: </strong>
+            @if ($prepper==0)
+             Head Human Resources
+            @else
+             {{$prepper}}
+            @endif
         </td>
-        <td  class="btop">
-            Joloba Moses
-        </td>
-        <td  class="btop t-bold">
+        {{-- <td  class="btop">
+            
+        </td> --}}
+        {{-- <td  class="btop t-bold">
             Date
         </td>
         <td  class="btop">
-            {{ \Carbon\Carbon::parse($month)->format('d-M-Y') }}
-        </td>
-    </tr>
-    <tr>
-        <td colspan="4"><br></td>
-    </tr>
-    <tr class="brow">
-        <td  class="btop t-bold">
-            Received by:
-        </td>
-        <td  class="btop">
-            {{ $employee->fullName }}
-        </td>
-        <td  class="btop t-bold">
-            Date
-        </td>
-        <td  class="btop">
-            {{ \Carbon\Carbon::parse($month)->format('d-M-Y') }}
-        </td>
+            {{ \Carbon\Carbon::parse($month)->format('d-F-Y') }}
+        </td> --}}
     </tr>
 </table>

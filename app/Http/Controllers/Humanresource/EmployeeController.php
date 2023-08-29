@@ -465,21 +465,28 @@ class EmployeeController extends Controller
         return redirect()->back()->with('success', 'Employee Updated Successfully!!');
     }
 
-    public function downloadPayslip($emp_id)
+    public function downloadPayslip($emp_id,$month,$prepared_by)
     {
-        $month = Carbon::today()->format('Y-m-d');
-        $global = GeneralSetting::latest()->first();
-        $employee = Employee::with(['designation','department','departmentunit','officialContract'])->where('id', $emp_id)->first();
-        $bank_account = BankingInformation::where(['employee_id'=> $emp_id, 'is_default'=>1])->latest()->first();
-        if(!$bank_account){            
-            $bank_account = BankingInformation::where('employee_id', $emp_id)->latest()->first();
+        
+        $data['employee'] = Employee::with(['designation','department','departmentunit','officialContract'])->where('id', $emp_id)->first();
+        $data['bank_account'] = BankingInformation::where(['employee_id'=> $emp_id, 'is_default'=>1])->latest()->first();
+        if(!$data['bank_account']){            
+            $data['bank_account'] = BankingInformation::where('employee_id', $emp_id)->latest()->first();
         }
-        // return View('downloads.view-pay-slip-component', compact('employee','bank_account','month','global'));
+        $print_month= Carbon::parse($month)->format('F-Y');
+        $month_date = Carbon::parse($month)->format('Y-m-d');
+        $data['month_value'] = $month;
+        $data['month'] = Carbon::today()->format('Y-m-d');
+        $data['currency'] =$data['employee']->officialContract->currency;
+        $data['global'] = GeneralSetting::latest()->first();        
+        // $data['approvaler']=Employee::where('id', $approver_id)->first();
+        $data['prepper']=$prepared_by;
+        return View('downloads.view-pay-slip-component', $data);
         $pdf = PDF::loadView('downloads.view-pay-slip-component', compact('employee','bank_account','month','global'));
         $pdf->setPaper('a4', 'portrait');   //horizontal
         $pdf->getDOMPdf()->set_option('isPhpEnabled', true);
 
-        return  $pdf->stream($employee->surname.'.pdf');
+        return  $pdf->stream($data['employee']->surname.'.pdf');
 
 
         // return $pdf->download($testResult->sample->participant->identity.rand().'.pdf');
