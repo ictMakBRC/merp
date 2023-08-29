@@ -477,7 +477,7 @@ class EmployeeController extends Controller
         $month_date = Carbon::parse($month)->format('Y-m-d');
         $data['month_value'] = $month;
         $data['month'] = Carbon::today()->format('Y-m-d');
-        $data['currency'] =$data['employee']->officialContract->currency;
+        $data['currency'] =$data['employee']->officialContract->currency??'N/A';
         $data['global'] = GeneralSetting::latest()->first();        
         // $data['approvaler']=Employee::where('id', $approver_id)->first();
         $data['prepper']=$prepared_by;
