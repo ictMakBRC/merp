@@ -17,6 +17,11 @@
     .twidth{
         width: 30%;
     }
+    .txt-center{
+        text-align: center;
+        font-size: 22px;
+        color: #f8f8f897;
+    }
 </style>
 <table style="border-collapse:collapse;margin-left:5.5566pt" width="100%"  cellspacing="0">
     <tbody>
