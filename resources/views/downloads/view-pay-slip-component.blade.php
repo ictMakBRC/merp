@@ -167,11 +167,11 @@
     {{-- <tr>
         <td colspan="2">Account Name:</td>
         <td colspan="2">{{$bank_account->account_name??'No bank data'}}</td>
-    </tr>
+    </tr> --}}
     <tr>
         <td colspan="2">Bank Name:</td>
         <td colspan="2">{{$bank_account->bank_name??'No bank data'}}</td>
-    </tr> --}}
+    </tr>
     <tr>
         <td  colspan="2">Branch Name:</td>
         <td  colspan="2">{{$bank_account->branch??'No bank data'}} </td>
