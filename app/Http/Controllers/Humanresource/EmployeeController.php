@@ -481,7 +481,7 @@ class EmployeeController extends Controller
         $data['global'] = GeneralSetting::latest()->first();        
         // $data['approvaler']=Employee::where('id', $approver_id)->first();
         $data['prepper']=$prepared_by;
-        // return View('downloads.view-pay-slip-component', $data);
+        return View('downloads.view-pay-slip-component', $data);
         $pdf = PDF::loadView('downloads.view-pay-slip-component', $data);
         $pdf->setPaper('a4', 'portrait');   //horizontal
         $pdf->getDOMPdf()->set_option('isPhpEnabled', true);

@@ -80,7 +80,7 @@ class ItemsController extends Controller
         $value->inv_subunit_id = $request->input('inv_subunit_id');
         $value->cost_price = $request->input('cost_price');
         $value->inv_uom_id = $request->input('inv_uom_id');
-        $value->inv_supplier_id = $request->input('inv_supplier_id') != '' ? $request->input('inv_supplier_id') : null;
+        // $value->supplier_id = $request->input('inv_supplier_id') != '' ? $request->input('inv_supplier_id') : null;
         $value->max_qty = $request->input('max_qty');
         $value->min_qty = $request->input('min_qty');
         $value->item_code = $request->input('item_code');
@@ -117,7 +117,7 @@ class ItemsController extends Controller
      */
     public function edit($id)
     {
-        $units = Department::orderBy('name', 'asc')->get();
+        $units = Department::orderBy('department_name', 'asc')->get();
         $uoms = invUom::orderBy('uom_name', 'asc')->get();
         $suppliers = invSuppliers::orderBy('sup_name', 'asc')->get();
         $stores = invStores::orderBy('store_name', 'asc')->get();
@@ -162,7 +162,7 @@ class ItemsController extends Controller
         $value->inv_subunit_id = $request->input('inv_subunit_id');
         $value->cost_price = $request->input('cost_price');
         $value->inv_uom_id = $request->input('inv_uom_id');
-        $value->inv_supplier_id = $request->input('inv_supplier_id');
+        // $value->inv_supplier_id = $request->input('inv_supplier_id');
         $value->max_qty = $request->input('max_qty');
         $value->min_qty = $request->input('min_qty');
         $value->inv_store_id = $request->input('inv_store_id');

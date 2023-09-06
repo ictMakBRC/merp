@@ -38,7 +38,8 @@
                 <div class="content">
                     <!-- Topbar Start -->
 
-                    @include("livewire.document-management.layouts.topbar")
+                    {{-- @include("livewire.document-management.layouts.topbar") --}}
+                    <livewire:document-management.layouts.top-bar-component />
                     <!-- end Topbar -->
                     <!-- Start Content-->
                     <main>
