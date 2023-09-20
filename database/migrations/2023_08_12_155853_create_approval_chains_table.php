@@ -13,13 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('approval_chains', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('employee_id')->index('approval_chains_employee_id_foreign');
-            $table->string('type');
-            $table->string('status')->default('Active');
-            $table->timestamps();
-        });
+        // Schema::create('approval_chains', function (Blueprint $table) {
+        //     $table->bigIncrements('id');
+        //     $table->unsignedBigInteger('employee_id')->index('approval_chains_employee_id_foreign');
+        //     $table->string('type');
+        //     $table->string('status')->default('Active');
+        //     $table->timestamps();
+        // });
     }
 
     /**
