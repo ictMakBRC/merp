@@ -477,6 +477,13 @@
             </div>
         </li>
     @endif
+    <li class="side-nav-item">
+        <a href="{{ route('hr.myPayroll') }}" aria-expanded="false" aria-controls="sidebarDashboards"
+            class="side-nav-link">
+            <i class="uil-file-alt"></i>
+            <span> My Payslips</span>
+        </a>
+    </li>
     </ul>
     <!-- End Sidebar -->
     <div class="clearfix"></div>
