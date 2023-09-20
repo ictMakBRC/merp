@@ -23,7 +23,7 @@ class ResignationController extends Controller
             ->where('employee_id', Auth::user()->employee_id)->latest()->get();
         } elseif (Auth::user()->hasRole(['HrSupervisor'])) {
             $resignations = Resignation::with('employee', 'employee.designation:id,name', 'employee.department:id,department_name', 'approver:id,prefix,surname,other_name,first_name')
-            ->where(['department_id' => Auth::user()->employee->department_id, 'status' => 'Accepted'])->latest()->get();
+            ->where(['department_id' => Auth::user()->employee->department_id??'', 'status' => 'Accepted'])->latest()->get();
         } elseif (Auth::user()->hasRole(['HrAdmin', 'SuperAdmin'])) {
             $resignations = Resignation::with('employee', 'employee.designation:id,name', 'employee.department:id,department_name', 'approver:id,prefix,surname,other_name,first_name')->latest()->get();
         } else {

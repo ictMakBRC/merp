@@ -46,13 +46,13 @@ class LeaveRequestController extends Controller
         }
 
         $employee = Employee::findOrFail(Auth::user()->employee_id);
-        $parentDept = Department::select('parent_department')->where('id', Auth::user()->employee->department_id)->get();
+        $parentDept = Department::select('parent_department')->where('id', Auth::user()->employee->department_id??'')->get();
 
         if (Auth::user()->hasRole(['HrAdmin', 'SuperAdmin', 'HrSupervisor'])) {
-            $deptEmployees = Employee::select('id', 'prefix', 'surname', 'other_name', 'first_name')->where('id', '!=', $employee->id)->where('department_id', Auth::user()->employee->department_id)
+            $deptEmployees = Employee::select('id', 'prefix', 'surname', 'other_name', 'first_name')->where('id', '!=', $employee->id)->where('department_id', Auth::user()->employee->department_id??'')
             ->orWhere('department_id', $parentDept[0]->parent_department)->get();
         } else {
-            $deptEmployees = Employee::select('id', 'prefix', 'surname', 'other_name', 'first_name')->where('department_id', Auth::user()->employee->department_id)
+            $deptEmployees = Employee::select('id', 'prefix', 'surname', 'other_name', 'first_name')->where('department_id', Auth::user()->employee->department_id??'')
             ->where('id', '!=', Auth::user()->employee->id)->get();
         }
 
@@ -122,7 +122,7 @@ class LeaveRequestController extends Controller
         $leaveRequest = new LeaveRequest();
         $leaveRequest->employee_id = Auth::user()->employee_id;
         $leaveRequest->emp_id = Auth::user()->emp_id;
-        $leaveRequest->department_id = Auth::user()->employee->department_id;
+        $leaveRequest->department_id = Auth::user()->employee->department_id??'';
         $leaveRequest->leave_id = $request->leave_id;
         $leaveRequest->start_date = $request->start_date;
         $leaveRequest->end_date = $request->end_date;
@@ -164,13 +164,13 @@ class LeaveRequestController extends Controller
             ->where('employee_id', $id)->latest()->get();
 
             $employee = Employee::findOrFail(Auth::user()->employee_id);
-            $parentDept = Department::select('parent_department')->where('id', Auth::user()->employee->department_id)->get();
+            $parentDept = Department::select('parent_department')->where('id', Auth::user()->employee->department_id??'')->get();
 
             if (Auth::user()->hasRole(['HrAdmin', 'SuperAdmin', 'HrSupervisor'])) {
-                $deptEmployees = Employee::select('id', 'prefix', 'surname', 'other_name', 'first_name')->where('id', '!=', $employee->id)->where('department_id', Auth::user()->employee->department_id)
+                $deptEmployees = Employee::select('id', 'prefix', 'surname', 'other_name', 'first_name')->where('id', '!=', $employee->id)->where('department_id', Auth::user()->employee->department_id??'')
                 ->orWhere('department_id', $parentDept[0]->parent_department)->get();
             } else {
-                $deptEmployees = Employee::select('id', 'prefix', 'surname', 'other_name', 'first_name')->where('department_id', Auth::user()->employee->department_id)
+                $deptEmployees = Employee::select('id', 'prefix', 'surname', 'other_name', 'first_name')->where('department_id', Auth::user()->employee->department_id??'')
                 ->where('id', '!=', Auth::user()->employee->id)->get();
             }
 
@@ -193,13 +193,13 @@ class LeaveRequestController extends Controller
             ->where('delegated_to', $id)->latest()->get();
 
             $employee = Employee::findOrFail(Auth::user()->employee_id);
-            $parentDept = Department::select('parent_department')->where('id', Auth::user()->employee->department_id)->get();
+            $parentDept = Department::select('parent_department')->where('id', Auth::user()->employee->department_id??'')->get();
 
             if (Auth::user()->hasRole(['HrAdmin', 'SuperAdmin'])) {
-                $deptEmployees = Employee::select('id', 'prefix', 'surname', 'other_name', 'first_name')->where('id', '!=', $employee->id)->where('department_id', Auth::user()->employee->department_id)
+                $deptEmployees = Employee::select('id', 'prefix', 'surname', 'other_name', 'first_name')->where('id', '!=', $employee->id)->where('department_id', Auth::user()->employee->department_id??'')
                 ->orWhere('department_id', $parentDept[0]->parent_department)->get();
             } else {
-                $deptEmployees = Employee::select('id', 'prefix', 'surname', 'other_name', 'first_name')->where('department_id', Auth::user()->employee->department_id)
+                $deptEmployees = Employee::select('id', 'prefix', 'surname', 'other_name', 'first_name')->where('department_id', Auth::user()->employee->department_id??'')
                 ->where('id', '!=', Auth::user()->employee->id)->get();
             }
 
@@ -237,10 +237,10 @@ class LeaveRequestController extends Controller
         ->whereIn('employee_id', $myjuniorsList)->where('start_date', '>=', $yearStart)->where('delegatee_status', 'Accepted')->latest()->get();
 
         $employee = Employee::findOrFail(Auth::user()->employee_id);
-        $parentDept = Department::select('parent_department')->where('id', Auth::user()->employee->department_id)->get();
+        $parentDept = Department::select('parent_department')->where('id', Auth::user()->employee->department_id??'')->get();
 
         if (Auth::user()->hasRole(['HrAdmin', 'SuperAdmin'])) {
-            $deptEmployees = Employee::select('id', 'prefix', 'surname', 'other_name', 'first_name')->where('id', '!=', $employee->id)->where('department_id', Auth::user()->employee->department_id)
+            $deptEmployees = Employee::select('id', 'prefix', 'surname', 'other_name', 'first_name')->where('id', '!=', $employee->id)->where('department_id', Auth::user()->employee->department_id??'')
         ->orWhere('department_id', $parentDept[0]->parent_department)->get();
         }
 

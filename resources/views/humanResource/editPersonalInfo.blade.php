@@ -158,7 +158,7 @@
         <div class="mb-3 col-md-4">
             <label for="designation" class="form-label">Designation / Position</label>
             <select class="form-select select2" data-toggle="select2" id="designation" name="designation_id">
-                <option selected value="{{ $employee->designation?$employee->designation->id:'' }}">{{ $employee->designation ? $employee->designation->name : 'Select' }}</option>
+                <option selected value="{{ $employee->designation?$employee->designation->id:'' }}">{{ $employee->designation ? $employee->designation->name??'N/A' : 'Select' }}</option>
                 @if ($read_only===false && $employee->id!= Auth::user()?->employee?->id)
                     @foreach ($designations as $designation)
                         <option value='{{ $designation->id }}'>{{ $designation->name }}</option>
@@ -186,7 +186,7 @@
         <div class="mb-3 col-md-4">
             <label for="user_department" class="form-label">Department</label>
             <select class="form-select select2" data-toggle="select2" id="user_department" name="department_id">
-                <option selected value="{{ $employee->department?$employee->department->id:'' }}">{{ $employee->department ? $employee->department->department_name : 'Select' }}</option>
+                <option selected value="{{ $employee->department?$employee->department->id:'' }}">{{ $employee->department ? $employee->department->department_name??'N/A' : 'Select' }}</option>
                 @if ($read_only===false && $employee->id!= Auth::user()?->employee?->id)
                     @foreach ($departments as $department)
                         <option value='{{ $department->id }}'>{{ $department->department_name }}</option>

@@ -49,8 +49,8 @@
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $termination->emp_id }}</td>
                                             <td>{{ $termination->employee->fullName }}</td>
-                                            <td>{{ $termination->employee->department->department_name }}</td>
-                                            <td>{{ $termination->employee->designation->name }}</td>
+                                            <td>{{ $termination->employee->department->department_name??'N/A' }}</td>
+                                            <td>{{ $termination->employee->designation->name??'N/A' }}</td>
                                             <td>{{ $termination->reason }}</td>
                                             <td>{{ date('d-m-Y', strtotime($termination->created_at)) }}</td>
                                             <td>{{ date('d-m-Y', strtotime($termination->termination_date)) }}</td>

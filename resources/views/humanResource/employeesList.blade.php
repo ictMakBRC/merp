@@ -54,8 +54,8 @@
                                             <td>{{ $employee->gender }}</td>
                                             <td>{{ $employee->contact }}</td>
                                             <td>{{ $employee->email }}</td>
-                                            <td>{{ $employee->designation?$employee->designation->name:'N/A' }}</td>
-                                            <td>{{ $employee->department?$employee->department->department_name:'N/A' }}</td>
+                                            <td>{{ $employee->designation?$employee->designation->name??'N/A':'N/A' }}</td>
+                                            <td>{{ $employee->department?$employee->department->department_name??'N/A':'N/A' }}</td>
                                             <td>{{ $employee->work_type }}</td>
                                             @if ($employee->status != 'Active')
                                                 <td><span class="badge bg-danger">{{ $employee->status }}</span></td>
@@ -64,11 +64,7 @@
                                             @endif
                                             <td class="table-action">
                                                 <a href="{{ route('employees.show', $employee->id) }}"
-                                                    class="action-icon"> <i class="mdi mdi-eye"></i></a>
-                                                    <a href="{{ URL::signedRoute('hr.viewPaySlip', $employee->id) }}"
-                                                        class="action-icon"> <i class="mdi mdi-eye"></i></a>
-                                                        <a href="{{ route('humanresource.downloadPayslip', $employee->id) }}"
-                                                            class="action-icon"> <i class="mdi mdi-download"></i></a>
+                                                    class="action-icon"> <i class="mdi mdi-eye"></i></a>                                                   
                                                 @if (Auth::user()->isAbleTo('employee-create'))
                                                     <a href="{{ route('employees.edit', [$employee->id]) }}"
                                                         class="action-icon"> <i class="mdi mdi-pencil"></i></a>

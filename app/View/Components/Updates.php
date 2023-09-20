@@ -38,7 +38,7 @@ class Updates extends Component
     {
         $childDepartments = [];
 
-        $level1_children = Department::select('id')->where('parent_department', Auth::user()->employee->department_id)->get();
+        $level1_children = Department::select('id')->where('parent_department', Auth::user()->employee->department_id??'')->get();
 
         if (! $level1_children->isEmpty()) {
             foreach ($level1_children as $level1_child) {
@@ -61,7 +61,7 @@ class Updates extends Component
                 array_push($childDepartments, $level3_child->id);
             }
         }
-        $this->notices = Notice::with('employee')->where('expires_on', '>=', date('Y-m-d'))->where('audience', Auth::user()->employee->department_id)->orWhere('audience', 0)->latest()->get();
+        $this->notices = Notice::with('employee')->where('expires_on', '>=', date('Y-m-d'))->where('audience', Auth::user()->employee->department_id??'')->orWhere('audience', 0)->latest()->get();
         $this->educationInfoCount = EducationBackground::where(['employee_id' => auth()->user()->employee->id])->count();
         $this->bankingInfoCount = BankingInformation::where(['employee_id' => auth()->user()->employee->id])->count();
         $this->emergencyContactCount = EmergencyContact::where(['employee_id' => auth()->user()->employee->id])->count();
@@ -71,7 +71,7 @@ class Updates extends Component
         if (Auth::user()->hasRole(['HrAdmin', 'SuperAdmin'])) {
             $this->contracts = OfficialContract::contractOwner()->get();
         } elseif (Auth::user()->hasRole(['HrSupervisor'])) {
-            $this->contracts = OfficialContract::contractOwner()->where('department_id', Auth::user()->employee->department_id)->orWhereIn('department_id', $childDepartments)->get();
+            $this->contracts = OfficialContract::contractOwner()->where('department_id', Auth::user()->employee->department_id??'')->orWhereIn('department_id', $childDepartments)->get();
         } elseif (Auth::user()->hasRole(['HrUser'])) {
             $this->contracts = OfficialContract::contractOwner()->where(['employee_id' => auth()->user()->employee->id])->get();
         }

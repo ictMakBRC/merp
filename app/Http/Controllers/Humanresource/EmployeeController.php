@@ -43,7 +43,7 @@ class EmployeeController extends Controller
     {
         $childDepartments = [];
 
-        $level1_children = Department::select('id')->where('parent_department', Auth::user()->employee->department_id)->get();
+        $level1_children = Department::select('id')->where('parent_department', Auth::user()->employee->department_id??''??0)->get();
         if (! $level1_children->isEmpty()) {
             foreach ($level1_children as $level1_child) {
                 array_push($childDepartments, $level1_child->id);
@@ -69,7 +69,7 @@ class EmployeeController extends Controller
 
         if (Auth::user()->hasRole(['HrSupervisor'])) {
             $employees = Employee::with(['department:id,department_name', 'designation:id,name'])->where('status', 'Active')
-            ->where('department_id', Auth::user()->employee->department_id)->orWhereIn('department_id', $childDepartments)->latest()->get();
+            ->where('department_id', Auth::user()->employee->department_id??'')->orWhereIn('department_id', $childDepartments)->latest()->get();
 
             return view('humanResource.employeesList', compact('employees'));
         } elseif (Auth::user()->hasRole(['HrAdmin', 'SuperAdmin'])) {
@@ -218,7 +218,7 @@ class EmployeeController extends Controller
      */
     public function show(Employee $employee)
     {
-        if (Auth::user()->hasRole(['HrAdmin', 'SuperAdmin']) || Auth::user()->hasRole(['HrUser']) && Auth::user()->employee_id == $employee->id || Auth::user()->hasRole(['HrSupervisor']) && Auth::user()->employee->department_id == $employee->department_id) {
+        if (Auth::user()->hasRole(['HrAdmin', 'SuperAdmin']) || Auth::user()->hasRole(['HrUser']) && Auth::user()->employee_id == $employee->id || Auth::user()->hasRole(['HrSupervisor']) && Auth::user()->employee->department_id??'' == $employee->department_id) {
             $employee->load('station:id,station_name', 'department:id,department_name', 'designation:id,name', 'departmentunit:id,department_name')->get();
             $reportingTo = Employee::select('prefix', 'surname', 'other_name', 'first_name')->where('id', $employee->reporting_to)->get();
             $awards = EducationBackground::where('employee_id', $employee->id)->latest()->get();
@@ -268,7 +268,7 @@ class EmployeeController extends Controller
         } elseif (Auth::user()->hasRole(['HrSupervisor'])) {
             $childDepartments = [];
 
-            $level1_children = Department::select('id')->where('parent_department', Auth::user()->employee->department_id)->get();
+            $level1_children = Department::select('id')->where('parent_department', Auth::user()->employee->department_id??'')->get();
 
             if (! $level1_children->isEmpty()) {
                 foreach ($level1_children as $level1_child) {
@@ -293,21 +293,21 @@ class EmployeeController extends Controller
             }
 
             $leaveCount = LeaveRequest::where(['status' => 'Approved', 'confirmation' => 'Confirmed'])
-            ->where('department_id', Auth::user()->employee->department_id)->orWhereIn('department_id', $childDepartments)->count();
+            ->where('department_id', Auth::user()->employee->department_id??'')->orWhereIn('department_id', $childDepartments)->count();
             $grievanceCount = Grievance::where('status', 'Pending')
-            ->where('department_id', Auth::user()->employee->department_id)->orWhereIn('department_id', $childDepartments)->count();
+            ->where('department_id', Auth::user()->employee->department_id??'')->orWhereIn('department_id', $childDepartments)->count();
             $resignationCount = Resignation::where('status', 'Pending')
-            ->where('department_id', Auth::user()->employee->department_id)->orWhereIn('department_id', $childDepartments)->count();
+            ->where('department_id', Auth::user()->employee->department_id??'')->orWhereIn('department_id', $childDepartments)->count();
             $exitInterviewCount = ExitInterview::whereBetween('created_at', [$prev_date, $today])
-            ->where('department_id', Auth::user()->employee->department_id)->orWhereIn('department_id', $childDepartments)->count();
+            ->where('department_id', Auth::user()->employee->department_id??'')->orWhereIn('department_id', $childDepartments)->count();
             $appraisalCount = EmployeeAppraisal::whereBetween('created_at', [$prev_date, $today])
-            ->where('department_id', Auth::user()->employee->department_id)->orWhereIn('department_id', $childDepartments)->count();
+            ->where('department_id', Auth::user()->employee->department_id??'')->orWhereIn('department_id', $childDepartments)->count();
             $departmentCount = Department::where(['status' => 'active', 'type' => 'Unit'])->count();
             $projectsCount = Department::where(['status' => 'active', 'type' => 'Project'])->count();
             $employeeCount = Employee::where('status', 'active')
-            ->where('department_id', Auth::user()->employee->department_id)->orWhereIn('department_id', $childDepartments)->count();
+            ->where('department_id', Auth::user()->employee->department_id??'')->orWhereIn('department_id', $childDepartments)->count();
             $expiredCount = OfficialContract::where('status', 'Expired')->whereBetween('end_date', [$prev_date, $today])
-            ->where('department_id', Auth::user()->employee->department_id)->orWhereIn('department_id', $childDepartments)->count();
+            ->where('department_id', Auth::user()->employee->department_id??'')->orWhereIn('department_id', $childDepartments)->count();
 
             return view('humanResource.dashboard', compact(
                 'employeeCount', 'expiredCount',
@@ -335,7 +335,7 @@ class EmployeeController extends Controller
             $read_only = true;
         }
 
-        if (Auth::user()->hasRole(['HrAdmin', 'SuperAdmin']) || Auth::user()->hasRole(['HrUser']) && Auth::user()->employee_id == $employee->id || Auth::user()->hasRole(['HrSupervisor']) && Auth::user()->employee->department_id == $employee->department_id) {
+        if (Auth::user()->hasRole(['HrAdmin', 'SuperAdmin']) || Auth::user()->hasRole(['HrUser']) && Auth::user()->employee_id == $employee->id || Auth::user()->hasRole(['HrSupervisor']) && Auth::user()->employee->department_id??'' == $employee->department_id) {
             $employee->load('station:id,station_name', 'department:id,department_name', 'designation:id,name', 'departmentunit:id,department_name')->get();
             $reportingTo = Employee::select('id', 'prefix', 'surname', 'other_name', 'first_name')->where('id', $employee->reporting_to)->get();
             $awards = EducationBackground::where('employee_id', $employee->id)->latest()->get();

@@ -44,8 +44,8 @@
                                                 <td>{{ $employee->gender }}</td>
                                                 <td>{{ $employee->contact }}</td>
                                                 <td>{{ $employee->email }}</td>
-                                                <td>{{ $employee->designation->name }}</td>
-                                                <td>{{ $employee->department->department_name }}</td>
+                                                <td>{{ $employee->designation->name??'N/A' }}</td>
+                                                <td>{{ $employee->department->department_name??'N/A' }}</td>
                                                 <td>{{ $employee->work_type }}</td>
                                                 @if ($employee->status != 'Active')
                                                     <td><span class="badge bg-danger">{{ $employee->status }}</span></td>

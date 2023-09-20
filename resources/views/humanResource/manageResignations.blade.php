@@ -50,8 +50,8 @@
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $resignation->emp_id }}</td>
                                         <td>{{ $resignation->employee->fullName }}</td>
-                                        <td>{{ $resignation->employee->department->department_name }}</td>
-                                        <td>{{ $resignation->employee->designation->name }}</td>
+                                        <td>{{ $resignation->employee->department->department_name??'N/A' }}</td>
+                                        <td>{{ $resignation->employee->designation->name??'N/A' }}</td>
                                         <td>{{ $resignation->subject }}</td>
                                         <td>{{ date('d-m-Y', strtotime($resignation->created_at)) }}</td>
                                         <td>{{ date('d-m-Y', strtotime($resignation->hand_over_date)) }}</td>

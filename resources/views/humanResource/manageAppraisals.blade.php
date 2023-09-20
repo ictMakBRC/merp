@@ -45,8 +45,8 @@
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $appraisal->emp_id }}</td>
                                             <td>{{ $appraisal->employee->fullName }}</td>
-                                            <td>{{ $appraisal->employee->department->department_name }}</td>
-                                            <td>{{ $appraisal->employee->designation->name }}</td>
+                                            <td>{{ $appraisal->employee->department->department_name??'N/A' }}</td>
+                                            <td>{{ $appraisal->employee->designation->name??'N/A' }}</td>
                                             <td>{{ date('d-m-Y', strtotime($appraisal->start_date)) . ' To ' . date('d-m-Y', strtotime($appraisal->end_date)) }}
                                             </td>
                                             <td>{{ date('d-m-Y', strtotime($appraisal->created_at)) }}</td>

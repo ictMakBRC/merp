@@ -26,7 +26,7 @@ class WarningsController extends Controller
             return view('humanResource.manageWarnings', compact('warnings'));
         } elseif (Auth::user()->hasRole(['HrSupervisor'])) {
             $warnings = EmployeeWarning::with('employee', 'employee.designation:id,name', 'employee.department:id,department_name')
-            ->where('department_id', Auth::user()->employee->department_id)->latest()->get();
+            ->where('department_id', Auth::user()->employee->department_id??'')->latest()->get();
 
             return view('humanResource.manageWarnings', compact('warnings'));
         } elseif (Auth::user()->hasRole(['HrUser'])) {

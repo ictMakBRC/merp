@@ -23,7 +23,7 @@ class AppraisalsController extends Controller
             ->where('employee_id', Auth::user()->employee_id)->latest()->get();
         } elseif (Auth::user()->hasRole(['HrSupervisor'])) {
             $appraisals = EmployeeAppraisal::with('employee', 'employee.designation:id,name', 'employee.department:id,department_name')
-            ->where('department_id', Auth::user()->employee->department_id)->latest()->get();
+            ->where('department_id', Auth::user()->employee->department_id??'')->latest()->get();
         } elseif (Auth::user()->hasRole(['HrAdmin', 'SuperAdmin'])) {
             $appraisals = EmployeeAppraisal::with('employee', 'employee.designation:id,name', 'employee.department:id,department_name')->latest()->get();
         } else {
@@ -47,7 +47,7 @@ class AppraisalsController extends Controller
 
     public function downloadForm(Request $request, $emp_id)
     {
-        $file = storage_path('app/appraisalform_templates/AppraisalFormTemplate.docx');
+        $file = storage_path('app/appraisal_files/AppraisalFormTemplate.docx');
 
         // $headers = ['Content-Type: application/pdf'];
 
@@ -80,11 +80,13 @@ class AppraisalsController extends Controller
     public function create()
     {
         if (Auth::user()->hasRole(['HrSupervisor', 'HrAdmin'])) {
-            $employees = Employee::select('id', 'prefix', 'surname', 'first_name', 'other_name')->where(['department_id' => Auth::user()->employee->department_id, 'status' => 'Active'])->latest()->get();
+            $employees = Employee::select('id', 'prefix', 'surname', 'first_name', 'other_name')->where(['department_id' => Auth::user()->employee?->department_id, 'status' => 'Active'])->latest()->get();
 
             return view('humanResource.uploadAppraisal', compact('employees'));
         } else {
-            abort(Response::HTTP_FORBIDDEN, '403 Forbidden');
+            $employees = collect([]);
+            return view('humanResource.uploadAppraisal', compact('employees'));
+            
         }
     }
 

@@ -36,6 +36,7 @@
                                 <select class="form-select select2" data-toggle="select2" id="employee"
                                     name="employee_id" required>
                                     <option selected value="">Select</option>
+                                    <option value='{{ auth()->user()->employee_id }}'>{{ auth()->user()->name }}</option>
                                     @foreach ($employees as $employee)
                                         <option value='{{ $employee->id }}'>{{ $employee->fullName }}</option>
                                     @endforeach

@@ -50,8 +50,8 @@
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $grievance->emp_id }}</td>
                                             <td>{{ $grievance->employee->fullName }}</td>
-                                            <td>{{ $grievance->employee->department->department_name }}</td>
-                                            <td>{{ $grievance->employee->designation->name }}</td>
+                                            <td>{{ $grievance->employee->department->department_name??'N/A' }}</td>
+                                            <td>{{ $grievance->employee->designation->name??'N/A' }}</td>
                                             <td>{{ $grievance->grievance_type }}</td>
                                             <td class="table-action">
                                                 <a type="button" href="#" class="btn btn-outline-info mb-2 me-1"

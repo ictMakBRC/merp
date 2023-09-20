@@ -50,7 +50,7 @@
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $request->emp_id }}</td>
                                             <td>{{ $request->employee->fullName }}</td>
-                                            <td>{{ $request->employee->department->department_name }}</td>
+                                            <td>{{ $request->employee->department->department_name??'N/A' }}</td>
                                             <td>{{ $request->leave->name }}</td>
                                             <td>{{ date('d-m-Y', strtotime($request->created_at)) }}</td>
                                             <td>{{ date('d-m-Y', strtotime($request->start_date)) }}</td>

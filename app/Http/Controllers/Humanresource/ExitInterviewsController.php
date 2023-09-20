@@ -23,7 +23,7 @@ class ExitInterviewsController extends Controller
             ->where('employee_id', Auth::user()->employee_id)->latest()->get();
         } elseif (Auth::user()->hasRole(['HrSupervisor'])) {
             $exitInterviews = ExitInterview::with('employee', 'employee.designation:id,name', 'employee.department:id,department_name')
-            ->where(['department_id' => Auth::user()->employee->department_id])->latest()->get();
+            ->where(['department_id' => Auth::user()->employee->department_id??''])->latest()->get();
         } elseif (Auth::user()->hasRole(['HrAdmin', 'SuperAdmin'])) {
             $exitInterviews = ExitInterview::with('employee', 'employee.designation:id,name', 'employee.department:id,department_name')->latest()->get();
         } else {

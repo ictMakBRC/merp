@@ -17,7 +17,7 @@
                             @if ($employee->designation == null)
                                 N/A
                             @else
-                                {{ $employee->designation->name }}
+                                {{ $employee->designation->name??'N/A' }}
                             @endif
                         </p>
                         <div class="text-start mt-3">
@@ -60,7 +60,7 @@
                                     @if ($employee->department == null)
                                         N/A
                                     @else
-                                        {{ $employee->department->department_name }}
+                                        {{ $employee->department->department_name??'N/A' }}
                                     @endif
                                 </span></p>
                             <p class="text-muted mb-1 font-13"><strong>Reporting to :</strong> <span class="ms-2">

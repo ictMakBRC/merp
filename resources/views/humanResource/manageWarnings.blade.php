@@ -48,8 +48,8 @@
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $warning->emp_id }}</td>
                                             <td>{{ $warning->employee->fullName }}</td>
-                                            <td>{{ $warning->employee->department->department_name }}</td>
-                                            <td>{{ $warning->employee->designation->name }}</td>
+                                            <td>{{ $warning->employee->department->department_name??'N/A' }}</td>
+                                            <td>{{ $warning->employee->designation->name??'N/A' }}</td>
                                             <td>{{ $warning->reason }}</td>
                                             <td>{{ date('d-m-Y', strtotime($warning->created_at)) }}</td>
                                             <td class="table-action">

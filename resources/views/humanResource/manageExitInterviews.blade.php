@@ -40,8 +40,8 @@
                                             <td>{{ $key + 1 }}</td>
                                             <td>{{ $exitInterview->emp_id }}</td>
                                             <td>{{ $exitInterview->employee->fullName }}</td>
-                                            <td>{{ $exitInterview->employee->department->department_name }}</td>
-                                            <td>{{ $exitInterview->employee->designation->name }}</td>
+                                            <td>{{ $exitInterview->employee->department->department_name??'N/A' }}</td>
+                                            <td>{{ $exitInterview->employee->designation->name??'N/A' }}</td>
                                             <td>{{ date('d-m-Y', strtotime($exitInterview->created_at)) }}</td>
                                             <td class="table-action">
                                                 <a href="{{ route('exitInterviews.download', ['id' => $exitInterview->id]) }}"

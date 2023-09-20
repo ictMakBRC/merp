@@ -161,7 +161,7 @@
                                                             @if ($employee->designation == null)
                                                                 N/A
                                                             @else
-                                                                {{ $employee->designation->name }}
+                                                                {{ $employee->designation->name??'N/A' }}
                                                             @endif
                                                         </p>
                                                     </td>
@@ -181,7 +181,7 @@
                                                             @if ($employee->department == null)
                                                                 N/A
                                                             @else
-                                                                {{ $employee->department->department_name }}
+                                                                {{ $employee->department->department_name??'N/A' }}
                                                             @endif
                                                         </p>
                                                     </td>

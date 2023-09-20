@@ -25,7 +25,7 @@ class OfficialContractController extends Controller
             ->where('employee_id', Auth::user()->employee_id)->latest()->get();
         } elseif (Auth::user()->hasRole(['HrSupervisor'])) {
             $contracts = OfficialContract::with('employee:id,emp_id,surname,other_name,first_name')
-            ->where('department_id', Auth::user()->employee->department_id)->latest()->get();
+            ->where('department_id', Auth::user()->employee->department_id??'')->latest()->get();
         } elseif (Auth::user()->hasRole(['HrAdmin', 'SuperAdmin'])) {
             $contracts = OfficialContract::with('employee:id,emp_id,surname,other_name,first_name')->latest()->get();
         }
