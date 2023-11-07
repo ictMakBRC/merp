@@ -58,7 +58,7 @@
                             @else
                             <div class="row">  
                                 <div class="col-12">
-                                    <a href="javascript:void(0)" wire:click='downloadDocument({{$active_document->id}})' class="text-center h4"><b>Doc: </b>{{$active_document->title}}</a>
+                                    <a href="javascript:void(0)" wire:click="$set('action',0)" class="text-center h4"><b>Doc: </b>{{$active_document->title}}</a>
                                 </div>
                                 <div class="col m-1" >
                                 @if ($active_document->status !="Pending" && auth()->user()->id == $active_document->created_by)
