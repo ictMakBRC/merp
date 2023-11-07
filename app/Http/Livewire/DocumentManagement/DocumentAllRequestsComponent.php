@@ -44,7 +44,7 @@ class DocumentAllRequestsComponent extends Component
     public function render()
     {
         // $data['incoming'] = $this->incomingRequests();
-        $data['incomingRequsests'] = DmDocumentRequest::search($this->search)->with('documents')->where('status','!=','Pending')->orderBy('id','DESC')->get();
+        $data['incomingRequsests'] = DmDocumentRequest::search($this->search)->with('documents')->where('status','!=','Pending')->orderBy('id','DESC')->paginate($this->perPage);
 
         $data['submited_requets'] = DmDocumentRequest::where('status','!=','Pending')->get();
         $data['submited_documents'] = DmRequestDocuments::where('status','!=','Pending')->get();

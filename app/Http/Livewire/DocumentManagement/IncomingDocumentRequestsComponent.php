@@ -47,7 +47,7 @@ class IncomingDocumentRequestsComponent extends Component
         $data['incomingRequsests'] = DmDocumentRequest::search($this->search)->with('documents')
         ->WhereHas('documents.signatories', function ($query) {
             $query->where('signatory_id', auth()->user()->id);
-        })->where('status','!=','Pending')->orderBy('id','DESC')->get();
+        })->where('status','!=','Pending')->orderBy('id','DESC')->paginate($this->perPage);
 
         $data['submited_requets'] = DmDocumentRequest::where('status','!=','Pending')->WhereHas('documents.signatories', function ($query) {
             $query->where('signatory_id', auth()->user()->id);})->get();
