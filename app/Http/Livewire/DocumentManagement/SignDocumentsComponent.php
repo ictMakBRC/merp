@@ -223,6 +223,7 @@ class SignDocumentsComponent extends Component
             $this->dispatchBrowserEvent('alert', ['type' => 'error',  'message' => 'File not found! ']);
         }
         }else{
+            dd('78 89');
             $this->dispatchBrowserEvent('alert', ['type' => 'error',  'message' => 'File not found! ']);
         }
     }
