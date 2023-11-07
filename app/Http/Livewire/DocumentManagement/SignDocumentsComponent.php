@@ -33,26 +33,6 @@ class SignDocumentsComponent extends Component
         }
     }
 
-    public function downloadDocument(DmRequestDocuments $document)
-    {
-        $file = storage_path('app/').$document->original_file;
-        if (file_exists($file)) {
-            return Storage::download($document->original_file, $document->title.' downloaded');
-        } else {
-            $this->dispatchBrowserEvent('alert', ['type' => 'error',  'message' => 'File not deleted! ']);
-        }
-    }
-
-    public function downloadSupportDocument(DmRequestSupportDocuments $document)
-    {
-        $file = storage_path('app/').$document->original_file;
-        if (file_exists($file)) {
-            return Storage::download($document->original_file, $document->title.' downloaded');
-        } else {
-            $this->dispatchBrowserEvent('alert', ['type' => 'error',  'message' => 'File not deleted! ']);
-        }
-    }
-
     public function updatedActiveDocumentId()
     {
         $this->action = false;
@@ -232,14 +212,53 @@ class SignDocumentsComponent extends Component
         if($document){
         $file = storage_path('app/').$document->signed_file;
         if (file_exists($file)) {
-            return Storage::download($document->signed_file, $document->document_code.'_signed downloaded');
+            return Storage::download($document->signed_file, $document->title.'_signed downloaded');
         } else {
+            dd($document->signed_file);
+            $this->dispatchBrowserEvent('swal:modal', [
+                'type' => 'error',
+                'message' => 'Not Found!',
+                'text' => 'Attachment not found!',
+            ]);
             $this->dispatchBrowserEvent('alert', ['type' => 'error',  'message' => 'File not found! ']);
         }
         }else{
             $this->dispatchBrowserEvent('alert', ['type' => 'error',  'message' => 'File not found! ']);
         }
     }
+    
+    public function downloadDocument(DmRequestDocuments $document)
+    {
+        $file = storage_path('app/').$document->original_file;
+        if (file_exists($file)) {
+            return Storage::download($document->original_file, $document->title.' downloaded');
+        } else {
+            dd($document->original_file);
+            $this->dispatchBrowserEvent('swal:modal', [
+                'type' => 'error',
+                'message' => 'Not Found!',
+                'text' => 'Attachment not found!',
+            ]);
+            $this->dispatchBrowserEvent('alert', ['type' => 'error',  'message' => 'File not deleted! ']);
+        }
+    }
+
+    public function downloadSupportDocument(DmRequestSupportDocuments $document)
+    {
+        $file = storage_path('app/').$document->original_file;
+        if (file_exists($file)) {
+            return Storage::download($document->original_file, $document->title.' downloaded');
+        } else {
+            dd($document->original_file);
+            $this->dispatchBrowserEvent('swal:modal', [
+                'type' => 'error',
+                'message' => 'Not Found!',
+                'text' => 'Attachment not found!',
+            ]);
+            $this->dispatchBrowserEvent('alert', ['type' => 'error',  'message' => 'File not deleted! ']);
+        }
+    }
+
 
     public function addSupportDocument()
     {
