@@ -251,14 +251,14 @@ class DocumentDashboardComponent extends Component
             $data['users'] = User::all();
             $data['submited_requets'] = DmDocumentRequest::where('status','!=','Pending')->where('created_by',auth()->user()->id)->get();
             $data['recent_requets'] = DmDocumentRequest::where('status','!=','Pending')->where('status', 'Completed')
-            ->when($this->document_category, function ($query) {$query->where('request_category', $this->document_category);})->where('created_by',auth()->user()->id)->get();
+            ->when($this->document_category, function ($query) {$query->where('request_category', $this->document_category);})->where('created_by',auth()->user()->id)->paginate($this->perPage);
             $data['received_requets'] = DmDocumentRequest::where('status','!=','Pending')->WhereHas('documents.signatories', function ($query) {
                 $query->where('signatory_id', auth()->user()->id);})->get();
             $data['incomingRequsests'] = DmDocumentRequest::with(['category','documents','user'])->where('status', '!=', 'Completed')
             ->WhereHas('documents.signatories', function ($query) {$query->where('signatory_id', auth()->user()->id);})
             ->when($this->document_category, function ($query) {$query->where('request_category', $this->document_category);})
             ->when($this->active_status, function ($query) { $query->where('status',  $this->active_status);})->where('status','!=','Pending')
-            ->get();
+            ->paginate($this->perPage);
         
         return view('livewire.document-management.document-dashboard-component',$data)->layout('livewire.document-management.layouts.app');
     }

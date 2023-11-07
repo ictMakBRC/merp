@@ -180,6 +180,11 @@
                         </tbody>
                     </table>
                 </div>
+                @if (count($incomingRequsests)>0) 
+                    {{ $incomingRequsests->links('vendor.pagination.bootstrap-5') }}
+                @else
+                    {{ $recent_requets->links('vendor.pagination.bootstrap-5') }}
+                @endif
             </div>
         </div>
     </div>
