@@ -26,7 +26,7 @@ class PreviewDocumentComponent extends Component
     {
         $file = storage_path('app/').$document->file;
         if (file_exists($file)) {
-            return Storage::download($document->file, $document->document_code.'_downloaded');
+            return Storage::download($document->file, $document->title.'_downloaded');
         } else {
             $this->dispatchBrowserEvent('swal:modal', [
                 'type' => 'error',
@@ -41,7 +41,7 @@ class PreviewDocumentComponent extends Component
     {
         $file = storage_path('app/').$document->signed_file;
         if (file_exists($file)) {
-            return Storage::download($document->signed_file, $document->document_code.'_signed downloaded');
+            return Storage::download($document->signed_file, $document->title.'_signed downloaded');
         } else {
             $this->dispatchBrowserEvent('swal:modal', [
                 'type' => 'error',
