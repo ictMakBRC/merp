@@ -6,6 +6,7 @@ use Throwable;
 use Carbon\Carbon;
 use App\Models\User;
 use Livewire\Component;
+use Illuminate\Support\Str;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
@@ -149,11 +150,15 @@ class NewDocumentComponent extends Component
         ]);
 
         
+        // $sanitizedFileName = Str::slug($this->document_title); 
+        $sanitizedFileName = str_replace('/', '-', $this->document_title);
+        $sanitizedFileName = $this->document_title;
+
         $path = 'Merp/documents/originals/'.date("Y").'/'.date("m");
         $permit_name = date('Ymdhis').'_'.time().'.'.$this->file->extension();
         $document_path = $this->file->storeAs($path, $permit_name);
         $document = new DmRequestDocuments();
-        $document->title = $this->document_title;
+        $document->title = $sanitizedFileName;
         $document->document_code =$this->getNumber(12);
         $document->document_category_id =  $this->active_request->request_category;
         $document->request_code =  $this->active_request->request_code;
@@ -236,8 +241,9 @@ class NewDocumentComponent extends Component
     public function downloadDocument(DmRequestDocuments $document)
     {
         $file = storage_path('app/').$document->original_file;
+        $sanitizedFileName = str_replace('/', '-', $document->title);
         if (file_exists($file)) {
-            return Storage::download($document->original_file, $document->title.' downloaded');
+            return Storage::download($document->original_file, $sanitizedFileName.' downloaded');
         } else {
             $this->dispatchBrowserEvent('alert', ['type' => 'error',  'message' => 'File not deleted! '.$error]);
         }
@@ -246,8 +252,9 @@ class NewDocumentComponent extends Component
     public function downloadSupportDocument(DmRequestSupportDocuments $document)
     {
         $file = storage_path('app/').$document->original_file;
+        $sanitizedFileName = str_replace('/', '-', $document->title);
         if (file_exists($file)) {
-            return Storage::download($document->original_file, $document->title.' downloaded');
+            return Storage::download($document->original_file, $sanitizedFileName.' downloaded');
         } else {
             $this->dispatchBrowserEvent('alert', ['type' => 'error',  'message' => 'File not deleted! '.$error]);
         }

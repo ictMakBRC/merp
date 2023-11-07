@@ -211,7 +211,7 @@ class SignDocumentsComponent extends Component
     public function downloadSignedDocument(DmRequestDocuments $document)
     {
         if($document){
-            $sanitizedFileName = Str::slug($document->title);
+            $sanitizedFileName = str_replace('/', '-', $this->document_title);
         $file = storage_path('app/').$document->signed_file;
         if (file_exists($file)) {
             return Storage::download($document->signed_file, $sanitizedFileName.'_signed downloaded');
@@ -234,7 +234,8 @@ class SignDocumentsComponent extends Component
     {
         $file = storage_path('app/').$document->original_file;
         if (file_exists($file)) {
-             $sanitizedFileName = Str::slug($document->title);
+            //  $sanitizedFileName = Str::slug($document->title);
+             $sanitizedFileName = str_replace('/', '-', $this->document_title);
             return Storage::download($document->original_file, $sanitizedFileName.'_original downloaded');
         } else {
             dd($document->original_file);
@@ -252,8 +253,8 @@ class SignDocumentsComponent extends Component
         
         $file = storage_path('app/').$document->original_file;
         if (file_exists($file)) {
-            $sanitizedFileName = Str::slug($document->title);
-            return Storage::download($document->original_file, $sanitizedFileName.' downloaded');
+            $sanitizedFileName = str_replace('/', '-', $this->document_title);
+            return Storage::download($document->original_file, $sanitizedFileName.'_support doc downloaded');
         } else {
             dd($document->original_file);
             $this->dispatchBrowserEvent('swal:modal', [
