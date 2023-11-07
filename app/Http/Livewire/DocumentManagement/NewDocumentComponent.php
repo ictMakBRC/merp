@@ -152,7 +152,6 @@ class NewDocumentComponent extends Component
         
         // $sanitizedFileName = Str::slug($this->document_title); 
         $sanitizedFileName = str_replace('/', '-', $this->document_title);
-        $sanitizedFileName = $this->document_title;
 
         $path = 'Merp/documents/originals/'.date("Y").'/'.date("m");
         $permit_name = date('Ymdhis').'_'.time().'.'.$this->file->extension();
