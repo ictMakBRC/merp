@@ -28,7 +28,12 @@ class PreviewDocumentComponent extends Component
         if (file_exists($file)) {
             return Storage::download($document->file, $document->document_code.'_downloaded');
         } else {
-            $this->dispatchBrowserEvent('alert', ['type' => 'error',  'message' => 'File not deleted! '.$error]);
+            $this->dispatchBrowserEvent('swal:modal', [
+                'type' => 'error',
+                'message' => 'Not Found!',
+                'text' => 'Attachment not found!',
+            ]);
+            $this->dispatchBrowserEvent('alert', ['type' => 'error',  'message' => 'File not found! ']);
         }
     }
 
@@ -38,7 +43,12 @@ class PreviewDocumentComponent extends Component
         if (file_exists($file)) {
             return Storage::download($document->signed_file, $document->document_code.'_signed downloaded');
         } else {
-            $this->dispatchBrowserEvent('alert', ['type' => 'error',  'message' => 'File not deleted! '.$error]);
+            $this->dispatchBrowserEvent('swal:modal', [
+                'type' => 'error',
+                'message' => 'Not Found!',
+                'text' => 'Attachment not found!',
+            ]);
+            $this->dispatchBrowserEvent('alert', ['type' => 'error',  'message' => 'File not found! ']);
         }
     }
 
