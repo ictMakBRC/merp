@@ -6,6 +6,7 @@ use Throwable;
 use Carbon\Carbon;
 use App\Models\User;
 use Livewire\Component;
+use Illuminate\Support\Str;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 use App\Providers\CodeGeneratorService;
@@ -210,9 +211,10 @@ class SignDocumentsComponent extends Component
     public function downloadSignedDocument(DmRequestDocuments $document)
     {
         if($document){
+            $sanitizedFileName = Str::slug($document->title);
         $file = storage_path('app/').$document->signed_file;
         if (file_exists($file)) {
-            return Storage::download($document->signed_file, $document->title.'_signed downloaded');
+            return Storage::download($document->signed_file, $sanitizedFileName.'_signed downloaded');
         } else {
             dd($document->signed_file);
             $this->dispatchBrowserEvent('swal:modal', [
@@ -223,7 +225,7 @@ class SignDocumentsComponent extends Component
             $this->dispatchBrowserEvent('alert', ['type' => 'error',  'message' => 'File not found! ']);
         }
         }else{
-            dd('78 89');
+            dd('78 89');    
             $this->dispatchBrowserEvent('alert', ['type' => 'error',  'message' => 'File not found! ']);
         }
     }
@@ -232,7 +234,8 @@ class SignDocumentsComponent extends Component
     {
         $file = storage_path('app/').$document->original_file;
         if (file_exists($file)) {
-            return Storage::download($document->original_file, $document->title.' downloaded');
+             $sanitizedFileName = Str::slug($document->title);
+            return Storage::download($document->original_file, $sanitizedFileName.'_original downloaded');
         } else {
             dd($document->original_file);
             $this->dispatchBrowserEvent('swal:modal', [
@@ -246,9 +249,11 @@ class SignDocumentsComponent extends Component
 
     public function downloadSupportDocument(DmRequestSupportDocuments $document)
     {
+        
         $file = storage_path('app/').$document->original_file;
         if (file_exists($file)) {
-            return Storage::download($document->original_file, $document->title.' downloaded');
+            $sanitizedFileName = Str::slug($document->title);
+            return Storage::download($document->original_file, $sanitizedFileName.' downloaded');
         } else {
             dd($document->original_file);
             $this->dispatchBrowserEvent('swal:modal', [
